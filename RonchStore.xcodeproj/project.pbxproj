@@ -15,6 +15,7 @@
 		6235CAA622D586C10011A330 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6235CAA422D586C10011A330 /* LaunchScreen.storyboard */; };
 		6235CAB122D586C10011A330 /* RonchStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6235CAB022D586C10011A330 /* RonchStoreTests.swift */; };
 		6235CABC22D586C10011A330 /* RonchStoreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6235CABB22D586C10011A330 /* RonchStoreUITests.swift */; };
+		6263986522DAE0A90080C243 /* ClientesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6263986422DAE0A90080C243 /* ClientesVC.swift */; };
 		627CDF4E22D820B10003EF15 /* InicioSesionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627CDF4D22D820B10003EF15 /* InicioSesionVC.swift */; };
 		627CDF5022D824E40003EF15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 627CDF4F22D824E40003EF15 /* GoogleService-Info.plist */; };
 		D0182B030A549135EAEED511 /* Pods_RonchStoreUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA3BD75B649D3F72D658339 /* Pods_RonchStoreUITests.framework */; };
@@ -52,6 +53,7 @@
 		6235CAB722D586C10011A330 /* RonchStoreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RonchStoreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6235CABB22D586C10011A330 /* RonchStoreUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RonchStoreUITests.swift; sourceTree = "<group>"; };
 		6235CABD22D586C10011A330 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6263986422DAE0A90080C243 /* ClientesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientesVC.swift; sourceTree = "<group>"; };
 		627CDF4D22D820B10003EF15 /* InicioSesionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InicioSesionVC.swift; sourceTree = "<group>"; };
 		627CDF4F22D824E40003EF15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7CA3BD75B649D3F72D658339 /* Pods_RonchStoreUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RonchStoreUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,6 +164,7 @@
 			children = (
 				627CDF4D22D820B10003EF15 /* InicioSesionVC.swift */,
 				622FCA1822D84486000B4239 /* ClienteAgregarVC.swift */,
+				6263986422DAE0A90080C243 /* ClientesVC.swift */,
 			);
 			path = Controlador;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				627CDF4E22D820B10003EF15 /* InicioSesionVC.swift in Sources */,
 				6235CA9C22D586C00011A330 /* AppDelegate.swift in Sources */,
 				622FCA1922D84486000B4239 /* ClienteAgregarVC.swift in Sources */,
+				6263986522DAE0A90080C243 /* ClientesVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
