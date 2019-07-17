@@ -51,7 +51,7 @@ class ClienteAgregarVC: UIViewController {
     }
     
     @IBAction func botonEliminar(_ sender: Any) {
-        let alert = UIAlertController(title: "¿Eliminar?", message: "¿Eliminar a: \(telefono.text!)?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "¿Eliminar?", message: "¿Esta seguro de eliminar?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Si", style: .default, handler: { (UIAlertAction) in
             var ref: DatabaseReference!
             ref = Database.database().reference()

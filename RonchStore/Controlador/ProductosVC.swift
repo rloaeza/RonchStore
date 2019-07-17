@@ -68,9 +68,9 @@ extension ProductosVC:UITableViewDataSource {
         celda.detailTextLabel?.text = valores[indexPath.row].value(forKey: "marca") as? String
         return celda
     }
-    
-    
 }
+
+
 extension ProductosVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "ProductoAgregarSegue", sender: valores[indexPath.row])
