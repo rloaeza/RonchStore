@@ -17,7 +17,7 @@ class ClientesVC: UIViewController {
         super.viewDidLoad()
         
         var ref: DatabaseReference!
-        ref = Database.database().reference().child("Clientes")
+        ref = Database.database().reference().child(Configuraciones.keyClientes)
         
         ref.observe(.value) { (DataSnapshot) in
             self.valores.removeAll()
@@ -39,17 +39,6 @@ class ClientesVC: UIViewController {
             vc.cliente = sender as? NSDictionary
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 extension ClientesVC:UITableViewDataSource {
@@ -59,8 +48,8 @@ extension ClientesVC:UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celda = tableView.dequeueReusableCell(withIdentifier: "ClienteCelda", for: indexPath)
-        celda.textLabel?.text = valores[indexPath.row].value(forKey: "nombre") as? String
-        celda.detailTextLabel?.text = valores[indexPath.row].value(forKey: "telefono") as? String
+        celda.textLabel?.text = valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String
+        celda.detailTextLabel?.text = valores[indexPath.row].value(forKey: Configuraciones.keyTelefono) as? String
         return celda
     }
     

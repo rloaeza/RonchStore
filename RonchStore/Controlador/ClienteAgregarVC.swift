@@ -26,18 +26,10 @@ class ClienteAgregarVC: UIViewController {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         
-        ref.child("Clientes").child(telefono.text!).setValue(["telefono": telefono.text!, "nombre": nombre.text!, "direccion": direccion.text!,"email": email.text!])
+        ref.child(Configuraciones.keyClientes).child(telefono.text!).setValue([Configuraciones.keyTelefono: telefono.text!, Configuraciones.keyNombre: nombre.text!, Configuraciones.keyDireccion: direccion.text!,Configuraciones.keyEmail: email.text!])
         
-        
-        let alert = UIAlertController(title: "Clientes", message: "Cliente guardado.", preferredStyle: .actionSheet)
-        self.present(alert, animated: true)
-        
-        let when = DispatchTime.now() + 3
-        DispatchQueue.main.asyncAfter(deadline: when){
-            alert.dismiss(animated: true, completion: nil)
-            self.navigationController?.popViewController(animated: true)
+        Configuraciones.alert(Titulo: "Clientes", Mensaje: "Cliente guardado", self, popView: true)
 
-        }
         
     }
     
@@ -55,7 +47,7 @@ class ClienteAgregarVC: UIViewController {
         alert.addAction(UIAlertAction(title: "Si", style: .default, handler: { (UIAlertAction) in
             var ref: DatabaseReference!
             ref = Database.database().reference()
-            ref.child("Clientes").child(self.telefono.text!).setValue(nil)
+            ref.child(Configuraciones.keyClientes).child(self.telefono.text!).setValue(nil)
             self.navigationController?.popViewController(animated: true)
         }))
         
@@ -68,14 +60,6 @@ class ClienteAgregarVC: UIViewController {
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
     }
   
     override func viewDidLoad() {
@@ -83,10 +67,10 @@ class ClienteAgregarVC: UIViewController {
 
         // Do any additional setup after loading the view.
         if cliente != nil {
-            telefono.text = cliente!.value(forKey: "telefono") as? String
-            nombre.text = cliente!.value(forKey: "nombre") as? String
-            direccion.text = cliente!.value(forKey: "direccion") as? String
-            email.text = cliente!.value(forKey: "email") as? String
+            telefono.text = cliente!.value(forKey: Configuraciones.keyTelefono) as? String
+            nombre.text = cliente!.value(forKey: Configuraciones.keyNombre) as? String
+            direccion.text = cliente!.value(forKey: Configuraciones.keyDireccion) as? String
+            email.text = cliente!.value(forKey: Configuraciones.keyEmail) as? String
             telefono.isEnabled = false
             botonEliminar.isHidden = false
             cliente = nil
@@ -97,16 +81,4 @@ class ClienteAgregarVC: UIViewController {
             botonEliminar.isHidden = true
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

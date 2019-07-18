@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0B3D256FD5EFF169001A4BA6 /* Pods_RonchStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3BD259218C7A9B5FA6557D1 /* Pods_RonchStore.framework */; };
+		621C6DD622DFEDB0003508EB /* VentasVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621C6DD522DFEDB0003508EB /* VentasVC.swift */; };
+		621C6DDC22DFFB88003508EB /* VentaAgregarPagoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621C6DDB22DFFB88003508EB /* VentaAgregarPagoVC.swift */; };
+		621C6DDE22E0C382003508EB /* Configuraciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621C6DDD22E0C382003508EB /* Configuraciones.swift */; };
 		622FCA1922D84486000B4239 /* ClienteAgregarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622FCA1822D84486000B4239 /* ClienteAgregarVC.swift */; };
 		6235CA9C22D586C00011A330 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6235CA9B22D586C00011A330 /* AppDelegate.swift */; };
 		6235CAA122D586C00011A330 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6235CA9F22D586C00011A330 /* Main.storyboard */; };
@@ -43,6 +46,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		621C6DD522DFEDB0003508EB /* VentasVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VentasVC.swift; sourceTree = "<group>"; };
+		621C6DDB22DFFB88003508EB /* VentaAgregarPagoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VentaAgregarPagoVC.swift; sourceTree = "<group>"; };
+		621C6DDD22E0C382003508EB /* Configuraciones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuraciones.swift; sourceTree = "<group>"; };
 		622FCA1822D84486000B4239 /* ClienteAgregarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteAgregarVC.swift; sourceTree = "<group>"; };
 		6235CA9822D586C00011A330 /* RonchStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RonchStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6235CA9B22D586C00011A330 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -174,6 +180,9 @@
 				6275291F22DE0342002C480C /* ProductoAgregarVC.swift */,
 				6275292122DE0B9B002C480C /* ProductosVC.swift */,
 				62793FB322DE40B600D2323C /* VentaAgregarVC.swift */,
+				621C6DD522DFEDB0003508EB /* VentasVC.swift */,
+				621C6DDB22DFFB88003508EB /* VentaAgregarPagoVC.swift */,
+				621C6DDD22E0C382003508EB /* Configuraciones.swift */,
 			);
 			path = Controlador;
 			sourceTree = "<group>";
@@ -432,10 +441,13 @@
 				627CDF4E22D820B10003EF15 /* InicioSesionVC.swift in Sources */,
 				6235CA9C22D586C00011A330 /* AppDelegate.swift in Sources */,
 				6275292222DE0B9B002C480C /* ProductosVC.swift in Sources */,
+				621C6DD622DFEDB0003508EB /* VentasVC.swift in Sources */,
 				622FCA1922D84486000B4239 /* ClienteAgregarVC.swift in Sources */,
 				62793FB422DE40B600D2323C /* VentaAgregarVC.swift in Sources */,
 				6263986522DAE0A90080C243 /* ClientesVC.swift in Sources */,
+				621C6DDE22E0C382003508EB /* Configuraciones.swift in Sources */,
 				6275292022DE0342002C480C /* ProductoAgregarVC.swift in Sources */,
+				621C6DDC22DFFB88003508EB /* VentaAgregarPagoVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

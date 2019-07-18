@@ -27,7 +27,7 @@ class ProductoAgregarVC: UIViewController {
         alert.addAction(UIAlertAction(title: "Si", style: .default, handler: { (UIAlertAction) in
             var ref: DatabaseReference!
             ref = Database.database().reference()
-            ref.child("Productos").child(self.codigo!).setValue(nil)
+            ref.child(Configuraciones.keyProductos).child(self.codigo!).setValue(nil)
             self.navigationController?.popViewController(animated: true)
         }))
         
@@ -43,30 +43,23 @@ class ProductoAgregarVC: UIViewController {
         ref = Database.database().reference()
         let newKey: DatabaseReference!
         if codigo == nil {
-            newKey = ref.child("Productos").childByAutoId()
+            newKey = ref.child(Configuraciones.keyProductos).childByAutoId()
         }
         else {
-            newKey = ref.child("Productos").child(codigo!)
+            newKey = ref.child(Configuraciones.keyProductos).child(codigo!)
         }
         newKey.setValue([
-            "nombre":nombre.text,
-            "marca":marca.text,
-            "talla":talla.text,
-            "costo":costo.text,
-            "costoVenta":costoVenta.text,
-            "existencia":existencia.text
+            Configuraciones.keyNombre:nombre.text,
+            Configuraciones.keyMarca:marca.text,
+            Configuraciones.keyTalla:talla.text,
+            Configuraciones.keyCosto:costo.text,
+            Configuraciones.keyCostoVenta:costoVenta.text,
+            Configuraciones.keyExistencia:existencia.text
             ])
         codigo = newKey.key
         
-        let alert = UIAlertController(title: "Productos", message: "Producto guardado.", preferredStyle: .actionSheet)
-        self.present(alert, animated: true)
-        
-        let when = DispatchTime.now() + 3
-        DispatchQueue.main.asyncAfter(deadline: when){
-            alert.dismiss(animated: true, completion: nil)
-            self.navigationController?.popViewController(animated: true)
-            
-        }
+        Configuraciones.alert(Titulo: "Productos", Mensaje: "Producto guardado", self, popView: true)
+
         
         
     }
@@ -75,13 +68,13 @@ class ProductoAgregarVC: UIViewController {
         
         // Do any additional setup after loading the view.
         if producto != nil {
-            codigo =  producto!.value(forKey: "codigo") as? String
-            nombre.text = producto!.value(forKey: "nombre") as? String
-            marca.text = producto!.value(forKey: "marca") as? String
-            talla.text = producto!.value(forKey: "talla") as? String
-            costo.text = producto!.value(forKey: "costo") as? String
-            costoVenta.text = producto!.value(forKey: "costoVenta") as? String
-            existencia.text = producto!.value(forKey: "existencia") as? String
+            codigo =  producto!.value(forKey: Configuraciones.keyId) as? String
+            nombre.text = producto!.value(forKey: Configuraciones.keyNombre) as? String
+            marca.text = producto!.value(forKey: Configuraciones.keyMarca) as? String
+            talla.text = producto!.value(forKey: Configuraciones.keyTalla) as? String
+            costo.text = producto!.value(forKey: Configuraciones.keyCosto) as? String
+            costoVenta.text = producto!.value(forKey: Configuraciones.keyCostoVenta) as? String
+            existencia.text = producto!.value(forKey: Configuraciones.keyExistencia) as? String
             botonEliminar.isHidden = false
             producto = nil
             
@@ -99,15 +92,5 @@ class ProductoAgregarVC: UIViewController {
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

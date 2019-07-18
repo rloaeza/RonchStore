@@ -19,15 +19,15 @@ class ProductosVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        var ref: DatabaseReference!
-        ref = Database.database().reference().child("Productos")
+        
+        let ref = Database.database().reference().child(Configuraciones.keyProductos).queryOrdered(byChild: Configuraciones.keyMarca)
         
         ref.observe(.value) { (DataSnapshot) in
             self.valores.removeAll()
             for child in DataSnapshot.children {
                 if let snap = child as? DataSnapshot {
                     let dic = snap.value as? NSDictionary
-                    dic?.setValue(snap.key, forKey: "codigo")
+                    dic?.setValue(snap.key, forKey: Configuraciones.keyId)
                     self.valores.append(dic!)
                 }
             }
@@ -42,17 +42,6 @@ class ProductosVC: UIViewController {
             vc.producto = sender as? NSDictionary
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 
@@ -64,8 +53,10 @@ extension ProductosVC:UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath)
-        celda.textLabel?.text = valores[indexPath.row].value(forKey: "nombre") as? String
-        celda.detailTextLabel?.text = valores[indexPath.row].value(forKey: "marca") as? String
+        let nombre = valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String
+        let talla = valores[indexPath.row].value(forKey: Configuraciones.keyTalla) as? String
+        celda.textLabel?.text = "\(nombre!) (\(talla!))"
+        celda.detailTextLabel?.text = valores[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String
         return celda
     }
 }

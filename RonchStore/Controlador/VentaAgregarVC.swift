@@ -8,18 +8,78 @@
 
 import UIKit
 import FirebaseDatabase
+import MessageUI
 
-class VentaAgregarVC: UIViewController {
+class VentaAgregarVC: UIViewController, MFMessageComposeViewControllerDelegate  {
     var clientes: [NSDictionary] = []
     var productos: [NSDictionary] = []
     var productosVenta: [NSDictionary] = []
     var totalVenta: Double = 0
+    var venta: NSDictionary? = nil
 
     @IBOutlet weak var total: UITextField!
     @IBOutlet weak var tableViewProductos: UITableView!
     
+    @IBOutlet weak var pagado: UITextField!
     @IBOutlet weak var pickerViewClientes: UIPickerView!
     @IBOutlet weak var pickerViewProductos: UIPickerView!
+    
+    @IBAction func botonGuardar(_ sender: Any) {
+        if productosVenta.count == 0 || pagado.text!.isEmpty {
+            return
+        }
+        
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        let newKey: DatabaseReference!
+        if venta == nil {
+            newKey = ref.child(Configuraciones.keyVentasActivas).childByAutoId()
+        }
+        else {
+            newKey = ref.child(Configuraciones.keyVentasActivas).child(venta?.value(forKey: Configuraciones.keyId) as! String)
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = Configuraciones.keyDateFormat
+        let myDate = formatter.string(from: Date())
+        
+        
+        var pagos: [NSDictionary] = []
+        pagos.append([Configuraciones.keyPago : Double(pagado.text!)!, Configuraciones.keyFecha : myDate])
+        
+        let cliente = clientes[pickerViewClientes.selectedRow(inComponent: 0)]
+        newKey.setValue([
+            Configuraciones.keyCliente:cliente,
+            Configuraciones.keyProductos:productosVenta,
+            Configuraciones.keyTotal:totalVenta,
+            Configuraciones.keyPagos:pagos,
+            Configuraciones.keyAbonado:Double(pagado.text!)!
+            ])
+        
+        
+        
+        
+        if (MFMessageComposeViewController.canSendText()) {
+            let controller = MFMessageComposeViewController()
+            controller.body = "Pago: \(pagado.text!) de \(total.text!)"
+            controller.recipients = [cliente.value(forKey: Configuraciones.keyTelefono)] as? [String]
+            controller.messageComposeDelegate = self
+            self.present(controller, animated: true, completion: nil)
+        }
+        
+        Configuraciones.alert(Titulo: "Venta", Mensaje: "Venta agregada", self, popView: true)
+
+    }
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController!, didFinishWith result: MessageComposeResult) {
+        //... handle sms screen actions
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     
     @IBAction func botonQuitarProducto(_ sender: Any) {
         let index = tableViewProductos.indexPathForSelectedRow?.row
@@ -27,7 +87,7 @@ class VentaAgregarVC: UIViewController {
             return
         }
         let dic = productosVenta[index!]
-        totalVenta -= Double(dic.value(forKey: "costoVenta") as! String)!
+        totalVenta -= Double(dic.value(forKey: Configuraciones.keyCostoVenta) as! String)!
         total.text = String( totalVenta )
         productosVenta.remove(at: index!)
         tableViewProductos.reloadData()
@@ -38,7 +98,7 @@ class VentaAgregarVC: UIViewController {
         let dic = productos[index]
         productosVenta.append(dic)
         tableViewProductos.reloadData()
-        totalVenta += Double(dic.value(forKey: "costoVenta") as! String)!
+        totalVenta += Double(dic.value(forKey: Configuraciones.keyCostoVenta) as! String)!
         total.text = String( totalVenta )
         
     }
@@ -47,14 +107,14 @@ class VentaAgregarVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        let ref = Database.database().reference().child("Productos").queryOrdered(byChild: "nombre")
+        let ref = Database.database().reference().child(Configuraciones.keyProductos).queryOrdered(byChild: Configuraciones.keyNombre)
         
         ref.observe(.value) { (DataSnapshot) in
             self.productos.removeAll()
             for child in DataSnapshot.children {
                 if let snap = child as? DataSnapshot {
                     let dic = snap.value as? NSDictionary
-                    dic?.setValue(snap.key, forKey: "codigo")
+                    dic?.setValue(snap.key, forKey: Configuraciones.keyId)
                     self.productos.append(dic!)
                 }
             }
@@ -62,7 +122,7 @@ class VentaAgregarVC: UIViewController {
         }
         
         
-        let ref2 = Database.database().reference().child("Clientes").queryOrdered(byChild: "nombre")
+        let ref2 = Database.database().reference().child(Configuraciones.keyClientes).queryOrdered(byChild: Configuraciones.keyNombre)
         
         ref2.observe(.value) { (DataSnapshot) in
             self.clientes.removeAll()
@@ -79,17 +139,6 @@ class VentaAgregarVC: UIViewController {
         totalVenta = 0
         productosVenta.removeAll()
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
@@ -110,14 +159,31 @@ extension VentaAgregarVC:UIPickerViewDataSource {
     }
 }
 extension VentaAgregarVC:UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+   
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel = view as? UILabel
+        
+        if (pickerLabel == nil)
+        {
+            pickerLabel = UILabel()
+            
+            pickerLabel?.font = UIFont(name: "System", size: 14)
+            pickerLabel?.textAlignment = NSTextAlignment.center
+        }
+        
+        
         if pickerView == pickerViewProductos {
-            return productos[row].value(forKey: "nombre") as? String
+            let nombre = productos[row].value(forKey: Configuraciones.keyNombre) as! String
+            let costo = productos[row].value(forKey: Configuraciones.keyCostoVenta) as! String
+            let marca = productos[row].value(forKey: Configuraciones.keyMarca) as! String
+            let talla = productos[row].value(forKey: Configuraciones.keyTalla) as! String
+            pickerLabel?.text =  "\(nombre) ( \(marca)/\(talla) ) $\(costo)"
         }
         if pickerView == pickerViewClientes {
-            return clientes[row].value(forKey: "nombre") as? String
+            pickerLabel?.text =  clientes[row].value(forKey: Configuraciones.keyNombre) as? String
         }
-        return "NO"
+
+        return pickerLabel!
     }
 }
 
@@ -128,7 +194,13 @@ extension VentaAgregarVC:UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath)
-        celda.textLabel?.text = productosVenta[indexPath.row].value(forKey: "nombre") as? String
+        
+        let nombre = productosVenta[indexPath.row].value(forKey: Configuraciones.keyNombre) as! String
+        let marca = productosVenta[indexPath.row].value(forKey: Configuraciones.keyMarca) as! String
+        let talla = productosVenta[indexPath.row].value(forKey: Configuraciones.keyTalla) as! String
+        let costo = productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String
+        celda.textLabel?.text = String(indexPath.row + 1) + ") \(nombre) (\(marca)/\(talla))"
+        celda.detailTextLabel?.text = costo
         return celda
     }
     
