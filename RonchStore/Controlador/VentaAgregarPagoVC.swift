@@ -8,10 +8,9 @@
 
 import UIKit
 import FirebaseDatabase
-import MessageUI
 
 
-class VentaAgregarPagoVC: UIViewController, MFMessageComposeViewControllerDelegate  {
+class VentaAgregarPagoVC: UIViewController  {
     var venta: NSDictionary?
     var cliente: NSDictionary?
     var productosVenta: [NSDictionary] = []
@@ -51,10 +50,7 @@ class VentaAgregarPagoVC: UIViewController, MFMessageComposeViewControllerDelega
             return
         }
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = Configuraciones.keyDateFormat
-        let myDate = formatter.string(from: Date())
-        pagosVenta.append([Configuraciones.keyPago : Double(abono.text!)!, Configuraciones.keyFecha : myDate])
+        pagosVenta.append([Configuraciones.keyPago : Double(abono.text!)!, Configuraciones.keyFecha : Configuraciones.fecha()])
     
         let abonadoDouble = Double( abonado.text! )!
         let abonoDouble = Double ( abono.text! )!
@@ -64,14 +60,9 @@ class VentaAgregarPagoVC: UIViewController, MFMessageComposeViewControllerDelega
         ref.child(Configuraciones.keyPagos).setValue(pagosVenta)
         ref.child(Configuraciones.keyAbonado).setValue(abonadoTotal)
         
-        if (MFMessageComposeViewController.canSendText()) {
-            let controller = MFMessageComposeViewController()
-            controller.body = "Pago: \(abono.text!) de \(totalVenta.text!)"
-            controller.recipients = [cliente!.value(forKey: Configuraciones.keyTelefono)] as? [String]
-            controller.messageComposeDelegate = self
-            self.present(controller, animated: true, completion: nil)
-        }
         
+        Mensajes().sendSMS(Telefono: cliente!.value(forKey: Configuraciones.keyTelefono) as! String, Mensaje: "Pago: \(abono.text!) de \(totalVenta.text!)", self)
+
         Configuraciones.alert(Titulo: "Pagos", Mensaje: "Pago agregado", self, popView: true)
      
         
@@ -98,18 +89,7 @@ class VentaAgregarPagoVC: UIViewController, MFMessageComposeViewControllerDelega
         
         
     }
-    
 
-
-    func messageComposeViewController(_ controller: MFMessageComposeViewController!, didFinishWith result: MessageComposeResult) {
-        //... handle sms screen actions
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
-    }
-    
     
 }
 extension VentaAgregarPagoVC:UITableViewDataSource {

@@ -13,6 +13,7 @@ class Configuraciones{
     static let keyVentasFinalizadas = "Ventas Finalizadas"
     static let keyProductos = "Productos"
     static let keyClientes = "Clientes"
+    static let keyPedidos = "Pedidos"
     
     static let keyNombre = "Nombre"
     static let keyTelefono = "Telefono"
@@ -31,6 +32,8 @@ class Configuraciones{
     static let keyPago = "Pago"
     static let keyAbonado = "Abonado"
     static let keyFecha = "Fecha"
+    static let keyStatus = "Status"
+    static let keyAnticipo = "Anticipo"
     
     static func fecha() -> String {
         let formatter = DateFormatter()
@@ -39,13 +42,22 @@ class Configuraciones{
     }
     
     static func alert(Titulo titulo: String, Mensaje mensaje: String, _ view: UIViewController, popView pop: Bool) {
-        let alert = UIAlertController(title: titulo, message: mensaje, preferredStyle: .actionSheet)
+        var alert: UIViewController
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            alert = UIAlertController(title: titulo, message: mensaje, preferredStyle: .alert)
+            
+        } else {
+            alert = UIAlertController(title: titulo, message: mensaje, preferredStyle: .actionSheet)
+        }
+        
         view.present(alert, animated: true)
         
         let when = DispatchTime.now() + 3
         DispatchQueue.main.asyncAfter(deadline: when){
             alert.dismiss(animated: true, completion: nil)
             if pop {
+                
                 view.navigationController?.popViewController(animated: true)
             }
             

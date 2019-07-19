@@ -8,9 +8,8 @@
 
 import UIKit
 import FirebaseDatabase
-import MessageUI
 
-class VentaAgregarVC: UIViewController, MFMessageComposeViewControllerDelegate  {
+class VentaAgregarVC: UIViewController  {
     var clientes: [NSDictionary] = []
     var productos: [NSDictionary] = []
     var productosVenta: [NSDictionary] = []
@@ -39,13 +38,8 @@ class VentaAgregarVC: UIViewController, MFMessageComposeViewControllerDelegate  
             newKey = ref.child(Configuraciones.keyVentasActivas).child(venta?.value(forKey: Configuraciones.keyId) as! String)
         }
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = Configuraciones.keyDateFormat
-        let myDate = formatter.string(from: Date())
-        
-        
         var pagos: [NSDictionary] = []
-        pagos.append([Configuraciones.keyPago : Double(pagado.text!)!, Configuraciones.keyFecha : myDate])
+        pagos.append([Configuraciones.keyPago : Double(pagado.text!)!, Configuraciones.keyFecha : Configuraciones.fecha()])
         
         let cliente = clientes[pickerViewClientes.selectedRow(inComponent: 0)]
         newKey.setValue([
@@ -56,28 +50,10 @@ class VentaAgregarVC: UIViewController, MFMessageComposeViewControllerDelegate  
             Configuraciones.keyAbonado:Double(pagado.text!)!
             ])
         
-        
-        
-        
-        if (MFMessageComposeViewController.canSendText()) {
-            let controller = MFMessageComposeViewController()
-            controller.body = "Pago: \(pagado.text!) de \(total.text!)"
-            controller.recipients = [cliente.value(forKey: Configuraciones.keyTelefono)] as? [String]
-            controller.messageComposeDelegate = self
-            self.present(controller, animated: true, completion: nil)
-        }
+        Mensajes().sendSMS(Telefono:cliente.value(forKey: Configuraciones.keyTelefono) as! String, Mensaje: "Pago: \(pagado.text!) de \(total.text!)", self)
         
         Configuraciones.alert(Titulo: "Venta", Mensaje: "Venta agregada", self, popView: true)
 
-    }
-    
-    func messageComposeViewController(_ controller: MFMessageComposeViewController!, didFinishWith result: MessageComposeResult) {
-        //... handle sms screen actions
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
     }
     
     

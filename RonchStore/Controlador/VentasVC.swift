@@ -14,6 +14,17 @@ class VentasVC: UIViewController {
     var ventasFinalizadas: [NSDictionary] = []
     var pagado = 0.0
     
+    @IBOutlet weak var switchMostrarVentasFinalizadas: UISwitch!
+    @IBAction func mostrarVentas(_ sender: Any) {
+        if switchMostrarVentasFinalizadas.isOn {
+            tableViewVentasFinalizadas.isHidden = false
+            tableViewVentas.isHidden = true
+        }
+        else {
+            tableViewVentasFinalizadas.isHidden = true
+            tableViewVentas.isHidden = false
+        }
+    }
     @IBOutlet weak var tableViewVentasFinalizadas: UITableView!
     @IBOutlet weak var tableViewVentas: UITableView!
     override func viewDidLoad() {
@@ -29,27 +40,23 @@ class VentasVC: UIViewController {
                 if let snap = child as? DataSnapshot {
                     let dic = snap.value as! NSDictionary
                     dic.setValue(snap.key, forKey: Configuraciones.keyId)
-
                     self.ventas.append(dic)
                 }
             }
             self.tableViewVentas.reloadData()
-            
-            
-            let ref2 = Database.database().reference().child(Configuraciones.keyVentasFinalizadas).queryOrdered(byChild: "\(Configuraciones.keyCliente)/\(Configuraciones.keyNombre)")
-            
-            ref2.observe(.value) { (DataSnapshot) in
-                self.ventasFinalizadas.removeAll()
-                for child in DataSnapshot.children {
-                    if let snap = child as? DataSnapshot {
-                        let dic = snap.value as! NSDictionary                                               
-                        self.ventasFinalizadas.append(dic)
-                    }
+        
+        }
+        let ref2 = Database.database().reference().child(Configuraciones.keyVentasFinalizadas).queryOrdered(byChild: "\(Configuraciones.keyCliente)/\(Configuraciones.keyNombre)")
+        
+        ref2.observe(.value) { (DataSnapshot) in
+            self.ventasFinalizadas.removeAll()
+            for child in DataSnapshot.children {
+                if let snap = child as? DataSnapshot {
+                    let dic = snap.value as! NSDictionary
+                    self.ventasFinalizadas.append(dic)
                 }
-                self.tableViewVentasFinalizadas.reloadData()
-                
             }
-            
+            self.tableViewVentasFinalizadas.reloadData()
             
         }
     }
@@ -58,9 +65,11 @@ class VentasVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AgregarPagoVentaSegue",
             let vc = segue.destination as? VentaAgregarPagoVC {
-            
             vc.venta = sender as? NSDictionary
-            
+        }
+        else {
+            switchMostrarVentasFinalizadas.isOn = false
+            mostrarVentas(sender!)
         }
     }
     
@@ -85,7 +94,7 @@ extension VentasVC:UITableViewDataSource {
             let abonado: Double = ventas[indexPath.row].value(forKey: Configuraciones.keyAbonado) as! Double
             
             celda.textLabel?.text = cliente.value(forKey: Configuraciones.keyNombre) as? String
-            celda.detailTextLabel?.text = String( total-abonado )
+            celda.detailTextLabel?.text = "Restan " + String( total-abonado )
             return celda
         }
         if tableView == tableViewVentasFinalizadas {
