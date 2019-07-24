@@ -8,8 +8,9 @@
 
 import UIKit
 import FirebaseDatabase
+import FirebaseStorage
 
-class ClienteAgregarVC: UIViewController {
+class ClienteAgregarVC: UIViewController{
     
     var cliente: NSDictionary? = nil
 
@@ -18,7 +19,21 @@ class ClienteAgregarVC: UIViewController {
     @IBOutlet weak var direccion: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var botonEliminar: UIButton!
+    @IBOutlet weak var foto: UIImageView!
     
+    @IBAction func botonTomarFoto(_ sender: Any) {
+        if telefono.text!.isEmpty {
+            Configuraciones.alert(Titulo: "Error", Mensaje: "No existe telefono", self, popView: false)
+            return
+        }
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self;
+            imagePickerController.sourceType = .camera
+            self.present(imagePickerController, animated: true, completion: nil)
+        }
+        
+    }
     @IBAction func botonGuardar(_ sender: Any) {
         if telefono.text!.isEmpty {
             return
@@ -74,11 +89,54 @@ class ClienteAgregarVC: UIViewController {
             telefono.isEnabled = false
             botonEliminar.isHidden = false
             cliente = nil
+            
+            let storageRef = Storage.storage().reference()
+            let userRef = storageRef.child(Configuraciones.keyClientes).child(telefono.text!)
+            userRef.getData(maxSize: 10*1024*1024) { (data, error) in
+                if error == nil {
+                    let img = UIImage(data: data!)
+                    self.foto.image = img
+                }
+            }
         }
         else {
             limpiar()
             telefono.isEnabled = true
             botonEliminar.isHidden = true
         }
+    }
+}
+
+
+extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        foto.image = image
+        self.dismiss(animated: true, completion: nil)
+        
+        
+        
+        let data = image!.jpegData(compressionQuality: 0.8)! as NSData
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpg"
+        
+        let storageRef = Storage.storage().reference()
+        let userRef = storageRef.child(Configuraciones.keyClientes).child(telefono.text!)
+        
+        let uploadTask = userRef.putData(data as Data, metadata: metadata) { (metadata, error) in
+            guard metadata != nil else {
+                Configuraciones.alert(Titulo: "Imagen", Mensaje: "Error al subir imagen", self, popView: false)
+                return
+            }
+        }
+
+
+        
+    }
+ 
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

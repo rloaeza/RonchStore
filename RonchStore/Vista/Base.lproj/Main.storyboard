@@ -312,6 +312,14 @@
                                     <action selector="botonGuardar:" destination="r1W-dT-uSc" eventType="touchUpInside" id="xfA-d2-Mww"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rtf-VN-ESa">
+                                <rect key="frame" x="154" y="312" width="240" height="30"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Tomar foto"/>
+                                <connections>
+                                    <action selector="botonTomarFoto:" destination="r1W-dT-uSc" eventType="touchUpInside" id="618-C9-mjg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="lWv-kE-lwv"/>
@@ -320,6 +328,7 @@
                         <outlet property="botonEliminar" destination="7rA-vB-Lmh" id="3xs-QD-dL2"/>
                         <outlet property="direccion" destination="r2E-ev-d9f" id="J43-TS-e3E"/>
                         <outlet property="email" destination="haS-rq-ATd" id="M4d-Pl-fpi"/>
+                        <outlet property="foto" destination="ccQ-nI-QBd" id="JE3-Tk-Luw"/>
                         <outlet property="nombre" destination="mBW-2j-C6J" id="9JZ-e3-5gh"/>
                         <outlet property="telefono" destination="Cbf-gB-t9d" id="jm4-qa-JaU"/>
                     </connections>

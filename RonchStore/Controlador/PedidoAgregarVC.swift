@@ -26,6 +26,7 @@ class PedidoAgregarVC: UIViewController {
         } else {
             tel = (pedido?.value(forKey: Configuraciones.keyCliente) as! NSDictionary).value(forKey: Configuraciones.keyTelefono) as! String
         }
+        
         Mensajes().sendSMS(Telefono: tel, Mensaje: "Tu pedido ya esta XD", self)
     }
     @IBAction func botonEliminar(_ sender: Any) {

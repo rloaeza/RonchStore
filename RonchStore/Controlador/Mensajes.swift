@@ -10,41 +10,37 @@ import UIKit
 import MessageUI
 
 
-class Mensajes: UIViewController, MFMessageComposeViewControllerDelegate  {
+class Mensajes: UIViewController, MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate{
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        
+    }
     
+    func smessageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        print ("cerrando composer")
+        self.dismiss(animated: true, completion: nil)
+        // self.dismiss(animated: true, completion: nil)
+    }
+    func canSend() -> Bool {
+        return MFMessageComposeViewController.canSendText()
+    }
     func sendSMS(Telefono tel:String, Mensaje msg:String, _ view: UIViewController) {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            return
-        }
-        if (MFMessageComposeViewController.canSendText()) {
+        //if UIDevice.current.userInterfaceIdiom == .pad { return }
+        
+        if MFMessageComposeViewController.canSendText() {
+            print( "tratando de enviar" )
             let controller = MFMessageComposeViewController()
             controller.body = msg
             controller.recipients = [tel]
-            
             controller.messageComposeDelegate = self
             view.present(controller, animated: true, completion: nil)
         }
-    }
-    
-    
-    
-    
-    
-    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         
-        controller.dismiss(animated: true, completion: nil)
-       // self.dismiss(animated: true, completion: nil)
-    }
-    
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
     }
     
     
-
+    
+    
+    
    
-
 }
