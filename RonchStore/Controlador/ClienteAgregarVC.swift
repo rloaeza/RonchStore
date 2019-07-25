@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseStorage
+import MapKit
 
 class ClienteAgregarVC: UIViewController{
     
@@ -20,13 +21,32 @@ class ClienteAgregarVC: UIViewController{
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var botonEliminar: UIButton!
     @IBOutlet weak var foto: UIImageView!
+    @IBOutlet weak var imagenPersona: UIImageView!
+    @IBOutlet weak var imagenCasa: UIImageView!
+    @IBOutlet weak var mapView: MKMapView!
     
+    var imagen: UIImageView!
+    
+    @IBAction func botonTomarFotoCasa(_ sender: Any) {
+        if telefono.text!.isEmpty {
+            Configuraciones.alert(Titulo: "Error", Mensaje: "No existe telefono", self, popView: false)
+            return
+        }
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imagen = imagenCasa
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self;
+            imagePickerController.sourceType = .camera
+            self.present(imagePickerController, animated: true, completion: nil)
+        }
+    }
     @IBAction func botonTomarFoto(_ sender: Any) {
         if telefono.text!.isEmpty {
             Configuraciones.alert(Titulo: "Error", Mensaje: "No existe telefono", self, popView: false)
             return
         }
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imagen = imagenPersona
             let imagePickerController = UIImagePickerController()
             imagePickerController.delegate = self;
             imagePickerController.sourceType = .camera
@@ -91,13 +111,48 @@ class ClienteAgregarVC: UIViewController{
             cliente = nil
             
             let storageRef = Storage.storage().reference()
+            
             let userRef = storageRef.child(Configuraciones.keyClientes).child(telefono.text!)
             userRef.getData(maxSize: 10*1024*1024) { (data, error) in
                 if error == nil {
                     let img = UIImage(data: data!)
-                    self.foto.image = img
+                    self.imagenPersona.image = img
                 }
             }
+            
+            
+            let homeRef = storageRef.child(Configuraciones.keyCasas).child(telefono.text!)
+            homeRef.getData(maxSize: 10*1024*1024) { (data, error) in
+                if error == nil {
+                    let img = UIImage(data: data!)
+                    self.imagenCasa.image = img
+                }
+            }
+            
+            mapView.delegate = self
+            let initialLocation = CLLocation(latitude: 19.6460889, longitude: -102.0513349)
+            let regionRadius: CLLocationDistance = 1000
+            
+            //
+            
+            
+            let locat = CLLocationCoordinate2D(latitude: 19.5130623, longitude: -101.6106347)
+            let artwork = Mapas(title: nombre.text!,
+                                  locationName: direccion.text!,                            
+                                  coordinate: locat)
+            mapView.addAnnotation(artwork)
+            
+            let coordinateRegion = MKCoordinateRegion(center: locat,
+                                                      latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            mapView.setRegion(coordinateRegion, animated: true)
+            
+            let location = mapView.annotations[0] as! Mapas
+            let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+           // location.mapItem().openInMaps(launchOptions: launchOptions)
+            
+            
+            
+            
         }
         else {
             limpiar()
@@ -123,7 +178,9 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
         metadata.contentType = "image/jpg"
         
         let storageRef = Storage.storage().reference()
-        let userRef = storageRef.child(Configuraciones.keyClientes).child(telefono.text!)
+        let key = self.imagen==self.imagenCasa ? Configuraciones.keyCasas : Configuraciones.keyClientes
+        
+        let userRef = storageRef.child(key).child(telefono.text!)
         
         let uploadTask = userRef.putData(data as Data, metadata: metadata) { (metadata, error) in
             guard metadata != nil else {
@@ -139,4 +196,39 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
+}
+
+
+extension ClienteAgregarVC:MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
+                 calloutAccessoryControlTapped control: UIControl) {
+        
+        let location = view.annotation as! Mapas
+        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+        location.mapItem().openInMaps(launchOptions: launchOptions)
+    }
+    
+    
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        // 2
+        guard let annotation = annotation as? Mapas else { return nil }
+        // 3
+        let identifier = "marker"
+        var view: MKMarkerAnnotationView
+        // 4
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+            as? MKMarkerAnnotationView {
+            dequeuedView.annotation = annotation
+            view = dequeuedView
+        } else {
+            // 5
+            view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            view.canShowCallout = true
+            view.calloutOffset = CGPoint(x: -5, y: 5)
+            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        }
+        return view
+    }
+    
 }
