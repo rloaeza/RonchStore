@@ -377,7 +377,6 @@
                         <outlet property="botonEliminar" destination="7rA-vB-Lmh" id="3xs-QD-dL2"/>
                         <outlet property="direccion" destination="r2E-ev-d9f" id="J43-TS-e3E"/>
                         <outlet property="email" destination="haS-rq-ATd" id="M4d-Pl-fpi"/>
-                        <outlet property="foto" destination="ccQ-nI-QBd" id="JE3-Tk-Luw"/>
                         <outlet property="imagenCasa" destination="snl-Ks-IW2" id="1gm-yk-ELc"/>
                         <outlet property="imagenPersona" destination="ccQ-nI-QBd" id="dly-QG-NG0"/>
                         <outlet property="mapView" destination="Rqd-5b-gxS" id="Rce-TB-vV4"/>

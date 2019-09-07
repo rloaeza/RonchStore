@@ -20,12 +20,11 @@ class ClienteAgregarVC: UIViewController{
     @IBOutlet weak var direccion: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var botonEliminar: UIButton!
-    @IBOutlet weak var foto: UIImageView!
     @IBOutlet weak var imagenPersona: UIImageView!
     @IBOutlet weak var imagenCasa: UIImageView!
     @IBOutlet weak var mapView: MKMapView!
     
-    var imagen: UIImageView!
+    var imagenMostrar: UIImageView!
     
     @IBAction func botonTomarFotoCasa(_ sender: Any) {
         if telefono.text!.isEmpty {
@@ -33,20 +32,21 @@ class ClienteAgregarVC: UIViewController{
             return
         }
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            imagen = imagenCasa
+            imagenMostrar = imagenCasa
             let imagePickerController = UIImagePickerController()
             imagePickerController.delegate = self;
             imagePickerController.sourceType = .camera
             self.present(imagePickerController, animated: true, completion: nil)
         }
     }
+    
     @IBAction func botonTomarFoto(_ sender: Any) {
         if telefono.text!.isEmpty {
             Configuraciones.alert(Titulo: "Error", Mensaje: "No existe telefono", self, popView: false)
             return
         }
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            imagen = imagenPersona
+            imagenMostrar = imagenPersona
             let imagePickerController = UIImagePickerController()
             imagePickerController.delegate = self;
             imagePickerController.sourceType = .camera
@@ -130,7 +130,7 @@ class ClienteAgregarVC: UIViewController{
             }
             
             mapView.delegate = self
-            let initialLocation = CLLocation(latitude: 19.6460889, longitude: -102.0513349)
+            //let initialLocation = CLLocation(latitude: 19.6460889, longitude: -102.0513349)
             let regionRadius: CLLocationDistance = 1000
             
             //
@@ -146,8 +146,8 @@ class ClienteAgregarVC: UIViewController{
                                                       latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
             mapView.setRegion(coordinateRegion, animated: true)
             
-            let location = mapView.annotations[0] as! Mapas
-            let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+            //let location = mapView.annotations[0] as! Mapas
+            //let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
            // location.mapItem().openInMaps(launchOptions: launchOptions)
             
             
@@ -167,7 +167,8 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-        foto.image = image
+        
+        imagenMostrar.image = image
         self.dismiss(animated: true, completion: nil)
         
         
@@ -178,15 +179,18 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
         metadata.contentType = "image/jpg"
         
         let storageRef = Storage.storage().reference()
-        let key = self.imagen==self.imagenCasa ? Configuraciones.keyCasas : Configuraciones.keyClientes
+        let key = self.imagenMostrar==self.imagenCasa ? Configuraciones.keyCasas : Configuraciones.keyClientes
         
         let userRef = storageRef.child(key).child(telefono.text!)
         
-        let uploadTask = userRef.putData(data as Data, metadata: metadata) { (metadata, error) in
+        _ = userRef.putData(data as Data, metadata: metadata) { (metadata, error) in
             guard metadata != nil else {
                 Configuraciones.alert(Titulo: "Imagen", Mensaje: "Error al subir imagen", self, popView: false)
                 return
             }
+            
+            Configuraciones.alert(Titulo: "Imagen", Mensaje: "Carga satisfactoria", self, popView: false)
+
         }
 
 
