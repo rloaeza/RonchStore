@@ -19,7 +19,7 @@ class InicioSesionVC: UIViewController {
     @IBAction func botonAcceder(_ sender: Any) {
         
         print("Usuario: "+usuario.text!)
-        print("  Clave: "+clave.text!)
+        print("Clave: "+clave.text!)
         
         Auth.auth().signIn(withEmail: usuario.text!, password: clave.text!) { (user, error) in
             if error == nil {
