@@ -20,6 +20,8 @@ class Configuraciones{
     static let keyTelefono = "Telefono"
     static let keyDireccion = "Direccion"
     static let keyEmail = "Email"
+    static let keyLat = "Lat"
+    static let keyLong = "Long"
     static let keyMarca = "Marca"
     static let keyTalla = "Talla"
     static let keyCosto = "Costo"

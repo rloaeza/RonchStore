@@ -25,7 +25,27 @@ class ClienteAgregarVC: UIViewController{
     @IBOutlet weak var mapView: MKMapView!
     
     var imagenMostrar: UIImageView!
+    var ubicacion: CLLocationCoordinate2D!
     
+    
+    @IBAction func botonGPS(_ sender: Any) {
+        
+        ubicacion = mapView.convert(CGPoint(x: mapView.bounds.width / 2, y: mapView.bounds.height / 2), toCoordinateFrom: mapView)
+
+        mapView.removeAnnotations(mapView.annotations)
+        let artwork = Mapas(title: nombre.text!,
+                            locationName: direccion.text!,
+                            coordinate: ubicacion)
+        
+        
+        mapView.addAnnotation(artwork)
+        let coordinateRegion = MKCoordinateRegion(center: ubicacion,
+                                                  latitudinalMeters: 100, longitudinalMeters: 100)
+        mapView.setRegion(coordinateRegion, animated: true)
+        
+        
+
+    }
     @IBAction func botonTomarFotoCasa(_ sender: Any) {
         if telefono.text!.isEmpty {
             Configuraciones.alert(Titulo: "Error", Mensaje: "No existe telefono", self, popView: false)
@@ -58,10 +78,12 @@ class ClienteAgregarVC: UIViewController{
         if telefono.text!.isEmpty {
             return
         }
+
+        
         var ref: DatabaseReference!
         ref = Database.database().reference()
         
-        ref.child(Configuraciones.keyClientes).child(telefono.text!).setValue([Configuraciones.keyTelefono: telefono.text!, Configuraciones.keyNombre: nombre.text!, Configuraciones.keyDireccion: direccion.text!,Configuraciones.keyEmail: email.text!])
+        ref.child(Configuraciones.keyClientes).child(telefono.text!).setValue([Configuraciones.keyTelefono: telefono.text!, Configuraciones.keyNombre: nombre.text!, Configuraciones.keyDireccion: direccion.text!,Configuraciones.keyEmail: email.text!, Configuraciones.keyLat: "\(ubicacion.latitude)", Configuraciones.keyLong: "\(ubicacion.longitude)" ] )
         
         Configuraciones.alert(Titulo: "Clientes", Mensaje: "Cliente guardado", self, popView: true)
 
@@ -97,6 +119,9 @@ class ClienteAgregarVC: UIViewController{
         
     }
   
+    
+    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -106,6 +131,20 @@ class ClienteAgregarVC: UIViewController{
             nombre.text = cliente!.value(forKey: Configuraciones.keyNombre) as? String
             direccion.text = cliente!.value(forKey: Configuraciones.keyDireccion) as? String
             email.text = cliente!.value(forKey: Configuraciones.keyEmail) as? String
+            
+            
+            
+            
+            if let lat = cliente!.value(forKey: Configuraciones.keyLat) as? String,
+               let long = cliente!.value(forKey: Configuraciones.keyLong) as? String {
+                
+                let latitude = Double( lat ) ?? 0.0
+                let longitude = Double( long ) ?? 0.0
+                
+                ubicacion = CLLocationCoordinate2DMake(latitude, longitude)
+            }
+            
+    
             telefono.isEnabled = false
             botonEliminar.isHidden = false
             cliente = nil
@@ -130,27 +169,22 @@ class ClienteAgregarVC: UIViewController{
             }
             
             mapView.delegate = self
-            //let initialLocation = CLLocation(latitude: 19.6460889, longitude: -102.0513349)
-            let regionRadius: CLLocationDistance = 1000
-            
-            //
             
             
-            let locat = CLLocationCoordinate2D(latitude: 19.5130623, longitude: -101.6106347)
-            let artwork = Mapas(title: nombre.text!,
-                                  locationName: direccion.text!,                            
-                                  coordinate: locat)
-            mapView.addAnnotation(artwork)
             
-            let coordinateRegion = MKCoordinateRegion(center: locat,
-                                                      latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
-            mapView.setRegion(coordinateRegion, animated: true)
-            
-            //let location = mapView.annotations[0] as! Mapas
-            //let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-           // location.mapItem().openInMaps(launchOptions: launchOptions)
-            
-            
+            if ubicacion != nil {
+                //let regionRadius: CLLocationDistance = 1000
+                mapView.removeAnnotations(mapView.annotations)
+                let artwork = Mapas(title: nombre.text!,
+                                      locationName: direccion.text!,
+                                      coordinate: ubicacion)
+                
+                
+                mapView.addAnnotation(artwork)
+                let coordinateRegion = MKCoordinateRegion(center: ubicacion,
+                                                          latitudinalMeters: 1000, longitudinalMeters: 1000)
+                mapView.setRegion(coordinateRegion, animated: true)
+            }
             
             
         }
@@ -183,13 +217,21 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
         
         let userRef = storageRef.child(key).child(telefono.text!)
         
+        navigationController?.navigationBar.isUserInteractionEnabled = false
+        navigationController?.navigationBar.tintColor = UIColor.lightGray
+        
+        
         _ = userRef.putData(data as Data, metadata: metadata) { (metadata, error) in
             guard metadata != nil else {
                 Configuraciones.alert(Titulo: "Imagen", Mensaje: "Error al subir imagen", self, popView: false)
+                self.navigationController?.navigationBar.isUserInteractionEnabled = true
+                self.navigationController?.navigationBar.tintColor = UIColor.blue
                 return
             }
             
             Configuraciones.alert(Titulo: "Imagen", Mensaje: "Carga satisfactoria", self, popView: false)
+            self.navigationController?.navigationBar.isUserInteractionEnabled = true
+            self.navigationController?.navigationBar.tintColor = UIColor.blue
 
         }
 
