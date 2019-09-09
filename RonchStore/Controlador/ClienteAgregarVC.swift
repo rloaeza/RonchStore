@@ -20,11 +20,13 @@ class ClienteAgregarVC: UIViewController{
     @IBOutlet weak var direccion: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var botonEliminar: UIButton!
-    @IBOutlet weak var imagenPersona: UIImageView!
-    @IBOutlet weak var imagenCasa: UIImageView!
+    //@IBOutlet weak var imagenPersona: UIImageView!
+    //@IBOutlet weak var imagenCasa: UIImageView!
     @IBOutlet weak var mapView: MKMapView!
-    
-    var imagenMostrar: UIImageView!
+    @IBOutlet weak var imagenCasa: UIButton!
+    @IBOutlet weak var imagenPersona: UIButton!
+    @IBOutlet weak var imagenCasa2: UIButton!
+    var imagenMostrar: UIButton!
     var ubicacion: CLLocationCoordinate2D!
     
     
@@ -155,7 +157,7 @@ class ClienteAgregarVC: UIViewController{
             userRef.getData(maxSize: 10*1024*1024) { (data, error) in
                 if error == nil {
                     let img = UIImage(data: data!)
-                    self.imagenPersona.image = img
+                    self.imagenPersona.setImage(img, for: UIControl.State.normal)
                 }
             }
             
@@ -164,7 +166,7 @@ class ClienteAgregarVC: UIViewController{
             homeRef.getData(maxSize: 10*1024*1024) { (data, error) in
                 if error == nil {
                     let img = UIImage(data: data!)
-                    self.imagenCasa.image = img
+                    self.imagenCasa.setImage(img, for: UIControl.State.normal)
                 }
             }
             
@@ -202,7 +204,11 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         
-        imagenMostrar.image = image
+        //imagenMostrar.image = image
+        imagenMostrar.setImage(image, for: UIControl.State.normal)
+        
+        
+        //imagenCasa2.setImage(image, for: UIControl.State.normal)
         self.dismiss(animated: true, completion: nil)
         
         

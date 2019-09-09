@@ -16,6 +16,7 @@ class Configuraciones{
     static let keyPedidos = "Pedidos"
     static let keyCasas = "Casas"
     
+    
     static let keyNombre = "Nombre"
     static let keyTelefono = "Telefono"
     static let keyDireccion = "Direccion"

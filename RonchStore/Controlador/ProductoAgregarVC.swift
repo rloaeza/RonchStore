@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseDatabase
+import FirebaseStorage
 
 class ProductoAgregarVC: UIViewController {
     
@@ -21,6 +22,22 @@ class ProductoAgregarVC: UIViewController {
     @IBOutlet weak var costo: UITextField!
     @IBOutlet weak var costoVenta: UITextField!
     @IBOutlet weak var existencia: UITextField!
+    @IBOutlet weak var imagenProducto: UIButton!
+    
+    
+   
+    @IBAction func botonTomarFotoProducto(_ sender: Any) {
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self;
+            imagePickerController.sourceType = .camera
+            self.present(imagePickerController, animated: true, completion: nil)
+        }
+        
+        
+    }
+    
     
     @IBAction func botonEliminar(_ sender: Any) {
         let alert = UIAlertController(title: "¿Eliminar?", message: "¿Esta seguro de eliminar?", preferredStyle: .alert)
@@ -78,6 +95,17 @@ class ProductoAgregarVC: UIViewController {
             botonEliminar.isHidden = false
             producto = nil
             
+            //cargando imagen
+            let storageRef = Storage.storage().reference()
+            
+            let userRef = storageRef.child(Configuraciones.keyProductos).child(codigo!)
+            userRef.getData(maxSize: 10*1024*1024) { (data, error) in
+                if error == nil {
+                    let img = UIImage(data: data!)
+                    self.imagenProducto.setImage(img, for: UIControl.State.normal)
+                }
+            }
+            
         }
         else {
             codigo = nil
@@ -94,3 +122,60 @@ class ProductoAgregarVC: UIViewController {
     
 
 }
+
+
+
+
+
+
+extension ProductoAgregarVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        
+        //imagenMostrar.image = image
+        imagenProducto.setImage(image, for: UIControl.State.normal)
+        
+        
+        //imagenCasa2.setImage(image, for: UIControl.State.normal)
+        self.dismiss(animated: true, completion: nil)
+        
+        
+        
+        let data = image!.jpegData(compressionQuality: 0.8)! as NSData
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpg"
+        
+        let storageRef = Storage.storage().reference()
+        let key = Configuraciones.keyProductos
+        
+        let userRef = storageRef.child(key).child(codigo!)
+        
+        navigationController?.navigationBar.isUserInteractionEnabled = false
+        navigationController?.navigationBar.tintColor = UIColor.lightGray
+        
+        
+        _ = userRef.putData(data as Data, metadata: metadata) { (metadata, error) in
+            guard metadata != nil else {
+                Configuraciones.alert(Titulo: "Imagen", Mensaje: "Error al subir imagen", self, popView: false)
+                self.navigationController?.navigationBar.isUserInteractionEnabled = true
+                self.navigationController?.navigationBar.tintColor = UIColor.blue
+                return
+            }
+            
+            Configuraciones.alert(Titulo: "Imagen", Mensaje: "Carga satisfactoria", self, popView: false)
+            self.navigationController?.navigationBar.isUserInteractionEnabled = true
+            self.navigationController?.navigationBar.tintColor = UIColor.blue
+            
+        }
+        
+        
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
