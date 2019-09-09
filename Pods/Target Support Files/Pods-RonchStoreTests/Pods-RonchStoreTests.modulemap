@@ -1,0 +1,6 @@
+framework module Pods_RonchStoreTests {
+  umbrella header "Pods-RonchStoreTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
