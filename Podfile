@@ -6,6 +6,11 @@ target 'RonchStore' do
   use_frameworks!
 
   # Pods for RonchStore
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
+  pod 'IQKeyboardManager'
 
   target 'RonchStoreTests' do
     inherit! :search_paths
@@ -18,8 +23,5 @@ target 'RonchStore' do
   end
 
 end
-pod 'Firebase/Analytics'
-pod 'Firebase/Auth'
-pod 'Firebase/Database'
-pod 'Firebase/Storage'
+
 

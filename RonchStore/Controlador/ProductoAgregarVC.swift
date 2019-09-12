@@ -24,6 +24,7 @@ class ProductoAgregarVC: UIViewController {
     @IBOutlet weak var existencia: UITextField!
     @IBOutlet weak var imagenProducto: UIButton!
     
+    @IBOutlet weak var botonMarca: UIButton!
     
    
     @IBAction func botonTomarFotoProducto(_ sender: Any) {
@@ -120,6 +121,14 @@ class ProductoAgregarVC: UIViewController {
         }
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "MarcaAgregarDesdeProducto",
+            let vc = segue.destination as? MarcaVC {
+                vc.delegate = self
+        }
+    }
+    
 
 }
 
@@ -177,5 +186,14 @@ extension ProductoAgregarVC: UIImagePickerControllerDelegate, UINavigationContro
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
+}
+
+
+extension ProductoAgregarVC: MarcaVCDelegate {
+    func marcaSeleccionada(nombre: String) {
+        botonMarca.setTitle(nombre, for: .normal)
+    }
+    
+    
 }
 
