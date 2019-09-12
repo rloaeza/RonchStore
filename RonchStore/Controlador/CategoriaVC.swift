@@ -1,50 +1,53 @@
 //
-//  MarcaVC.swift
+//  CategoriaVC.swift
 //  RonchStore
 //
-//  Created by Roberto Loaeza Valerio on 9/9/19.
+//  Created by Roberto Loaeza Valerio on 9/12/19.
 //  Copyright © 2019 Roberto Loaeza Valerio. All rights reserved.
 //
+
+
 
 import UIKit
 import FirebaseDatabase
 
-protocol MarcaVCDelegate {
-    func marcaSeleccionada(nombre: String)
+protocol CategoriaVCDelegate {
+    func categoriaSeleccionada(nombre: String)
 }
 
 
-class MarcaVC: UIViewController {
+class CategoriaVC: UIViewController {
     
-    var delegate: MarcaVCDelegate?
+    var delegate: CategoriaVCDelegate?
     var valores: [NSDictionary] = []
     
-    @IBOutlet weak var marcaViewController: UITableView!
+    @IBOutlet weak var categoriaViewController: UITableView!
+    
     
     @IBAction func botonAgregar(_ sender: Any) {
-        var marca: String = ""
+        var categoria: String = ""
         var alert: UIAlertController
-        alert = UIAlertController(title: "Marca", message: "Introduce el nomnbre de la marca", preferredStyle: .alert)
+        alert = UIAlertController(title: "Categoría", message: "Introduce el nomnbre de la categoría", preferredStyle: .alert)
         alert.addTextField { (textField) in
-            //textField.text = "Marca"
+            //textField.text = ""
         }
-      
+        
         alert.addAction(UIAlertAction(title: "Guardar", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
             
-            marca = textField!.text!
+            categoria = textField!.text!
             var ref: DatabaseReference!
             ref = Database.database().reference()
             let newKey: DatabaseReference!
             
-            newKey = ref.child(Configuraciones.keyMarca).childByAutoId()
+            newKey = ref.child(Configuraciones.keyCategorias).childByAutoId()
             
             newKey.setValue([
-                Configuraciones.keyNombre:marca
+                Configuraciones.keyNombre:categoria
                 ])
             
             
-            Configuraciones.alert(Titulo: "Marcas", Mensaje: "Marca guardada", self, popView: false)
+            Configuraciones.alert(Titulo: "Categoría", Mensaje: "Categoría guardada", self, popView: false)
             
         }))
         
@@ -52,7 +55,7 @@ class MarcaVC: UIViewController {
         alert.addAction(UIAlertAction(title: "Cancelar", style: .destructive) { (alertAction) in })
         
         present(alert, animated: true)
-
+        
         
     }
     override func viewDidLoad() {
@@ -60,7 +63,7 @@ class MarcaVC: UIViewController {
         
         
         
-        let ref = Database.database().reference().child(Configuraciones.keyMarca).queryOrdered(byChild: Configuraciones.keyNombre)
+        let ref = Database.database().reference().child(Configuraciones.keyCategorias).queryOrdered(byChild: Configuraciones.keyNombre)
         
         ref.observe(.value) { (DataSnapshot) in
             self.valores.removeAll()
@@ -71,25 +74,25 @@ class MarcaVC: UIViewController {
                     self.valores.append(dic!)
                 }
             }
-            self.marcaViewController.reloadData()
+            self.categoriaViewController.reloadData()
         }
-
+        
     }
     
-
+    
 }
 
 
-extension MarcaVC:UITableViewDataSource {
+extension CategoriaVC:UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return valores.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "MarcaCelda", for: indexPath)
+        let celda = tableView.dequeueReusableCell(withIdentifier: "CategoriaCelda", for: indexPath)
         let nombre = valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String
         celda.textLabel?.text = "\(nombre!)"
-        celda.detailTextLabel?.text = valores[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String
+        celda.detailTextLabel?.text = valores[indexPath.row].value(forKey: Configuraciones.keyCategorias) as? String
         return celda
     }
     
@@ -97,19 +100,17 @@ extension MarcaVC:UITableViewDataSource {
         if (editingStyle == .delete) {
             var ref: DatabaseReference!
             ref = Database.database().reference()
-            ref.child(Configuraciones.keyMarca).child(valores[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+            ref.child(Configuraciones.keyCategorias).child(valores[indexPath.row].value(forKey: "key") as! String).setValue(nil)
         }
     }
 }
 
 
-extension MarcaVC:UITableViewDelegate {
+extension CategoriaVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //self.performSegue(withIdentifier: "ProductoAgregarSegue", sender: valores[indexPath.row])
-        delegate?.marcaSeleccionada(nombre: valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as! String)
+        delegate?.categoriaSeleccionada(nombre: valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as! String)
         self.navigationController?.popViewController(animated: true)
-
         
-        //tableView.deselectRow(at: indexPath, animated: true)
     }
 }

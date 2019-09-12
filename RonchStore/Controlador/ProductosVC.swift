@@ -59,6 +59,15 @@ extension ProductosVC:UITableViewDataSource {
         celda.detailTextLabel?.text = valores[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String
         return celda
     }
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            var ref: DatabaseReference!
+            ref = Database.database().reference()
+            ref.child(Configuraciones.keyProductos).child(valores[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+        }
+    }
 }
 
 

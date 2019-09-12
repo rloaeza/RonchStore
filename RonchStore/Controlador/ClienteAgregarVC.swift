@@ -14,6 +14,10 @@ import MapKit
 class ClienteAgregarVC: UIViewController{
     
     var cliente: NSDictionary? = nil
+    var codigo: String? = nil
+    var ref: DatabaseReference!
+    
+    
 
     @IBOutlet weak var telefono: UITextField!
     @IBOutlet weak var nombre: UITextField!
@@ -28,6 +32,23 @@ class ClienteAgregarVC: UIViewController{
     @IBOutlet weak var imagenCasa2: UIButton!
     var imagenMostrar: UIButton!
     var ubicacion: CLLocationCoordinate2D!
+    
+    
+    @IBAction func guardarTelefono(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyTelefono, Value: telefono.text!)
+    }
+    
+    @IBAction func guardarNombre(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyNombre, Value: nombre.text!)
+    }
+    @IBAction func guardarEmail(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyEmail, Value: email.text!)
+    }
+    
+    @IBAction func guardarDireccion(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyDireccion, Value: direccion.text!)
+    }
+    
     
     
     @IBAction func botonGPS(_ sender: Any) {
@@ -45,12 +66,16 @@ class ClienteAgregarVC: UIViewController{
                                                   latitudinalMeters: 100, longitudinalMeters: 100)
         mapView.setRegion(coordinateRegion, animated: true)
         
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyLat, Value: "\(ubicacion.latitude)")
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyLong, Value: "\(ubicacion.longitude)")
+        
+        
         
 
     }
     @IBAction func botonTomarFotoCasa(_ sender: Any) {
-        if telefono.text!.isEmpty {
-            Configuraciones.alert(Titulo: "Error", Mensaje: "No existe telefono", self, popView: false)
+        if codigo == nil {
+            Configuraciones.alert(Titulo: "Error", Mensaje: "Debe llenar al menos un campo", self, popView: false)
             return
         }
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
@@ -63,8 +88,8 @@ class ClienteAgregarVC: UIViewController{
     }
     
     @IBAction func botonTomarFoto(_ sender: Any) {
-        if telefono.text!.isEmpty {
-            Configuraciones.alert(Titulo: "Error", Mensaje: "No existe telefono", self, popView: false)
+        if codigo == nil {
+            Configuraciones.alert(Titulo: "Error", Mensaje: "Debe llenar al menos un campo", self, popView: false)
             return
         }
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
@@ -126,9 +151,11 @@ class ClienteAgregarVC: UIViewController{
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref = Database.database().reference()
 
         // Do any additional setup after loading the view.
         if cliente != nil {
+            codigo =  cliente!.value(forKey: Configuraciones.keyId) as? String
             telefono.text = cliente!.value(forKey: Configuraciones.keyTelefono) as? String
             nombre.text = cliente!.value(forKey: Configuraciones.keyNombre) as? String
             direccion.text = cliente!.value(forKey: Configuraciones.keyDireccion) as? String
@@ -147,13 +174,13 @@ class ClienteAgregarVC: UIViewController{
             }
             
     
-            telefono.isEnabled = false
+            //telefono.isEnabled = false
             botonEliminar.isHidden = false
             cliente = nil
             
             let storageRef = Storage.storage().reference()
             
-            let userRef = storageRef.child(Configuraciones.keyClientes).child(telefono.text!)
+            let userRef = storageRef.child(Configuraciones.keyClientes).child(codigo!)
             userRef.getData(maxSize: 10*1024*1024) { (data, error) in
                 if error == nil {
                     let img = UIImage(data: data!)
@@ -162,7 +189,7 @@ class ClienteAgregarVC: UIViewController{
             }
             
             
-            let homeRef = storageRef.child(Configuraciones.keyCasas).child(telefono.text!)
+            let homeRef = storageRef.child(Configuraciones.keyCasas).child(codigo!)
             homeRef.getData(maxSize: 10*1024*1024) { (data, error) in
                 if error == nil {
                     let img = UIImage(data: data!)

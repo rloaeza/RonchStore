@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseDatabase
+
 
 class Configuraciones{
     static let keyVentasActivas = "Ventas Activas"
@@ -15,6 +17,7 @@ class Configuraciones{
     static let keyClientes = "Clientes"
     static let keyPedidos = "Pedidos"
     static let keyCasas = "Casas"
+    static let keyCategorias = "Categorias"
     
     
     static let keyNombre = "Nombre"
@@ -38,6 +41,11 @@ class Configuraciones{
     static let keyFecha = "Fecha"
     static let keyStatus = "Status"
     static let keyAnticipo = "Anticipo"
+    
+    
+    static let txtSeleccionarMarca = "Seleccionar marca"
+    static let txtSeleccionarTalla = "Seleccionar talla"
+    static let txtSeleccionarCategoria = "Seleccionar categoria"
     
     static func fecha() -> String {
         let formatter = DateFormatter()
@@ -67,5 +75,20 @@ class Configuraciones{
             
         }
     }
+    
+    static func guardarValor(Reference ref: DatabaseReference!, KeyNode keyNode: String, Child child: String?, KeyValue keyValue: String, Value val: Any) -> String {
+        var newData: DatabaseReference!
+        
+        if child == nil {
+            newData = ref.child(keyNode).childByAutoId()
+        }
+        else {
+            newData = ref.child(keyNode).child(child!)
+        }
+        newData.child(keyValue).setValue(val)
+        
+        return newData.key!
+    }
+    
     
 }

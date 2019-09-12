@@ -1,5 +1,5 @@
 //
-//  MarcaVC.swift
+//  TallaVC.swift
 //  RonchStore
 //
 //  Created by Roberto Loaeza Valerio on 9/9/19.
@@ -9,42 +9,42 @@
 import UIKit
 import FirebaseDatabase
 
-protocol MarcaVCDelegate {
-    func marcaSeleccionada(nombre: String)
+protocol TallaVCDelegate {
+    func tallaSeleccionada(nombre: String)
 }
 
 
-class MarcaVC: UIViewController {
+class TallaVC: UIViewController {
     
-    var delegate: MarcaVCDelegate?
+    var delegate: TallaVCDelegate?
     var valores: [NSDictionary] = []
     
-    @IBOutlet weak var marcaViewController: UITableView!
+    @IBOutlet weak var tallaViewController: UITableView!
     
     @IBAction func botonAgregar(_ sender: Any) {
-        var marca: String = ""
+        var talla: String = ""
         var alert: UIAlertController
-        alert = UIAlertController(title: "Marca", message: "Introduce el nomnbre de la marca", preferredStyle: .alert)
+        alert = UIAlertController(title: "Talla", message: "Introduce el nomnbre de la talla", preferredStyle: .alert)
         alert.addTextField { (textField) in
-            //textField.text = "Marca"
+            //textField.text = ""
         }
-      
+        
         alert.addAction(UIAlertAction(title: "Guardar", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
             
-            marca = textField!.text!
+            talla = textField!.text!
             var ref: DatabaseReference!
             ref = Database.database().reference()
             let newKey: DatabaseReference!
             
-            newKey = ref.child(Configuraciones.keyMarca).childByAutoId()
+            newKey = ref.child(Configuraciones.keyTalla).childByAutoId()
             
             newKey.setValue([
-                Configuraciones.keyNombre:marca
+                Configuraciones.keyNombre:talla
                 ])
             
             
-            Configuraciones.alert(Titulo: "Marcas", Mensaje: "Marca guardada", self, popView: false)
+            Configuraciones.alert(Titulo: "Talla", Mensaje: "Talla guardada", self, popView: false)
             
         }))
         
@@ -52,7 +52,7 @@ class MarcaVC: UIViewController {
         alert.addAction(UIAlertAction(title: "Cancelar", style: .destructive) { (alertAction) in })
         
         present(alert, animated: true)
-
+        
         
     }
     override func viewDidLoad() {
@@ -60,7 +60,7 @@ class MarcaVC: UIViewController {
         
         
         
-        let ref = Database.database().reference().child(Configuraciones.keyMarca).queryOrdered(byChild: Configuraciones.keyNombre)
+        let ref = Database.database().reference().child(Configuraciones.keyTalla).queryOrdered(byChild: Configuraciones.keyNombre)
         
         ref.observe(.value) { (DataSnapshot) in
             self.valores.removeAll()
@@ -71,25 +71,25 @@ class MarcaVC: UIViewController {
                     self.valores.append(dic!)
                 }
             }
-            self.marcaViewController.reloadData()
+            self.tallaViewController.reloadData()
         }
-
+        
     }
     
-
+    
 }
 
 
-extension MarcaVC:UITableViewDataSource {
+extension TallaVC:UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return valores.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "MarcaCelda", for: indexPath)
+        let celda = tableView.dequeueReusableCell(withIdentifier: "TallaCelda", for: indexPath)
         let nombre = valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String
         celda.textLabel?.text = "\(nombre!)"
-        celda.detailTextLabel?.text = valores[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String
+        celda.detailTextLabel?.text = valores[indexPath.row].value(forKey: Configuraciones.keyTalla) as? String
         return celda
     }
     
@@ -97,19 +97,17 @@ extension MarcaVC:UITableViewDataSource {
         if (editingStyle == .delete) {
             var ref: DatabaseReference!
             ref = Database.database().reference()
-            ref.child(Configuraciones.keyMarca).child(valores[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+            ref.child(Configuraciones.keyTalla).child(valores[indexPath.row].value(forKey: "key") as! String).setValue(nil)
         }
     }
 }
 
 
-extension MarcaVC:UITableViewDelegate {
+extension TallaVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //self.performSegue(withIdentifier: "ProductoAgregarSegue", sender: valores[indexPath.row])
-        delegate?.marcaSeleccionada(nombre: valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as! String)
+        delegate?.tallaSeleccionada(nombre: valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as! String)
         self.navigationController?.popViewController(animated: true)
-
         
-        //tableView.deselectRow(at: indexPath, animated: true)
     }
 }

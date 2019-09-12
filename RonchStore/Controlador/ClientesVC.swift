@@ -24,6 +24,7 @@ class ClientesVC: UIViewController {
             for child in DataSnapshot.children {
                 if let snap = child as? DataSnapshot {
                     let dic = snap.value as? NSDictionary
+                    dic?.setValue(snap.key, forKey: Configuraciones.keyId)
                     self.valores.append(dic!)
                 }
             }
@@ -53,6 +54,14 @@ extension ClientesVC:UITableViewDataSource {
         return celda
     }
     
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            var ref: DatabaseReference!
+            ref = Database.database().reference()
+            ref.child(Configuraciones.keyClientes).child(valores[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+        }
+    }
     
 }
 

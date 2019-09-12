@@ -14,19 +14,19 @@ class ProductoAgregarVC: UIViewController {
     
     var producto: NSDictionary? = nil
     var codigo: String? = nil
+    var ref: DatabaseReference!
     
     @IBOutlet weak var botonEliminar: UIButton!
     @IBOutlet weak var nombre: UITextField!
-    @IBOutlet weak var marca: UITextField!
-    @IBOutlet weak var talla: UITextField!
     @IBOutlet weak var costo: UITextField!
     @IBOutlet weak var costoVenta: UITextField!
     @IBOutlet weak var existencia: UITextField!
     @IBOutlet weak var imagenProducto: UIButton!
     
     @IBOutlet weak var botonMarca: UIButton!
+    @IBOutlet weak var botonTalla: UIButton!
+    @IBOutlet weak var botonCategoria: UIButton!
     
-   
     @IBAction func botonTomarFotoProducto(_ sender: Any) {
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
@@ -56,6 +56,21 @@ class ProductoAgregarVC: UIViewController {
         
         self.present(alert, animated: true)
     }
+    
+    @IBAction func guardarNombre(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyNombre, Value: nombre.text!)
+    }
+    
+    @IBAction func guardarCosto(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCosto, Value: costo.text!)
+    }
+    
+    @IBAction func guardarCostoVenta(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCostoVenta, Value: costoVenta.text!)
+    }
+    @IBAction func guardarExistencia(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyExistencia, Value: existencia.text!)
+    }
     @IBAction func botonGuardar(_ sender: Any) {
         var ref: DatabaseReference!
         ref = Database.database().reference()
@@ -68,8 +83,8 @@ class ProductoAgregarVC: UIViewController {
         }
         newKey.setValue([
             Configuraciones.keyNombre:nombre.text,
-            Configuraciones.keyMarca:marca.text,
-            Configuraciones.keyTalla:talla.text,
+            Configuraciones.keyMarca:botonMarca.titleLabel?.text,
+            Configuraciones.keyTalla:botonTalla.titleLabel?.text,
             Configuraciones.keyCosto:costo.text,
             Configuraciones.keyCostoVenta:costoVenta.text,
             Configuraciones.keyExistencia:existencia.text
@@ -81,15 +96,19 @@ class ProductoAgregarVC: UIViewController {
         
         
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref = Database.database().reference()
         
         // Do any additional setup after loading the view.
         if producto != nil {
             codigo =  producto!.value(forKey: Configuraciones.keyId) as? String
             nombre.text = producto!.value(forKey: Configuraciones.keyNombre) as? String
-            marca.text = producto!.value(forKey: Configuraciones.keyMarca) as? String
-            talla.text = producto!.value(forKey: Configuraciones.keyTalla) as? String
+            
+            botonMarca.setTitle(producto!.value(forKey: Configuraciones.keyMarca) as? String, for: .normal)
+            botonTalla.setTitle(producto!.value(forKey: Configuraciones.keyTalla) as? String, for: .normal)
+            
             costo.text = producto!.value(forKey: Configuraciones.keyCosto) as? String
             costoVenta.text = producto!.value(forKey: Configuraciones.keyCostoVenta) as? String
             existencia.text = producto!.value(forKey: Configuraciones.keyExistencia) as? String
@@ -111,8 +130,8 @@ class ProductoAgregarVC: UIViewController {
         else {
             codigo = nil
             nombre.text = ""
-            marca.text = ""
-            talla.text = ""
+            botonMarca.titleLabel?.text = Configuraciones.txtSeleccionarMarca
+            botonTalla.titleLabel?.text = Configuraciones.txtSeleccionarTalla
             costo.text = ""
             costoVenta.text = ""
             existencia.text = ""
@@ -123,9 +142,19 @@ class ProductoAgregarVC: UIViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "MarcaAgregarDesdeProducto",
+        if segue.identifier == "MarcaDesdeProducto",
             let vc = segue.destination as? MarcaVC {
                 vc.delegate = self
+        }
+        
+        if segue.identifier == "TallaDesdeProducto",
+            let vc = segue.destination as? TallaVC {
+                vc.delegate = self
+        }
+        
+        if segue.identifier == "CategoriaDesdeProducto",
+            let vc = segue.destination as? CategoriaVC {
+            vc.delegate = self
         }
     }
     
@@ -192,6 +221,29 @@ extension ProductoAgregarVC: UIImagePickerControllerDelegate, UINavigationContro
 extension ProductoAgregarVC: MarcaVCDelegate {
     func marcaSeleccionada(nombre: String) {
         botonMarca.setTitle(nombre, for: .normal)
+        
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyMarca, Value: nombre)
+        
+    }
+    
+    
+}
+
+extension ProductoAgregarVC: TallaVCDelegate {
+    func tallaSeleccionada(nombre: String) {
+        botonTalla.setTitle(nombre, for: .normal)
+        
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyTalla, Value: nombre)
+    }
+    
+    
+}
+
+extension ProductoAgregarVC: CategoriaVCDelegate {
+    func categoriaSeleccionada(nombre: String) {
+        botonCategoria.setTitle(nombre, for: .normal)
+        
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCategorias, Value: nombre)
     }
     
     
