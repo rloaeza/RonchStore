@@ -64,6 +64,16 @@ class VentaAgregarVC: UIViewController  {
     @IBAction func actualizarSemanas(_ sender: Any) {
         calcularCostos()
     }
+    
+    
+    
+    @IBAction func botonFinalizarVenta(_ sender: Any) {
+        
+    }
+    
+    
+    
+    
     @IBAction func botonGuardar(_ sender: Any) {
         if productosVenta.count == 0 || pagado.text!.isEmpty {
             return
@@ -138,19 +148,21 @@ class VentaAgregarVC: UIViewController  {
     func calcularCostos() {
         total.text = "$ \(totalVenta)"
         calcularPagoInicial()
-        tfPagoInicialV.text = "\(pagoInicialV)"
+        tfPagoInicialV.text = "\(String(format: "%.1f",pagoInicialV))"
         tfPagoInicialP.text = "\(pagoInicialP)"
         calcularSemanas()
-        tfPagoSemanasV.text = "$ \(pagoSemanasV)"
-        tfPagoDemora1.text = "$ \(pagoDemora1)"
-        tfPagoDemora2.text = "$ \(pagoDemora2)"
+        tfPagoSemanasV.text = "$ \(String(format: "%.1f", pagoSemanasV))"
+        tfPagoDemora1.text = "$ \(String(format: "%.1f", pagoDemora1))"
+        tfPagoDemora2.text = "$ \(String(format: "%.1f", pagoDemora2))"
         
         
         let d1 = Configuraciones.txtMensajeDemora.replacingOccurrences(of: "#", with: String(pagoSemanas))
         let d2 = Configuraciones.txtMensajeDemora.replacingOccurrences(of: "#", with: String(pagoSemanas + 3))
         
-        labelDemora1.text = d1
-        labelDemora2.text = d2
+        
+        
+        labelDemora1.text = Configuraciones.fechaMasDias( Semanas: Double(pagoSemanas) )
+        labelDemora2.text = Configuraciones.fechaMasDias( Semanas: Double(pagoSemanas + 3) )
         
         guardarValores()
     }
@@ -196,6 +208,19 @@ class VentaAgregarVC: UIViewController  {
         
         pagoDemora1 = totalVenta * 1.2
         pagoDemora2 = pagoDemora1 * 1.2
+    }
+    
+    func calcularFechas() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = Configuraciones.keyDateFormat
+        
+        let someDateTime = formatter.date(from: "2019/11/09 22:31")
+        let d = someDateTime?.addingTimeInterval(60*60*24*7)
+        formatter.timeStyle = .none
+        formatter.dateStyle = .long
+        let dateTime = formatter.string(from: d!)
+        
+        Configuraciones.alert(Titulo: "Hora", Mensaje: dateTime, self, popView: false)
     }
     
     

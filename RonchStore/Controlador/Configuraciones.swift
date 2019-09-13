@@ -60,6 +60,18 @@ class Configuraciones{
         return formatter.string(from: Date())
     }
     
+    static func fechaMasDias(Semanas semanas: Double) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = keyDateFormat
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        formatter.locale = NSLocale(localeIdentifier: "es_MX") as Locale
+        return formatter.string(from: Date().addingTimeInterval(semanas*60*60*24*7))
+    }
+    
+    
+    
+    
     static func alert(Titulo titulo: String, Mensaje mensaje: String, _ view: UIViewController, popView pop: Bool) {
         var alert: UIViewController
         
