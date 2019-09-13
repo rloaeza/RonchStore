@@ -16,7 +16,6 @@ class ProductoAgregarVC: UIViewController {
     var codigo: String? = nil
     var ref: DatabaseReference!
     
-    @IBOutlet weak var botonEliminar: UIButton!
     @IBOutlet weak var nombre: UITextField!
     @IBOutlet weak var costo: UITextField!
     @IBOutlet weak var costoVenta: UITextField!
@@ -40,22 +39,7 @@ class ProductoAgregarVC: UIViewController {
     }
     
     
-    @IBAction func botonEliminar(_ sender: Any) {
-        let alert = UIAlertController(title: "¿Eliminar?", message: "¿Esta seguro de eliminar?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Si", style: .default, handler: { (UIAlertAction) in
-            var ref: DatabaseReference!
-            ref = Database.database().reference()
-            ref.child(Configuraciones.keyProductos).child(self.codigo!).setValue(nil)
-            self.navigationController?.popViewController(animated: true)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (UIAlertAction) in
-            alert.dismiss(animated: true, completion: nil)
-            
-        }))
-        
-        self.present(alert, animated: true)
-    }
+ 
     
     @IBAction func guardarNombre(_ sender: Any) {
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyNombre, Value: nombre.text!)
@@ -71,31 +55,7 @@ class ProductoAgregarVC: UIViewController {
     @IBAction func guardarExistencia(_ sender: Any) {
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyExistencia, Value: existencia.text!)
     }
-    @IBAction func botonGuardar(_ sender: Any) {
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        let newKey: DatabaseReference!
-        if codigo == nil {
-            newKey = ref.child(Configuraciones.keyProductos).childByAutoId()
-        }
-        else {
-            newKey = ref.child(Configuraciones.keyProductos).child(codigo!)
-        }
-        newKey.setValue([
-            Configuraciones.keyNombre:nombre.text,
-            Configuraciones.keyMarca:botonMarca.titleLabel?.text,
-            Configuraciones.keyTalla:botonTalla.titleLabel?.text,
-            Configuraciones.keyCosto:costo.text,
-            Configuraciones.keyCostoVenta:costoVenta.text,
-            Configuraciones.keyExistencia:existencia.text
-            ])
-        codigo = newKey.key
-        
-        Configuraciones.alert(Titulo: "Productos", Mensaje: "Producto guardado", self, popView: true)
-
-        
-        
-    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,10 +69,10 @@ class ProductoAgregarVC: UIViewController {
             botonMarca.setTitle(producto!.value(forKey: Configuraciones.keyMarca) as? String, for: .normal)
             botonTalla.setTitle(producto!.value(forKey: Configuraciones.keyTalla) as? String, for: .normal)
             
+            botonCategoria.setTitle(producto!.value(forKey: Configuraciones.keyCategorias) as? String, for: .normal)
             costo.text = producto!.value(forKey: Configuraciones.keyCosto) as? String
             costoVenta.text = producto!.value(forKey: Configuraciones.keyCostoVenta) as? String
             existencia.text = producto!.value(forKey: Configuraciones.keyExistencia) as? String
-            botonEliminar.isHidden = false
             producto = nil
             
             //cargando imagen
@@ -136,7 +96,6 @@ class ProductoAgregarVC: UIViewController {
             costoVenta.text = ""
             existencia.text = ""
             nombre.select(nil)
-            botonEliminar.isHidden = true
         }
     }
     

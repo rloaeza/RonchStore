@@ -90,11 +90,15 @@ extension VentasVC:UITableViewDataSource {
         let celda = tableView.dequeueReusableCell(withIdentifier: "VentaCelda", for: indexPath)
         if tableView == tableViewVentas {
             let cliente = ventas[indexPath.row].value(forKey: Configuraciones.keyCliente) as! NSDictionary
-            let total = ventas[indexPath.row].value(forKey: Configuraciones.keyTotal) as! Double
-            let abonado: Double = ventas[indexPath.row].value(forKey: Configuraciones.keyAbonado) as! Double
+            let fecha = ventas[indexPath.row].value(forKey: Configuraciones.keyFecha) as! String
+            
+            let index = fecha.index(fecha.startIndex, offsetBy: 9)
+
+            let fecha2 = fecha[...index]
+            
             
             celda.textLabel?.text = cliente.value(forKey: Configuraciones.keyNombre) as? String
-            celda.detailTextLabel?.text = "Restan " + String( total-abonado )
+            celda.detailTextLabel?.text = String( fecha2 )
             return celda
         }
         if tableView == tableViewVentasFinalizadas {

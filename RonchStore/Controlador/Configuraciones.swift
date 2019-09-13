@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseDatabase
+import FirebaseStorage
 
 
 class Configuraciones{
@@ -41,11 +42,17 @@ class Configuraciones{
     static let keyFecha = "Fecha"
     static let keyStatus = "Status"
     static let keyAnticipo = "Anticipo"
+    static let keyPagoInicialP = "Pago Inicial Porcentaje"
+    static let keyPagoInicialV = "Pago Inicial Valor"
+    static let keyPagoSemanas = "Pago Semanas"
+    
+    
     
     
     static let txtSeleccionarMarca = "Seleccionar marca"
     static let txtSeleccionarTalla = "Seleccionar talla"
     static let txtSeleccionarCategoria = "Seleccionar categoria"
+    static let txtMensajeDemora = "Total despues de  # semanas"
     
     static func fecha() -> String {
         let formatter = DateFormatter()
@@ -88,6 +95,10 @@ class Configuraciones{
         newData.child(keyValue).setValue(val)
         
         return newData.key!
+    }
+    
+    static func eliminarFoto(Reference ref: StorageReference, KeyNode key: String, Child child: String) {
+        ref.child(key).child(child).delete(completion: nil)
     }
     
     

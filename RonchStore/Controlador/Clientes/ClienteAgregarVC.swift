@@ -23,7 +23,6 @@ class ClienteAgregarVC: UIViewController{
     @IBOutlet weak var nombre: UITextField!
     @IBOutlet weak var direccion: UITextField!
     @IBOutlet weak var email: UITextField!
-    @IBOutlet weak var botonEliminar: UIButton!
     //@IBOutlet weak var imagenPersona: UIImageView!
     //@IBOutlet weak var imagenCasa: UIImageView!
     @IBOutlet weak var mapView: MKMapView!
@@ -101,21 +100,7 @@ class ClienteAgregarVC: UIViewController{
         }
         
     }
-    @IBAction func botonGuardar(_ sender: Any) {
-        if telefono.text!.isEmpty {
-            return
-        }
-
-        
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        
-        ref.child(Configuraciones.keyClientes).child(telefono.text!).setValue([Configuraciones.keyTelefono: telefono.text!, Configuraciones.keyNombre: nombre.text!, Configuraciones.keyDireccion: direccion.text!,Configuraciones.keyEmail: email.text!, Configuraciones.keyLat: "\(ubicacion.latitude)", Configuraciones.keyLong: "\(ubicacion.longitude)" ] )
-        
-        Configuraciones.alert(Titulo: "Clientes", Mensaje: "Cliente guardado", self, popView: true)
-
-        
-    }
+    
     
   
     func limpiar() {
@@ -126,26 +111,6 @@ class ClienteAgregarVC: UIViewController{
         telefono.select(nil)
     }
     
-    @IBAction func botonEliminar(_ sender: Any) {
-        let alert = UIAlertController(title: "¿Eliminar?", message: "¿Esta seguro de eliminar?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Si", style: .default, handler: { (UIAlertAction) in
-            var ref: DatabaseReference!
-            ref = Database.database().reference()
-            ref.child(Configuraciones.keyClientes).child(self.telefono.text!).setValue(nil)
-            self.navigationController?.popViewController(animated: true)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (UIAlertAction) in
-            alert.dismiss(animated: true, completion: nil)
-
-        }))
-        
-        self.present(alert, animated: true)
-        
-        
-        
-    }
-  
     
     
   
@@ -174,8 +139,6 @@ class ClienteAgregarVC: UIViewController{
             }
             
     
-            //telefono.isEnabled = false
-            botonEliminar.isHidden = false
             cliente = nil
             
             let storageRef = Storage.storage().reference()
@@ -219,8 +182,6 @@ class ClienteAgregarVC: UIViewController{
         }
         else {
             limpiar()
-            telefono.isEnabled = true
-            botonEliminar.isHidden = true
         }
     }
 }
@@ -248,7 +209,7 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
         let storageRef = Storage.storage().reference()
         let key = self.imagenMostrar==self.imagenCasa ? Configuraciones.keyCasas : Configuraciones.keyClientes
         
-        let userRef = storageRef.child(key).child(telefono.text!)
+        let userRef = storageRef.child(key).child(codigo!)
         
         navigationController?.navigationBar.isUserInteractionEnabled = false
         navigationController?.navigationBar.tintColor = UIColor.lightGray
