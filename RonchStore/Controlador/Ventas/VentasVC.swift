@@ -27,12 +27,10 @@ class VentasVC: UIViewController {
     }
     @IBOutlet weak var tableViewVentasFinalizadas: UITableView!
     @IBOutlet weak var tableViewVentas: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
-        let ref = Database.database().reference().child(Configuraciones.keyVentasActivas).queryOrdered(byChild: "\(Configuraciones.keyCliente)/\(Configuraciones.keyNombre)")
+        let ref = Database.database().reference().child(Configuraciones.keyVentasBorrador).queryOrdered(byChild: "\(Configuraciones.keyCliente)/\(Configuraciones.keyNombre)")
         
         ref.observe(.value) { (DataSnapshot) in
             self.ventas.removeAll()

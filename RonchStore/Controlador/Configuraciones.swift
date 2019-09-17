@@ -12,7 +12,7 @@ import FirebaseStorage
 
 
 class Configuraciones{
-    static let keyVentasActivas = "Ventas Activas"
+    static let keyVentasBorrador = "Ventas Borrador"
     static let keyVentasFinalizadas = "Ventas Finalizadas"
     static let keyProductos = "Productos"
     static let keyClientes = "Clientes"

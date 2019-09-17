@@ -1683,7 +1683,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WsQ-s6-f4Y"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Marcas" id="P81-he-dRv">
+                    <navigationItem key="navigationItem" title="Categorías" id="P81-he-dRv">
                         <barButtonItem key="rightBarButtonItem" title="+" id="2QC-Uw-qR5">
                             <connections>
                                 <action selector="botonAgregar:" destination="poY-UA-nXb" id="kOD-3I-Hve"/>

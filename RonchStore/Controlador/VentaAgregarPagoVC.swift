@@ -33,7 +33,7 @@ class VentaAgregarPagoVC: UIViewController  {
             
             let ref = Database.database().reference().child(Configuraciones.keyVentasFinalizadas).child(venta?.value(forKey: Configuraciones.keyId) as! String)
             ref.setValue(venta)
-            let ref2 = Database.database().reference().child(Configuraciones.keyVentasActivas).child(venta?.value(forKey: Configuraciones.keyId) as! String)
+            let ref2 = Database.database().reference().child(Configuraciones.keyVentasBorrador).child(venta?.value(forKey: Configuraciones.keyId) as! String)
             ref2.setValue(nil)
             
             Configuraciones.alert(Titulo: "Venta", Mensaje: "Venta finalizada", self, popView: true)
@@ -55,7 +55,7 @@ class VentaAgregarPagoVC: UIViewController  {
         let abonadoDouble = Double( abonado.text! )!
         let abonoDouble = Double ( abono.text! )!
         let abonadoTotal = abonadoDouble + abonoDouble
-        let ref = Database.database().reference().child(Configuraciones.keyVentasActivas).child(venta?.value(forKey: Configuraciones.keyId) as! String)
+        let ref = Database.database().reference().child(Configuraciones.keyVentasBorrador).child(venta?.value(forKey: Configuraciones.keyId) as! String)
         
         ref.child(Configuraciones.keyPagos).setValue(pagosVenta)
         ref.child(Configuraciones.keyAbonado).setValue(abonadoTotal)

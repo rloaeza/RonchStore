@@ -71,56 +71,6 @@ class VentaAgregarVC: UIViewController  {
         
     }
     
-    
-    
-    
-    @IBAction func botonGuardar(_ sender: Any) {
-        if productosVenta.count == 0 || pagado.text!.isEmpty {
-            return
-        }
-        
-        var ref: DatabaseReference!
-        ref = Database.database().reference()
-        let newKey: DatabaseReference!
-        if venta == nil {
-            newKey = ref.child(Configuraciones.keyVentasActivas).childByAutoId()
-        }
-        else {
-            newKey = ref.child(Configuraciones.keyVentasActivas).child(venta?.value(forKey: Configuraciones.keyId) as! String)
-        }
-        
-        var pagos: [NSDictionary] = []
-        pagos.append([Configuraciones.keyPago : Double(pagado.text!)!, Configuraciones.keyFecha : Configuraciones.fecha()])
-        
-        let cliente = clientes[pickerViewClientes.selectedRow(inComponent: 0)]
-        newKey.setValue([
-            Configuraciones.keyCliente:cliente,
-            Configuraciones.keyProductos:productosVenta,
-            Configuraciones.keyTotal:totalVenta,
-            Configuraciones.keyPagos:pagos,
-            Configuraciones.keyAbonado:Double(pagado.text!)!
-            ])
-        
-        Mensajes().sendSMS(Telefono:cliente.value(forKey: Configuraciones.keyTelefono) as! String, Mensaje: "Pago: \(pagado.text!) de \(total.text!)", self)
-        
-        Configuraciones.alert(Titulo: "Venta", Mensaje: "Venta agregada", self, popView: true)
-
-    }
-    
-    
-    @IBAction func botonQuitarProducto(_ sender: Any) {
-        let index = tableViewProductos.indexPathForSelectedRow?.row
-        if index == nil {
-            return
-        }
-        let dic = productosVenta[index!]
-        totalVenta -= Double(dic.value(forKey: Configuraciones.keyCostoVenta) as! String)!
-        total.text = String( totalVenta )
-        productosVenta.remove(at: index!)
-        tableViewProductos.reloadData()
-        
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -168,12 +118,12 @@ class VentaAgregarVC: UIViewController  {
     }
     
     func guardarValores() {
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyProductos, Value: productosVenta)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyPagoSemanas, Value: pagoSemanas)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyPagoInicialP, Value: pagoInicialP)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyPagoInicialV, Value: pagoInicialV)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyTotal, Value: totalVenta)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyFecha, Value: Configuraciones.fecha())
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyProductos, Value: productosVenta)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoSemanas, Value: pagoSemanas)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoInicialP, Value: pagoInicialP)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoInicialV, Value: pagoInicialV)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyTotal, Value: totalVenta)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFecha, Value: Configuraciones.fecha())
         
         
     }
@@ -260,7 +210,7 @@ extension VentaAgregarVC: ClienteVCDelegate {
     func clienteSeleccionado(cliente: NSDictionary) {
         botonCliente.setTitle(cliente.value(forKey: Configuraciones.keyNombre) as! String , for: .normal)
         self.cliente = cliente
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyCliente, Value: cliente)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyCliente, Value: cliente)
     }
 }
 
@@ -272,8 +222,5 @@ extension VentaAgregarVC: ProductosListaVCDelegate {
         self.tableViewProductos.reloadData()
         totalVenta += Double(producto.value(forKey: Configuraciones.keyCostoVenta) as! String)!
         calcularCostos()
-
-        
-        //codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyCliente, Value: cliente)
     }
 }
