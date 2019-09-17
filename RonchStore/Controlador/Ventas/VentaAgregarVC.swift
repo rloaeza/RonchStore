@@ -13,6 +13,7 @@ class VentaAgregarVC: UIViewController  {
     var clientes: [NSDictionary] = []
     var productos: [NSDictionary] = []
     var productosVenta: [NSDictionary] = []
+    var ventaFinalizada: Bool = false
     
     var pagoInicialP: Double = 30.0
     var pagoInicialV: Double = 0.0
@@ -45,24 +46,34 @@ class VentaAgregarVC: UIViewController  {
     @IBOutlet weak var pickerViewProductos: UIPickerView!
     
     @IBOutlet weak var botonCliente: UIButton!
+    @IBOutlet weak var botonProductos: UIButton!
     
     
+    @IBOutlet weak var botonFinalizar: UIButton!
+    @IBOutlet weak var botonEditar: UIButton!
+    @IBOutlet weak var botonVerPagos: UIButton!
     
     
+    @IBAction func finalizarVenta(_ sender: Any) {
+        finalizarStatusVenta(Finalizar: true)
+    }
+    @IBAction func editarVenta(_ sender: Any) {
+        finalizarStatusVenta(Finalizar: false)
+    }
     
     
     @IBAction func actualizarPagoInicial(_ sender: Any) {
         tfPagoInicialV.text = ""
-        calcularCostos()
+        calcularCostos(Guardar: true)
     }
     
     @IBAction func actualizarPagoInicialV(_ sender: Any) {
         tfPagoInicialP.text = ""
-        calcularCostos()
+        calcularCostos(Guardar: true)
     }
     
     @IBAction func actualizarSemanas(_ sender: Any) {
-        calcularCostos()
+        calcularCostos(Guardar: true)
     }
     
     
@@ -77,9 +88,34 @@ class VentaAgregarVC: UIViewController  {
         // Do any additional setup after loading the view.
         
         ref = Database.database().reference()
-
         totalVenta = 0
         productosVenta.removeAll()
+        
+        if venta != nil {
+            codigo = venta?.value(forKey: Configuraciones.keyId) as! String
+            cliente = venta?.value(forKey: Configuraciones.keyCliente) as? NSDictionary
+            botonCliente.setTitle(cliente?.value(forKey: Configuraciones.keyNombre) as? String, for: .normal)
+            productosVenta = venta?.value(forKey: Configuraciones.keyProductos) as! [NSDictionary]
+            
+            for p in productosVenta {
+                totalVenta += Double(p.value(forKey: Configuraciones.keyCostoVenta) as! String)!
+            }
+            tableViewProductos.reloadData()
+            calcularCostos(Guardar: false)
+            
+            if let vf = venta?.value(forKey: Configuraciones.keyVentaFinalizada) as? Bool {
+                ventaFinalizada = vf
+            }
+            else {
+                ventaFinalizada = false
+            }
+            finalizarStatusVenta(Finalizar: ventaFinalizada)
+            
+            
+            
+        }
+        
+        
     }
     
     
@@ -95,7 +131,36 @@ class VentaAgregarVC: UIViewController  {
         }
     }
     
-    func calcularCostos() {
+    func finalizarStatusVenta(Finalizar finalizar: Bool) {
+        ventaFinalizada = finalizar
+        if finalizar {
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyVentaFinalizada, Value: true)
+        }
+        else {
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyVentaFinalizada, Value: false)
+        }
+        
+        
+        botonFinalizar.isHidden = finalizar
+        botonFinalizar.isEnabled = !finalizar
+        
+        botonEditar.isHidden = !finalizar
+        botonEditar.isEnabled = finalizar
+        botonVerPagos.isHidden = !finalizar
+        botonVerPagos.isEnabled = finalizar
+        
+        
+        
+        
+        botonCliente.isEnabled = !finalizar
+        botonProductos.isEnabled = !finalizar
+        
+        
+        
+    }
+    
+    
+    func calcularCostos(Guardar guardar: Bool) {
         total.text = "$ \(totalVenta)"
         calcularPagoInicial()
         tfPagoInicialV.text = "\(String(format: "%.1f",pagoInicialV))"
@@ -113,8 +178,9 @@ class VentaAgregarVC: UIViewController  {
         
         labelDemora1.text = Configuraciones.fechaMasDias( Semanas: Double(pagoSemanas) )
         labelDemora2.text = Configuraciones.fechaMasDias( Semanas: Double(pagoSemanas + 3) )
-        
-        guardarValores()
+        if guardar {
+            guardarValores()
+        }
     }
     
     func guardarValores() {
@@ -196,10 +262,14 @@ extension VentaAgregarVC:UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            totalVenta -= Double(productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String)!
-            productosVenta.remove(at: indexPath.row)
-            self.tableViewProductos.reloadData()
-            calcularCostos()
+            if self.ventaFinalizada {
+                Configuraciones.alert(Titulo: "Error", Mensaje: "Venta finalizada, no se puede editar", self, popView: false)
+            }else {
+                totalVenta -= Double(productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String)!
+                productosVenta.remove(at: indexPath.row)
+                self.tableViewProductos.reloadData()
+                calcularCostos(Guardar: true)
+            }
         }
     }
     
@@ -221,6 +291,6 @@ extension VentaAgregarVC: ProductosListaVCDelegate {
         productosVenta.append(producto)
         self.tableViewProductos.reloadData()
         totalVenta += Double(producto.value(forKey: Configuraciones.keyCostoVenta) as! String)!
-        calcularCostos()
+        calcularCostos(Guardar: true)
     }
 }

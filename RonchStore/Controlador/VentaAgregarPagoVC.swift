@@ -31,7 +31,7 @@ class VentaAgregarPagoVC: UIViewController  {
         
         if faltante == 0 {
             
-            let ref = Database.database().reference().child(Configuraciones.keyVentasFinalizadas).child(venta?.value(forKey: Configuraciones.keyId) as! String)
+            let ref = Database.database().reference().child(Configuraciones.keyVentaFinalizada).child(venta?.value(forKey: Configuraciones.keyId) as! String)
             ref.setValue(venta)
             let ref2 = Database.database().reference().child(Configuraciones.keyVentasBorrador).child(venta?.value(forKey: Configuraciones.keyId) as! String)
             ref2.setValue(nil)

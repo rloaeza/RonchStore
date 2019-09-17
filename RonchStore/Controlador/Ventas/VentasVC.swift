@@ -11,21 +11,7 @@ import FirebaseDatabase
 
 class VentasVC: UIViewController {
     var ventas: [NSDictionary] = []
-    var ventasFinalizadas: [NSDictionary] = []
     var pagado = 0.0
-    
-    @IBOutlet weak var switchMostrarVentasFinalizadas: UISwitch!
-    @IBAction func mostrarVentas(_ sender: Any) {
-        if switchMostrarVentasFinalizadas.isOn {
-            tableViewVentasFinalizadas.isHidden = false
-            tableViewVentas.isHidden = true
-        }
-        else {
-            tableViewVentasFinalizadas.isHidden = true
-            tableViewVentas.isHidden = false
-        }
-    }
-    @IBOutlet weak var tableViewVentasFinalizadas: UITableView!
     @IBOutlet weak var tableViewVentas: UITableView!
     
     override func viewDidLoad() {
@@ -44,30 +30,15 @@ class VentasVC: UIViewController {
             self.tableViewVentas.reloadData()
         
         }
-        let ref2 = Database.database().reference().child(Configuraciones.keyVentasFinalizadas).queryOrdered(byChild: "\(Configuraciones.keyCliente)/\(Configuraciones.keyNombre)")
         
-        ref2.observe(.value) { (DataSnapshot) in
-            self.ventasFinalizadas.removeAll()
-            for child in DataSnapshot.children {
-                if let snap = child as? DataSnapshot {
-                    let dic = snap.value as! NSDictionary
-                    self.ventasFinalizadas.append(dic)
-                }
-            }
-            self.tableViewVentasFinalizadas.reloadData()
-            
-        }
+      
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AgregarPagoVentaSegue",
-            let vc = segue.destination as? VentaAgregarPagoVC {
+        if segue.identifier == "AgregarVentaSegue",
+            let vc = segue.destination as? VentaAgregarVC {
             vc.venta = sender as? NSDictionary
-        }
-        else {
-            switchMostrarVentasFinalizadas.isOn = false
-            mostrarVentas(sender!)
         }
     }
     
@@ -75,40 +46,24 @@ class VentasVC: UIViewController {
 
 extension VentasVC:UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == tableViewVentas {
-            return ventas.count
-        }
-        if tableView == tableViewVentasFinalizadas {
-            return ventasFinalizadas.count
-        }
-        return 0
+        return ventas.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celda = tableView.dequeueReusableCell(withIdentifier: "VentaCelda", for: indexPath)
-        if tableView == tableViewVentas {
-            let cliente = ventas[indexPath.row].value(forKey: Configuraciones.keyCliente) as! NSDictionary
-            let fecha = ventas[indexPath.row].value(forKey: Configuraciones.keyFecha) as! String
-            
-            let index = fecha.index(fecha.startIndex, offsetBy: 9)
-
-            let fecha2 = fecha[...index]
-            
-            
-            celda.textLabel?.text = cliente.value(forKey: Configuraciones.keyNombre) as? String
-            celda.detailTextLabel?.text = String( fecha2 )
-            return celda
-        }
-        if tableView == tableViewVentasFinalizadas {
-            let cliente = ventasFinalizadas[indexPath.row].value(forKey: Configuraciones.keyCliente) as! NSDictionary
-            let abonado = ventasFinalizadas[indexPath.row].value(forKey: Configuraciones.keyAbonado) as! Double
-            
-            celda.textLabel?.text = cliente.value(forKey: Configuraciones.keyNombre) as? String
-            celda.detailTextLabel?.text = String( abonado )
-            return celda
-        }
         
+        let cliente = ventas[indexPath.row].value(forKey: Configuraciones.keyCliente) as! NSDictionary
+        let fecha = ventas[indexPath.row].value(forKey: Configuraciones.keyFecha) as! String
+        
+        let index = fecha.index(fecha.startIndex, offsetBy: 9)
+
+        let fecha2 = fecha[...index]
+        
+        
+        celda.textLabel?.text = cliente.value(forKey: Configuraciones.keyNombre) as? String
+        celda.detailTextLabel?.text = String( fecha2 )
         return celda
+    
     }
 }
 
@@ -116,7 +71,7 @@ extension VentasVC:UITableViewDataSource {
 
 extension VentasVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "AgregarPagoVentaSegue", sender: ventas[indexPath.row] as NSDictionary)
+        self.performSegue(withIdentifier: "AgregarVentaSegue", sender: ventas[indexPath.row] as NSDictionary)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
