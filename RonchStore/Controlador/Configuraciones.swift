@@ -12,6 +12,7 @@ import FirebaseStorage
 
 
 class Configuraciones{
+    static let Titulo = " .::RonchStore::."
     static let keyVentasBorrador = "Ventas Borrador"
     static let keyVentaFinalizada = "Venta Finalizada"
     static let keyProductos = "Productos"
@@ -35,7 +36,8 @@ class Configuraciones{
     static let keyId = "key"
     static let keyCliente = "Cliente"
     static let keyTotal = "Total"
-    static let keyDateFormat = "yyyy-MM-dd HH:mm:ss"
+    static let keyDateFormat = "yyyy-MM-dd HH:mm"
+    static let keyDateFormatExte = "yyyy-MM-dd HH:mm:ss"
     static let keyPagos = "Pagos"
     static let keyPago = "Pago"
     static let keyAbonado = "Abonado"

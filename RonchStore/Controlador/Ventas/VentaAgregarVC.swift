@@ -9,7 +9,10 @@
 import UIKit
 import FirebaseDatabase
 
-class VentaAgregarVC: UIViewController  {
+import MessageUI
+
+
+class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate {
     var clientes: [NSDictionary] = []
     var productos: [NSDictionary] = []
     var productosVenta: [NSDictionary] = []
@@ -56,7 +59,49 @@ class VentaAgregarVC: UIViewController  {
     
     @IBAction func finalizarVenta(_ sender: Any) {
         finalizarStatusVenta(Finalizar: true)
+        
+        
+        let nProductos = productosVenta.count
+        
+        
+        var mensaje = "\(Configuraciones.Titulo) \n"
+        
+        for p in productosVenta {
+           mensaje += "  1 x \(p.value(forKey: Configuraciones.keyNombre)!) [$\(p.value(forKey: Configuraciones.keyCostoVenta)!)]\n"
+        }
+        
+        mensaje += "Total: $\(totalVenta)\n"
+        mensaje += "Anticipo: $\(tfPagoInicialV.text!)\n\n"
+        mensaje += "Despues de \(labelDemora1.text!): \(tfPagoDemora1.text!)\n"
+        mensaje += "Despues de \(labelDemora2.text!): \(tfPagoDemora2.text!)\n"
+        
+        
+        let messageVC = MFMessageComposeViewController()
+        messageVC.body = mensaje
+        messageVC.recipients = [cliente?.value(forKey: Configuraciones.keyTelefono) as! String]
+        messageVC.messageComposeDelegate = self
+        self.present(messageVC, animated: true, completion: nil)
+        
+        
     }
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        switch (result) {
+        case .cancelled:
+            Configuraciones.alert(Titulo: "Mensaje", Mensaje: "Mensaje cancelado", self, popView: false)
+            dismiss(animated: true, completion: nil)
+        case .failed:
+            Configuraciones.alert(Titulo: "Mensaje", Mensaje: "Mensaje error al enviar", self, popView: false)
+            dismiss(animated: true, completion: nil)
+        case .sent:
+            Configuraciones.alert(Titulo: "Mensaje", Mensaje: "Mensaje enviado satisfactoriamente", self, popView: false)
+            dismiss(animated: true, completion: nil)
+        default:
+            break
+        }
+    }
+    
+    
     @IBAction func editarVenta(_ sender: Any) {
         finalizarStatusVenta(Finalizar: false)
     }

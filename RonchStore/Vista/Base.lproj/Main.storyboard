@@ -446,11 +446,11 @@
             </objects>
             <point key="canvasLocation" x="3062" y="1148"/>
         </scene>
-        <!--Borradores-->
+        <!--Ventas-->
         <scene sceneID="vpM-2C-CDp">
             <objects>
                 <navigationController id="ca4-hg-1fw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Borradores" id="4n8-fv-HSD"/>
+                    <tabBarItem key="tabBarItem" title="Ventas" id="4n8-fv-HSD"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DxI-e0-7kn">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -515,7 +515,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4JP-qF-VTL"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Ventas (Borradores)" id="7rj-nm-nKP">
+                    <navigationItem key="navigationItem" title="Ventas" id="7rj-nm-nKP">
                         <barButtonItem key="rightBarButtonItem" title="+" id="esK-Iw-sn4">
                             <connections>
                                 <segue destination="XgM-EM-jQM" kind="show" identifier="AgregarVentaSegue" id="iSq-dE-u9N"/>
@@ -530,10 +530,10 @@
             </objects>
             <point key="canvasLocation" x="3421.739130434783" y="-1234.1517857142856"/>
         </scene>
-        <!--Agregar Venta (Borrador)-->
+        <!--Agregar Venta-->
         <scene sceneID="aOC-mx-SnF">
             <objects>
-                <viewController title="Agregar Venta (Borrador)" id="XgM-EM-jQM" customClass="VentaAgregarVC" customModule="RonchStore" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Agregar Venta" id="XgM-EM-jQM" customClass="VentaAgregarVC" customModule="RonchStore" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MgR-Uw-iuW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1050"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
