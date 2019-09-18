@@ -40,6 +40,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     @IBOutlet weak var tfPagoDemora2: UITextField!
     @IBOutlet weak var labelDemora1: UILabel!
     @IBOutlet weak var labelDemora2: UILabel!
+    @IBOutlet weak var labelDescripcionFinal: UILabel!
     
     @IBOutlet weak var total: UITextField!
     @IBOutlet weak var tableViewProductos: UITableView!
@@ -60,27 +61,31 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     @IBAction func finalizarVenta(_ sender: Any) {
         finalizarStatusVenta(Finalizar: true)
         
-        
-        let nProductos = productosVenta.count
-        
-        
-        var mensaje = "\(Configuraciones.Titulo) \n"
-        
-        for p in productosVenta {
-           mensaje += "  1 x \(p.value(forKey: Configuraciones.keyNombre)!) [$\(p.value(forKey: Configuraciones.keyCostoVenta)!)]\n"
+        if MFMessageComposeViewController.canSendText() {
+            let nProductos = productosVenta.count
+            
+            
+            var mensaje = "\(Configuraciones.Titulo) \n"
+            
+            for p in productosVenta {
+                mensaje += "  1 x \(p.value(forKey: Configuraciones.keyNombre)!) [$\(p.value(forKey: Configuraciones.keyCostoVenta)!)]\n"
+            }
+            
+            mensaje += "Total: $\(totalVenta)\n"
+            mensaje += "Anticipo: $\(tfPagoInicialV.text!)\n\n"
+            mensaje += "Despues de \(labelDemora1.text!): \(tfPagoDemora1.text!)\n"
+            mensaje += "Despues de \(labelDemora2.text!): \(tfPagoDemora2.text!)\n"
+            
+            
+            let messageVC = MFMessageComposeViewController()
+            messageVC.body = mensaje
+            messageVC.recipients = [cliente?.value(forKey: Configuraciones.keyTelefono) as! String]
+            messageVC.messageComposeDelegate = self
+            self.present(messageVC, animated: true, completion: nil)
         }
-        
-        mensaje += "Total: $\(totalVenta)\n"
-        mensaje += "Anticipo: $\(tfPagoInicialV.text!)\n\n"
-        mensaje += "Despues de \(labelDemora1.text!): \(tfPagoDemora1.text!)\n"
-        mensaje += "Despues de \(labelDemora2.text!): \(tfPagoDemora2.text!)\n"
+
         
         
-        let messageVC = MFMessageComposeViewController()
-        messageVC.body = mensaje
-        messageVC.recipients = [cliente?.value(forKey: Configuraciones.keyTelefono) as! String]
-        messageVC.messageComposeDelegate = self
-        self.present(messageVC, animated: true, completion: nil)
         
         
     }
@@ -185,6 +190,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyVentaFinalizada, Value: false)
         }
         
+        labelDescripcionFinal.isHidden = !finalizar
         
         botonFinalizar.isHidden = finalizar
         botonFinalizar.isEnabled = !finalizar
