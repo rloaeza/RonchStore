@@ -804,7 +804,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="7q5-Bk-oCQ" kind="show" id="2rT-YG-AeO"/>
+                                                    <segue destination="7q5-Bk-oCQ" kind="show" identifier="PagosDesdeNuevaVenta" id="2rT-YG-AeO"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Al día de hoy se ha pagado $2500 de un total de $7000." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CBR-bT-jkm">
@@ -1951,6 +1951,9 @@
                                 <state key="normal" title="Finalizar">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="botonFinalizar:" destination="7q5-Bk-oCQ" eventType="touchUpInside" id="YkJ-gM-kTk"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1985,6 +1988,12 @@
                     <navigationItem key="navigationItem" title="Pagos realizados" id="4oc-0D-yZW">
                         <barButtonItem key="rightBarButtonItem" title="+" id="cqt-fW-tAg"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="botonCliente" destination="YrD-ZJ-Rzy" id="YrI-lX-7ah"/>
+                        <outlet property="botonProductos" destination="Sz2-ub-Gdb" id="PAN-s5-qdQ"/>
+                        <outlet property="labelDescripcion" destination="cUw-il-rsM" id="0F8-pB-yPA"/>
+                        <outlet property="tableViewController" destination="xCb-6b-vOm" id="fKn-cz-8cQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EwJ-94-Y7N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

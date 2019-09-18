@@ -9,22 +9,37 @@
 import UIKit
 
 class PagosListaVC: UIViewController {
+    
+    var venta: NSDictionary? = nil
+    var codigo: String? = nil
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    @IBOutlet weak var tableViewController: UITableView!
+    @IBOutlet weak var labelDescripcion: UITextView!
+    @IBOutlet weak var botonProductos: UIButton!
+    @IBOutlet weak var botonCliente: UITextField!
+    @IBAction func botonFinalizar(_ sender: Any) {
+        
+        
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if venta != nil {
+            let cliente = venta?.value(forKey: Configuraciones.keyCliente) as! NSDictionary
+            botonCliente.text = cliente.value(forKey: Configuraciones.keyNombre) as! String
+            
+            let productos = venta?.value(forKey: Configuraciones.keyProductos) as! [NSDictionary]
+            botonProductos.setTitle("\(productos.count) Productos", for: .normal)
+            
+            codigo = venta?.value(forKey: Configuraciones.keyId)
+            
+            
+        }
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
+    
+    
 
 }

@@ -179,6 +179,12 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             let vc = segue.destination as? ProductosListaVC {
             vc.delegate = self
         }
+        
+        
+        if segue.identifier == "PagosDesdeNuevaVenta",
+            let vc = segue.destination as? PagosListaVC {
+            vc.venta = venta
+        }
     }
     
     func finalizarStatusVenta(Finalizar finalizar: Bool) {

@@ -47,6 +47,7 @@ class Configuraciones{
     static let keyPagoInicialP = "Pago Inicial Porcentaje"
     static let keyPagoInicialV = "Pago Inicial Valor"
     static let keyPagoSemanas = "Pago Semanas"
+    static let keyFinalizada = "Finalizada"
     
     
     
