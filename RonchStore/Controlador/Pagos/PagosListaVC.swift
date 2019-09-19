@@ -178,6 +178,17 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     }
     
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ProductosVendidosDesdePagosListaSegue",
+            let vc = segue.destination as? ProductosVentaVC {
+            vc.valores = venta?.value(forKey: Configuraciones.keyProductos) as! [NSDictionary]
+        }
+    }
+    
+
+    
+    
 
 }
 

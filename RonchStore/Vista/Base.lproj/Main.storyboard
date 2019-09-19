@@ -1909,6 +1909,9 @@
                                     <constraint firstAttribute="height" constant="30" id="uUC-xA-kyH"/>
                                 </constraints>
                                 <state key="normal" title="# productos"/>
+                                <connections>
+                                    <segue destination="zPj-V4-sQ6" kind="show" identifier="ProductosVendidosDesdePagosListaSegue" id="n3A-o7-JOk"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Cliente" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YrD-ZJ-Rzy">
                                 <rect key="frame" x="143" y="107" width="251" height="30"/>
@@ -2010,6 +2013,62 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EwJ-94-Y7N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5405.7971014492759" y="-399.10714285714283"/>
+        </scene>
+        <!--Productos Venta Lista-->
+        <scene sceneID="TB7-eK-zCL">
+            <objects>
+                <viewController title="Productos Venta Lista" id="zPj-V4-sQ6" customClass="ProductosVentaVC" customModule="RonchStore" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="csv-ZC-5zE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KW8-cx-vwm">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProductoCelda" textLabel="Rg5-Xv-CGi" style="IBUITableViewCellStyleDefault" id="3pS-oX-ECx">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3pS-oX-ECx" id="UyT-Ta-Dgm">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Rg5-Xv-CGi">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="zPj-V4-sQ6" id="cug-Cb-IUj"/>
+                                    <outlet property="delegate" destination="zPj-V4-sQ6" id="Ulx-7c-WOg"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="KW8-cx-vwm" firstAttribute="top" secondItem="Gax-9G-orN" secondAttribute="top" id="JJX-IL-RNJ"/>
+                            <constraint firstItem="KW8-cx-vwm" firstAttribute="leading" secondItem="Gax-9G-orN" secondAttribute="leading" id="Smj-SN-DcV"/>
+                            <constraint firstItem="KW8-cx-vwm" firstAttribute="trailing" secondItem="Gax-9G-orN" secondAttribute="trailing" id="aVf-mv-CyO"/>
+                            <constraint firstItem="KW8-cx-vwm" firstAttribute="bottom" secondItem="Gax-9G-orN" secondAttribute="bottom" id="kPe-dJ-JUu"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Gax-9G-orN"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Productos vendidos" id="gnR-2V-uXj">
+                        <barButtonItem key="rightBarButtonItem" title="+" id="adk-Ry-hzU"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tablaViewController" destination="KW8-cx-vwm" id="G4d-MM-0W0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QcQ-ue-hnn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4401" y="-399"/>
         </scene>
     </scenes>
     <resources>
