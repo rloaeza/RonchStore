@@ -47,7 +47,7 @@ class Configuraciones{
     static let keyPagoInicialP = "Pago Inicial Porcentaje"
     static let keyPagoInicialV = "Pago Inicial Valor"
     static let keyPagoSemanas = "Pago Semanas"
-    static let keyFinalizada = "Finalizada"
+    static let keyPagosFinalizados = "Pagos Finalizados"
     
     
     
@@ -62,6 +62,7 @@ class Configuraciones{
         formatter.dateFormat = keyDateFormat
         return formatter.string(from: Date())
     }
+    
     
     static func fechaMasDias(Semanas semanas: Double) -> String {
         let formatter = DateFormatter()
@@ -112,6 +113,14 @@ class Configuraciones{
         return newData.key!
     }
     
+    
+    static func calcularTotalPagos(Pagos pagos: [NSDictionary]) -> Double {
+        var total: Double = 0.0
+        for p in pagos {
+            total += Double(p.value(forKey: Configuraciones.keyPago) as! String)!
+        }        
+        return total
+    }
     static func eliminarFoto(Reference ref: StorageReference, KeyNode key: String, Child child: String) {
         ref.child(key).child(child).delete(completion: nil)
     }

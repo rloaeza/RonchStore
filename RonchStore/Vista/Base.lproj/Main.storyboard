@@ -274,7 +274,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                                 <connections>
                                                     <action selector="guardarTelefono:" destination="r1W-dT-uSc" eventType="editingDidEnd" id="ib1-T4-Zyu"/>
                                                     <outlet property="delegate" destination="r1W-dT-uSc" id="4Vr-Vo-zej"/>
@@ -292,7 +292,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                                 <connections>
                                                     <action selector="guardarEmail:" destination="r1W-dT-uSc" eventType="editingDidEnd" id="vOs-WF-sJB"/>
                                                     <outlet property="delegate" destination="r1W-dT-uSc" id="OJU-c7-O0w"/>
@@ -687,7 +687,7 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                 <connections>
                                                     <action selector="actualizarPagoInicialV:" destination="XgM-EM-jQM" eventType="editingDidEnd" id="nwN-T3-LAE"/>
                                                     <outlet property="delegate" destination="XgM-EM-jQM" id="cQs-x3-Ry5"/>
@@ -737,7 +737,7 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                 <connections>
                                                     <action selector="actualizarPagoInicial:" destination="XgM-EM-jQM" eventType="editingDidEnd" id="EvX-VH-sw6"/>
                                                     <outlet property="delegate" destination="XgM-EM-jQM" id="qNf-Sb-Tyv"/>
@@ -751,7 +751,7 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 <connections>
                                                     <action selector="actualizarSemanas:" destination="XgM-EM-jQM" eventType="editingDidEnd" id="rK7-sF-rPl"/>
                                                 </connections>
@@ -807,7 +807,7 @@
                                                     <segue destination="7q5-Bk-oCQ" kind="show" identifier="PagosDesdeNuevaVenta" id="2rT-YG-AeO"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Al día de hoy se ha pagado $2500 de un total de $7000." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CBR-bT-jkm">
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Al día de hoy se ha pagado $2500 de un total de $7000." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CBR-bT-jkm">
                                                 <rect key="frame" x="14" y="874" width="386" height="80"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="80" id="f2A-Nf-dPB"/>
@@ -1047,7 +1047,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                 <connections>
                                                     <action selector="guardarCosto:" destination="vbp-xc-wtV" eventType="editingDidEnd" id="ySx-T8-Ska"/>
                                                     <outlet property="delegate" destination="vbp-xc-wtV" id="lLc-Fh-nIE"/>
@@ -1072,7 +1072,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                 <connections>
                                                     <action selector="guardarCostoVenta:" destination="vbp-xc-wtV" eventType="editingDidEnd" id="NQG-vx-BH9"/>
                                                     <outlet property="delegate" destination="vbp-xc-wtV" id="7Ne-HC-H54"/>
@@ -1090,7 +1090,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 <connections>
                                                     <action selector="guardarExistencia:" destination="vbp-xc-wtV" eventType="editingDidEnd" id="HKF-5O-PTx"/>
                                                     <outlet property="delegate" destination="vbp-xc-wtV" id="3fF-gv-ego"/>
@@ -1878,6 +1878,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="7q5-Bk-oCQ" id="Iuj-25-EwJ"/>
+                                    <outlet property="delegate" destination="7q5-Bk-oCQ" id="jpY-Te-VKv"/>
+                                </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cliente" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QWM-PF-LVz">
                                 <rect key="frame" x="20" y="112" width="115" height="21"/>
@@ -1906,7 +1910,7 @@
                                 </constraints>
                                 <state key="normal" title="# productos"/>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Cliente" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YrD-ZJ-Rzy">
+                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Cliente" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YrD-ZJ-Rzy">
                                 <rect key="frame" x="143" y="107" width="251" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Yu3-6Q-Vd1"/>
@@ -1937,9 +1941,12 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="b6g-Lv-Qc9"/>
                                 </constraints>
-                                <state key="normal" title="Enviar pagos">
+                                <state key="normal" title="Enviar pago">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="botonEnviarPago:" destination="7q5-Bk-oCQ" eventType="touchUpInside" id="1xw-LE-T4D"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zMR-z0-esW">
                                 <rect key="frame" x="20" y="778" width="115" height="30"/>
@@ -1986,10 +1993,15 @@
                         <viewLayoutGuide key="safeArea" id="Xyd-NC-FS1"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pagos realizados" id="4oc-0D-yZW">
-                        <barButtonItem key="rightBarButtonItem" title="+" id="cqt-fW-tAg"/>
+                        <barButtonItem key="rightBarButtonItem" title="+" id="cqt-fW-tAg">
+                            <connections>
+                                <action selector="botonAgregar:" destination="7q5-Bk-oCQ" id="rJr-SE-B6n"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="botonCliente" destination="YrD-ZJ-Rzy" id="YrI-lX-7ah"/>
+                        <outlet property="botonFinalizar" destination="zMR-z0-esW" id="oSX-gj-bQC"/>
                         <outlet property="botonProductos" destination="Sz2-ub-Gdb" id="PAN-s5-qdQ"/>
                         <outlet property="labelDescripcion" destination="cUw-il-rsM" id="0F8-pB-yPA"/>
                         <outlet property="tableViewController" destination="xCb-6b-vOm" id="fKn-cz-8cQ"/>

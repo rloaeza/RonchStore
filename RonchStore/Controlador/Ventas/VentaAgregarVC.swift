@@ -83,27 +83,29 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             messageVC.messageComposeDelegate = self
             self.present(messageVC, animated: true, completion: nil)
         }
+        else {
+            Configuraciones.alert(Titulo: "Alerta", Mensaje: "No es posible enviar mensajes", self, popView: false)
+        }
+        
 
-        
-        
-        
-        
     }
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        var msg = ""
         switch (result) {
         case .cancelled:
-            Configuraciones.alert(Titulo: "Mensaje", Mensaje: "Mensaje cancelado", self, popView: false)
-            dismiss(animated: true, completion: nil)
+            msg = "Mensaje cancelado"
         case .failed:
-            Configuraciones.alert(Titulo: "Mensaje", Mensaje: "Mensaje error al enviar", self, popView: false)
-            dismiss(animated: true, completion: nil)
+            msg = "Error al enviar"
         case .sent:
-            Configuraciones.alert(Titulo: "Mensaje", Mensaje: "Mensaje enviado satisfactoriamente", self, popView: false)
-            dismiss(animated: true, completion: nil)
+            msg = "Mensaje enviado satisfactoriamente"
         default:
             break
         }
+        
+        dismiss(animated: true, completion: nil)
+        Configuraciones.alert(Titulo: "Mensaje", Mensaje: msg, self, popView: true)
+    
     }
     
     
@@ -160,9 +162,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
                 ventaFinalizada = false
             }
             finalizarStatusVenta(Finalizar: ventaFinalizada)
-            
-            
-            
+
         }
         
         
@@ -194,6 +194,9 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         }
         else {
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyVentaFinalizada, Value: false)
+            
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagosFinalizados, Value: false)
+            venta?.setValue(false, forKey: Configuraciones.keyPagosFinalizados)
         }
         
         labelDescripcionFinal.isHidden = !finalizar
@@ -212,6 +215,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         botonCliente.isEnabled = !finalizar
         botonProductos.isEnabled = !finalizar
         
+        calcularTotales()
         
         
     }
@@ -297,7 +301,24 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     }
     
     
+    func calcularTotales() {
+        var pagos: [NSDictionary] = []
+        if let ps = venta?.value(forKey: Configuraciones.keyPagos) as?  [NSDictionary] {
+            pagos = ps
+        }
+        
+        let totalPagos = Configuraciones.calcularTotalPagos(Pagos: pagos)
+        let anticipo = pagoInicialV
+        
+        labelDescripcionFinal.text = "Actualmente se han pagado $\(totalPagos+anticipo) de un total de $\(totalVenta)"
+        
+    }
+    
+    
 }
+
+
+
 
 
 extension VentaAgregarVC:UITableViewDataSource {
