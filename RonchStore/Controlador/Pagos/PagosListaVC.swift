@@ -21,12 +21,14 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     var totalPagos: Double = 0.0
     var anticipo: Double = 0.0
     var totalVenta: Double = 0.0
-
+    var isAdmin: Bool = true
+    
     @IBOutlet weak var tableViewController: UITableView!
     @IBOutlet weak var labelDescripcion: UITextView!
     @IBOutlet weak var botonProductos: UIButton!
-    @IBOutlet weak var botonCliente: UITextField!
+    //@IBOutlet weak var botonCliente: UITextField!
     @IBOutlet weak var botonFinalizar: UIButton!
+    @IBOutlet weak var botonCliente: UIButton!
     
     @IBAction func botonEnviarPago(_ sender: Any) {
         if pagoActual != nil {
@@ -97,7 +99,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             let fechaPago = pago.value(forKey: Configuraciones.keyFecha)
             let monto = pago.value(forKey: Configuraciones.keyPago)
             
-            var msg = "Confirmacion de pago por $\(monto!) de \(self.botonCliente.text!) de la venta del dia \(fechaVenta) por la cantidad de: $\(total). Realizado el: \(fechaPago!)"
+            var msg = "Confirmacion de pago por $\(monto!) de \(self.botonCliente.currentTitle!) de la venta del dia \(fechaVenta) por la cantidad de: $\(total). Realizado el: \(fechaPago!)"
             
             let messageVC = MFMessageComposeViewController()
             messageVC.body = msg
@@ -138,9 +140,12 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
         super.viewDidLoad()
         ref = Database.database().reference()
 
+        
         if venta != nil {
+            botonFinalizar.isHidden = !isAdmin
+            
             let cliente = venta?.value(forKey: Configuraciones.keyCliente) as! NSDictionary
-            botonCliente.text = cliente.value(forKey: Configuraciones.keyNombre) as! String
+            botonCliente.setTitle(cliente.value(forKey: Configuraciones.keyNombre) as! String, for: .normal) 
             
             let productos = venta?.value(forKey: Configuraciones.keyProductos) as! [NSDictionary]
             botonProductos.setTitle("\(productos.count) Productos", for: .normal)
@@ -183,6 +188,11 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
         if segue.identifier == "ProductosVendidosDesdePagosListaSegue",
             let vc = segue.destination as? ProductosVentaVC {
             vc.valores = venta?.value(forKey: Configuraciones.keyProductos) as! [NSDictionary]
+        }
+        
+        if segue.identifier == "UbicacionClienteDesdePagosListaSegue",
+            let vc = segue.destination as? ClienteUbicacionVC {
+            vc.cliente = venta?.value(forKey: Configuraciones.keyCliente) as! NSDictionary            
         }
     }
     
