@@ -147,12 +147,16 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             codigo = venta?.value(forKey: Configuraciones.keyId) as! String
             cliente = venta?.value(forKey: Configuraciones.keyCliente) as? NSDictionary
             botonCliente.setTitle(cliente?.value(forKey: Configuraciones.keyNombre) as? String, for: .normal)
-            productosVenta = venta?.value(forKey: Configuraciones.keyProductos) as! [NSDictionary]
+            productosVenta = venta?.value(forKey: Configuraciones.keyProductos) as? [NSDictionary] ?? []
             
             for p in productosVenta {
                 totalVenta += Double(p.value(forKey: Configuraciones.keyCostoVenta) as! String)!
             }
             tableViewProductos.reloadData()
+            
+            tfPagoInicialP.text = String(venta?.value(forKey: Configuraciones.keyPagoInicialP) as? Double ?? 0.0)
+            tfPagoInicialV.text = String(venta?.value(forKey: Configuraciones.keyPagoInicialV) as? Double ?? 0.0)
+            
             calcularCostos(Guardar: false)
             
             if let vf = venta?.value(forKey: Configuraciones.keyVentaFinalizada) as? Bool {
@@ -359,6 +363,7 @@ extension VentaAgregarVC: ClienteVCDelegate {
         botonCliente.setTitle(cliente.value(forKey: Configuraciones.keyNombre) as! String , for: .normal)
         self.cliente = cliente
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyCliente, Value: cliente)
+        calcularCostos(Guardar: true)
     }
 }
 
