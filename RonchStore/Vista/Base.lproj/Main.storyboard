@@ -277,7 +277,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                                 <connections>
                                                     <action selector="guardarTelefono:" destination="r1W-dT-uSc" eventType="editingDidEnd" id="DUh-g4-ADH"/>
                                                     <outlet property="delegate" destination="r1W-dT-uSc" id="Dt9-KY-iho"/>
@@ -288,9 +288,20 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="r1W-dT-uSc" id="7gC-NB-kPv"/>
+                                                </connections>
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Calle" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9nQ-hf-zo1">
+                                                <rect key="frame" x="170" y="132" width="222" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="guardarCalle:" destination="r1W-dT-uSc" eventType="editingDidEnd" id="IS1-5c-KLd"/>
+                                                    <outlet property="delegate" destination="r1W-dT-uSc" id="N5B-l2-kym"/>
                                                 </connections>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Colonia" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8tL-59-hEl">
@@ -331,24 +342,13 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Ubicacion"/>
                                                 <connections>
-                                                    <action selector="botonGPS:" destination="r1W-dT-uSc" eventType="touchUpInside" id="fRx-Zh-hTJ"/>
+                                                    <action selector="botonGPS:" destination="r1W-dT-uSc" eventType="touchUpInside" id="gbi-om-hOG"/>
                                                 </connections>
                                             </button>
                                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Rqd-5b-gxS">
                                                 <rect key="frame" x="0.0" y="339" width="414" height="614"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </mapView>
-                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Calle" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8lJ-vI-k2O">
-                                                <rect key="frame" x="170" y="132" width="222" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                                <connections>
-                                                    <action selector="guardarCalle:" destination="r1W-dT-uSc" eventType="editingDidEnd" id="xWo-kk-hKM"/>
-                                                    <outlet property="delegate" destination="r1W-dT-uSc" id="IJC-V2-LAU"/>
-                                                </connections>
-                                            </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -376,7 +376,7 @@
                     </view>
                     <size key="freeformSize" width="414" height="896"/>
                     <connections>
-                        <outlet property="calle" destination="8lJ-vI-k2O" id="tPU-xc-cTY"/>
+                        <outlet property="calle" destination="9nQ-hf-zo1" id="Gel-7E-juk"/>
                         <outlet property="ciudad" destination="zBV-qS-QVd" id="NIj-ea-kDV"/>
                         <outlet property="colonia" destination="8tL-59-hEl" id="i0b-nY-Nhw"/>
                         <outlet property="email" destination="haS-rq-ATd" id="M4d-Pl-fpi"/>
