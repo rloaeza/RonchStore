@@ -21,15 +21,23 @@ class ClienteAgregarVC: UIViewController{
 
     @IBOutlet weak var telefono: UITextField!
     @IBOutlet weak var nombre: UITextField!
-    @IBOutlet weak var direccion: UITextField!
+
     @IBOutlet weak var email: UITextField!
     //@IBOutlet weak var imagenPersona: UIImageView!
     //@IBOutlet weak var imagenCasa: UIImageView!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var imagenCasa: UIButton!
-    @IBOutlet weak var imagenPersona: UIButton!
-    @IBOutlet weak var imagenCasa2: UIButton!
-    var imagenMostrar: UIButton!
+    
+    @IBOutlet weak var calle: UITextField!
+    @IBOutlet weak var colonia: UITextField!
+    @IBOutlet weak var ciudad: UITextField!
+    @IBOutlet weak var pais: UITextField!
+    
+    @IBOutlet weak var imagenCasa: UIImageView!
+    
+    @IBOutlet weak var imagenPersona: UIImageView!
+    
+    
+    var imagenMostrar: UIImageView!
     var ubicacion: CLLocationCoordinate2D!
     
     
@@ -44,10 +52,18 @@ class ClienteAgregarVC: UIViewController{
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyEmail, Value: email.text!)
     }
     
-    @IBAction func guardarDireccion(_ sender: Any) {
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyDireccion, Value: direccion.text!)
+    @IBAction func guardarCalle(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyCalle, Value: calle.text!)
     }
-    
+    @IBAction func guardarColonia(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyColonia, Value: colonia.text!)
+    }
+    @IBAction func guardarCiudad(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyCiudad, Value: ciudad.text!)
+    }
+    @IBAction func guardarPais(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyPais, Value: pais.text!)
+    }
     
     
     @IBAction func botonGPS(_ sender: Any) {
@@ -56,7 +72,7 @@ class ClienteAgregarVC: UIViewController{
 
         mapView.removeAnnotations(mapView.annotations)
         let artwork = Mapas(title: nombre.text!,
-                            locationName: direccion.text!,
+                            locationName: calle.text!,
                             coordinate: ubicacion)
         
         
@@ -106,7 +122,10 @@ class ClienteAgregarVC: UIViewController{
     func limpiar() {
         telefono.text = ""
         nombre.text = ""
-        direccion.text = ""
+        calle.text = ""
+        colonia.text = ""
+        ciudad.text = ""
+        pais.text = ""
         email.text = ""
         telefono.select(nil)
     }
@@ -123,9 +142,11 @@ class ClienteAgregarVC: UIViewController{
             codigo =  cliente!.value(forKey: Configuraciones.keyId) as? String
             telefono.text = cliente!.value(forKey: Configuraciones.keyTelefono) as? String
             nombre.text = cliente!.value(forKey: Configuraciones.keyNombre) as? String
-            direccion.text = cliente!.value(forKey: Configuraciones.keyDireccion) as? String
             email.text = cliente!.value(forKey: Configuraciones.keyEmail) as? String
-            
+            calle.text = cliente!.value(forKey: Configuraciones.keyCalle) as? String
+            colonia.text = cliente!.value(forKey: Configuraciones.keyColonia) as? String
+            ciudad.text = cliente!.value(forKey: Configuraciones.keyCiudad) as? String
+            pais.text = cliente!.value(forKey: Configuraciones.keyPais) as? String
             
             
             
@@ -147,7 +168,8 @@ class ClienteAgregarVC: UIViewController{
             userRef.getData(maxSize: 10*1024*1024) { (data, error) in
                 if error == nil {
                     let img = UIImage(data: data!)
-                    self.imagenPersona.setImage(img, for: UIControl.State.normal)
+                    self.imagenPersona.image = img
+                    //self.imagenPersona.setImage(img, for: UIControl.State.normal)
                 }
             }
             
@@ -156,7 +178,8 @@ class ClienteAgregarVC: UIViewController{
             homeRef.getData(maxSize: 10*1024*1024) { (data, error) in
                 if error == nil {
                     let img = UIImage(data: data!)
-                    self.imagenCasa.setImage(img, for: UIControl.State.normal)
+                    self.imagenCasa.image = img
+                    //self.imagenCasa.setImage(img, for: UIControl.State.normal)
                 }
             }
             
@@ -168,7 +191,7 @@ class ClienteAgregarVC: UIViewController{
                 //let regionRadius: CLLocationDistance = 1000
                 mapView.removeAnnotations(mapView.annotations)
                 let artwork = Mapas(title: nombre.text!,
-                                      locationName: direccion.text!,
+                                      locationName: calle.text!,
                                       coordinate: ubicacion)
                 
                 
@@ -192,8 +215,8 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         
-        //imagenMostrar.image = image
-        imagenMostrar.setImage(image, for: UIControl.State.normal)
+        imagenMostrar.image = image
+        //imagenMostrar.setImage(image, for: UIControl.State.normal)
         
         
         //imagenCasa2.setImage(image, for: UIControl.State.normal)
