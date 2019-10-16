@@ -60,7 +60,7 @@ extension ProductosListaVC:UITableViewDataSource {
         let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath)
         let nombre = valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String
         let marca = valores[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String
-        let categoria = valores[indexPath.row].value(forKey: Configuraciones.keyCategorias) as? String
+        //let categoria = valores[indexPath.row].value(forKey: Configuraciones.keyCategorias) as? String
         let talla = valores[indexPath.row].value(forKey: Configuraciones.keyTalla) as? String
         
         celda.textLabel?.text = "\(nombre!) [\(marca!)>\(talla!)]"

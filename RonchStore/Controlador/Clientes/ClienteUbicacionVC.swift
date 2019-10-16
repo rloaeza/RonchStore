@@ -23,9 +23,9 @@ class ClienteUbicacionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if cliente != nil {
-            nombre.text = cliente?.value(forKey: Configuraciones.keyNombre) as! String
-            telefono.text = cliente?.value(forKey: Configuraciones.keyTelefono) as! String
-            direccion.text = cliente?.value(forKey: Configuraciones.keyCalle) as! String
+            nombre.text = cliente?.value(forKey: Configuraciones.keyNombre) as? String
+            telefono.text = cliente?.value(forKey: Configuraciones.keyTelefono) as? String
+            direccion.text = cliente?.value(forKey: Configuraciones.keyCalle) as? String
             
             
             let storageRef = Storage.storage().reference()

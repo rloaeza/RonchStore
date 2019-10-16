@@ -62,7 +62,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         finalizarStatusVenta(Finalizar: true)
         
         if MFMessageComposeViewController.canSendText() {
-            let nProductos = productosVenta.count
+            //let nProductos = productosVenta.count
             
             
             var mensaje = "\(Configuraciones.Titulo) \n"
@@ -144,7 +144,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         productosVenta.removeAll()
         
         if venta != nil {
-            codigo = venta?.value(forKey: Configuraciones.keyId) as! String
+            codigo = venta?.value(forKey: Configuraciones.keyId) as? String
             cliente = venta?.value(forKey: Configuraciones.keyCliente) as? NSDictionary
             botonCliente.setTitle(cliente?.value(forKey: Configuraciones.keyNombre) as? String, for: .normal)
             productosVenta = venta?.value(forKey: Configuraciones.keyProductos) as? [NSDictionary] ?? []
@@ -236,8 +236,8 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         tfPagoDemora2.text = "$ \(String(format: "%.1f", pagoDemora2))"
         
         
-        let d1 = Configuraciones.txtMensajeDemora.replacingOccurrences(of: "#", with: String(pagoSemanas))
-        let d2 = Configuraciones.txtMensajeDemora.replacingOccurrences(of: "#", with: String(pagoSemanas + 3))
+        //let d1 = Configuraciones.txtMensajeDemora.replacingOccurrences(of: "#", with: String(pagoSemanas))
+        //let d2 = Configuraciones.txtMensajeDemora.replacingOccurrences(of: "#", with: String(pagoSemanas + 3))
         
         
         
@@ -360,7 +360,7 @@ extension VentaAgregarVC:UITableViewDataSource {
 
 extension VentaAgregarVC: ClienteVCDelegate {
     func clienteSeleccionado(cliente: NSDictionary) {
-        botonCliente.setTitle(cliente.value(forKey: Configuraciones.keyNombre) as! String , for: .normal)
+        botonCliente.setTitle(cliente.value(forKey: Configuraciones.keyNombre) as? String , for: .normal)
         self.cliente = cliente
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyCliente, Value: cliente)
         calcularCostos(Guardar: true)

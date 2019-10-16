@@ -16,7 +16,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     var venta: NSDictionary? = nil
     var pagos: [NSDictionary] = []
     var codigo: String? = nil
-    var pagosFinalizados: Bool? = nil
+    var pagosFinalizados: Bool = false
     var pagoActual: NSDictionary? = nil
     var totalPagos: Double = 0.0
     var anticipo: Double = 0.0
@@ -36,7 +36,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
         }
     }
     @IBAction func botonFinalizar(_ sender: Any) {
-        if !pagosFinalizados! {
+        if !pagosFinalizados {
             botonFinalizar.isHidden = true
             pagosFinalizados = true
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagosFinalizados, Value: pagosFinalizados)
@@ -49,7 +49,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     @IBAction func botonAgregar(_ sender: Any) {
         
-        if pagosFinalizados! {
+        if pagosFinalizados {
             Configuraciones.alert(Titulo: "Pagos", Mensaje: "Esta venta ya se finalizó", self, popView: false)
             return
         }
@@ -99,7 +99,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             let fechaPago = pago.value(forKey: Configuraciones.keyFecha)
             let monto = pago.value(forKey: Configuraciones.keyPago)
             
-            var msg = "Confirmacion de pago por $\(monto!) de \(self.botonCliente.currentTitle!) de la venta del dia \(fechaVenta) por la cantidad de: $\(total). Realizado el: \(fechaPago!)"
+            let msg = "Confirmacion de pago por $\(monto!) de \(self.botonCliente.currentTitle!) de la venta del dia \(fechaVenta) por la cantidad de: $\(total). Realizado el: \(fechaPago!)"
             
             let messageVC = MFMessageComposeViewController()
             messageVC.body = msg
@@ -145,12 +145,12 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             botonFinalizar.isHidden = !isAdmin
             
             let cliente = venta?.value(forKey: Configuraciones.keyCliente) as! NSDictionary
-            botonCliente.setTitle(cliente.value(forKey: Configuraciones.keyNombre) as! String, for: .normal) 
+            botonCliente.setTitle(cliente.value(forKey: Configuraciones.keyNombre) as? String, for: .normal)
             
             let productos = venta?.value(forKey: Configuraciones.keyProductos) as! [NSDictionary]
             botonProductos.setTitle("\(productos.count) Productos", for: .normal)
             
-            codigo = venta?.value(forKey: Configuraciones.keyId) as! String
+            codigo = venta?.value(forKey: Configuraciones.keyId) as? String
             
             pagosFinalizados = false
             if let f = venta?.value(forKey: Configuraciones.keyPagosFinalizados) as? Bool {
@@ -158,7 +158,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             } else {
              codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagosFinalizados, Value: pagosFinalizados)
             }
-            if pagosFinalizados! {
+            if pagosFinalizados {
                 botonFinalizar.isHidden = true
             }
             
@@ -192,7 +192,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
         
         if segue.identifier == "UbicacionClienteDesdePagosListaSegue",
             let vc = segue.destination as? ClienteUbicacionVC {
-            vc.cliente = venta?.value(forKey: Configuraciones.keyCliente) as! NSDictionary            
+            vc.cliente = venta?.value(forKey: Configuraciones.keyCliente) as? NSDictionary            
         }
     }
     
