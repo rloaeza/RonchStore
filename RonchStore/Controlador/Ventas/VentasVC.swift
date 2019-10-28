@@ -50,7 +50,7 @@ extension VentasVC:UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "VentaCelda", for: indexPath)
+        let celda = tableView.dequeueReusableCell(withIdentifier: "VentaCelda", for: indexPath) as! VideoCell
         
         let cliente = ventas[indexPath.row].value(forKey: Configuraciones.keyCliente) as! NSDictionary
         let fecha = ventas[indexPath.row].value(forKey: Configuraciones.keyFecha) as! String
@@ -60,8 +60,29 @@ extension VentasVC:UITableViewDataSource {
         let fecha2 = fecha[...index]
         
         
-        celda.textLabel?.text = cliente.value(forKey: Configuraciones.keyNombre) as? String
-        celda.detailTextLabel?.text = String( fecha2 )
+        //celda.textLabel?.text = cliente.value(forKey: Configuraciones.keyNombre) as? String
+        //celda.detailTextLabel?.text = String( fecha2 )
+        
+        let total: Double = (ventas[indexPath.row].value(forKey: Configuraciones.keyTotal) as! Double)
+        
+        var adeudo: Double = ventas[indexPath.row].value(forKey: Configuraciones.keyPagoInicialV) as! Double
+        
+        
+        
+        
+        if let pagos = ventas[indexPath.row].value(forKey: Configuraciones.keyPagos) as? [NSDictionary] {
+            for pago in pagos {
+                adeudo = adeudo + (Double(pago.value(forKey: Configuraciones.keyPago) as! String)!)
+            }
+        }
+        
+        
+        
+        
+        celda.Titulo.text = cliente.value(forKey: Configuraciones.keyNombre) as? String
+        celda.Fecha.text = String( fecha2 )
+        celda.Adeudo.text = "\(Configuraciones.txtAdeudo): \(String( total - adeudo ))"
+        
         return celda
     
     }

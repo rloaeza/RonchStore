@@ -53,11 +53,37 @@ extension ProductosVC:UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath)
+        let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath) as! ProductoCompletoCell
+        
+    
+        
         let nombre = valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String
+        let marca = valores[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String
+        let categoria = valores[indexPath.row].value(forKey: Configuraciones.keyCategorias) as? String
         let talla = valores[indexPath.row].value(forKey: Configuraciones.keyTalla) as? String
-        celda.textLabel?.text = "\(nombre!) (\(talla!))"
-        celda.detailTextLabel?.text = valores[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String
+
+        celda.Nombre.text = "\(nombre!) "
+        celda.Categoria.text = "\(categoria!)"
+        celda.Marca.text = "\(marca!)"
+        celda.Talla.text = "\(talla!)"
+        celda.CostoVenta.text = "$ \( (valores[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as? String)! )"
+        
+        let storageRef = Storage.storage().reference()
+        
+        let userRef = storageRef.child(Configuraciones.keyProductos).child(valores[indexPath.row].value(forKey: Configuraciones.keyId)! as! String)
+        userRef.getData(maxSize: 10*1024*1024) { (data, error) in
+            if error == nil {
+                let img = UIImage(data: data!)
+                celda.Imagen.image = img
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
         return celda
     }
     

@@ -57,7 +57,7 @@ class Configuraciones{
     
     
     
-    
+    static let txtAdeudo = "Adeudo"
     static let txtSeleccionarMarca = "Seleccionar marca"
     static let txtSeleccionarTalla = "Seleccionar talla"
     static let txtSeleccionarCategoria = "Seleccionar categoria"
