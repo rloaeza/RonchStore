@@ -25,6 +25,7 @@ class ProductosListaVC: UIViewController {
     var categoriaSeleccionada: String = ""
     var marcaSeleccionada: String = ""
     var tallaSeleccionada: String = ""
+    var textoSeleccionado: String = ""
     
     @IBOutlet weak var productosViewController: UITableView!
     @IBOutlet weak var botonCategoria: UIButton!
@@ -37,8 +38,11 @@ class ProductosListaVC: UIViewController {
         
     }
     
+    
+    
     private func actualizarDatos() {
         valoresParaMostrar.removeAll()
+        
         for valor in valores {
             let categoria: String = valor.value(forKey: Configuraciones.keyCategorias) as! String
             if  categoria == categoriaSeleccionada  || categoriaSeleccionada.isEmpty {
@@ -46,7 +50,11 @@ class ProductosListaVC: UIViewController {
                 if  marca == marcaSeleccionada  || marcaSeleccionada.isEmpty {
                     let talla: String = valor.value(forKey: Configuraciones.keyTalla) as! String
                     if  talla == tallaSeleccionada  || tallaSeleccionada.isEmpty {
-                        valoresParaMostrar.append(valor)
+                        let nombre: String = valor.value(forKey: Configuraciones.keyNombre) as! String
+                        if nombre.lowercased().contains(textoSeleccionado.lowercased())||marca.lowercased().contains(textoSeleccionado.lowercased())||categoria.lowercased().contains(textoSeleccionado.lowercased())||textoSeleccionado.isEmpty{
+                            valoresParaMostrar.append(valor)
+                        }
+                        
                     }
                 }
             }
@@ -172,4 +180,14 @@ extension ProductosListaVC: TallaVCDelegate {
         tallaSeleccionada = nombre
         actualizarDatos()
     }
+}
+
+extension ProductosListaVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(" Buscando: \(searchText)")
+        textoSeleccionado = searchText
+        actualizarDatos()
+    }
+  
+  
 }
