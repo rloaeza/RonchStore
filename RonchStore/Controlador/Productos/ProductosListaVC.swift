@@ -22,6 +22,7 @@ class ProductosListaVC: UIViewController {
     var valores: [NSDictionary] = []
     
     @IBOutlet weak var productosViewController: UITableView!
+    @IBOutlet weak var botonCategoria: UIButton!
     
     @IBAction func botonAgregar(_ sender: Any) {
         
@@ -47,6 +48,13 @@ class ProductosListaVC: UIViewController {
             self.productosViewController.reloadData()
         }
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+           if segue.identifier == "CategoriaDesdeListaProducto",
+               let vc = segue.destination as? CategoriaVC {
+                   vc.delegate = self
+           }
     }
     
     
@@ -104,3 +112,18 @@ extension ProductosListaVC:UITableViewDelegate {
         
     }
 }
+
+
+
+
+extension ProductosListaVC: CategoriaVCDelegate {
+    func categoriaSeleccionada(nombre: String) {
+        botonCategoria.setTitle(nombre, for: .normal)
+        print( "categoria = \(nombre)")
+        
+       
+    }
+    
+    
+}
+
