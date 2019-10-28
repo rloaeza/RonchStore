@@ -36,20 +36,20 @@ class UsuariosVC: UIViewController {
             let tfClave = alert?.textFields![1] // Force unwrapping because we know it exists.
             usuario = tfUsuario!.text!
             clave = tfClave!.text!
-            Auth.auth().createUser(withEmail: usuario, password: clave, completion: nil)
-            
-            var ref: DatabaseReference!
-            ref = Database.database().reference()
-            let newKey: DatabaseReference!
-            
-            newKey = ref.child(Configuraciones.keyUsuarios).childByAutoId()
-            
-            newKey.setValue([
-                Configuraciones.keyNombre:usuario
-                , Configuraciones.keyAdmin:true])
-            
-            
-            Configuraciones.alert(Titulo: "Usuario", Mensaje: "Usuario guardado", self, popView: false)
+            Auth.auth().createUser(withEmail: usuario, password: clave, completion: { (result, error) in
+                if error == nil {
+                    var ref: DatabaseReference!
+                    ref = Database.database().reference()
+                    let newKey: DatabaseReference!
+                   
+                    newKey = ref.child(Configuraciones.keyUsuarios).child(result!.user.uid)
+                    newKey.setValue( [Configuraciones.keyNombre:usuario,
+                       Configuraciones.keyAdmin:true])
+                    
+                    Configuraciones.alert(Titulo: "Usuario", Mensaje: "Usuario guardado", self, popView: false)
+                }
+                
+            })
             
         }))
         
@@ -58,19 +58,27 @@ class UsuariosVC: UIViewController {
             let tfClave = alert?.textFields![1] // Force unwrapping because we know it exists.
             usuario = tfUsuario!.text!
             clave = tfClave!.text!
-            Auth.auth().createUser(withEmail: usuario, password: clave, completion: nil)
-            var ref: DatabaseReference!
-            ref = Database.database().reference()
-            let newKey: DatabaseReference!
+            //Auth.auth().createUser(withEmail: usuario, password: clave, completion: nil)
             
-            newKey = ref.child(Configuraciones.keyUsuarios).childByAutoId()
+            Auth.auth().createUser(withEmail: usuario, password: clave, completion: { (result, error) in
+                if error == nil {
+                    var ref: DatabaseReference!
+                    ref = Database.database().reference()
+                    let newKey: DatabaseReference!
+                   
+                    newKey = ref.child(Configuraciones.keyUsuarios).child(result!.user.uid)
+                    newKey.setValue( [Configuraciones.keyNombre:usuario,
+                       Configuraciones.keyAdmin:false])
+                    
+                    Configuraciones.alert(Titulo: "Usuario", Mensaje: "Usuario guardado", self, popView: false)
+                }
+                
+            })
             
-            newKey.setValue([
-                Configuraciones.keyNombre:usuario
-                , Configuraciones.keyAdmin:false])
             
             
-            Configuraciones.alert(Titulo: "Usuario", Mensaje: "Usuario guardado", self, popView: false)
+            
+         
             
         }))
         
