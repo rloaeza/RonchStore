@@ -1341,7 +1341,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Faq-4U-r9c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6543" y="-1167"/>
+            <point key="canvasLocation" x="7146" y="-2025"/>
         </scene>
         <!--Agregar Pago Venta-->
         <scene sceneID="zyU-VT-5V3">
@@ -1743,7 +1743,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LIg-fb-IlB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5699" y="-1594"/>
+            <point key="canvasLocation" x="6880" y="-1132"/>
         </scene>
         <!--Categorias Lista-->
         <scene sceneID="9jX-6v-Ol3">
@@ -1803,7 +1803,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rYX-u3-oY0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5699" y="-603"/>
+            <point key="canvasLocation" x="5746" y="-721"/>
         </scene>
         <!--Clientes Lista-->
         <scene sceneID="FSH-hg-OZk">
@@ -1980,6 +1980,9 @@
                                     <constraint firstAttribute="width" constant="158" id="erq-4z-JSH"/>
                                 </constraints>
                                 <state key="normal" title="Marca"/>
+                                <connections>
+                                    <segue destination="yex-yx-Ga0" kind="show" identifier="MarcaDesdeListaProducto" id="tqs-RW-Xq3"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j1R-jQ-TRb">
                                 <rect key="frame" x="332" y="56" width="82" height="30"/>
@@ -1988,6 +1991,9 @@
                                     <constraint firstAttribute="height" constant="30" id="bOf-JJ-fYu"/>
                                 </constraints>
                                 <state key="normal" title="Talla"/>
+                                <connections>
+                                    <segue destination="2Bi-ol-8hg" kind="show" identifier="TallaDesdeListaProducto" id="0vZ-Nk-9B6"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cFJ-vS-x07">
                                 <rect key="frame" x="0.0" y="56" width="158" height="30"/>
@@ -2029,12 +2035,14 @@
                     </navigationItem>
                     <connections>
                         <outlet property="botonCategoria" destination="cFJ-vS-x07" id="4IW-ba-Elp"/>
+                        <outlet property="botonMarca" destination="fhM-fQ-jU3" id="xlT-Y6-a8i"/>
+                        <outlet property="botonTalla" destination="j1R-jQ-TRb" id="car-e4-4ZW"/>
                         <outlet property="productosViewController" destination="QIC-KA-iwT" id="DhN-7a-5vd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L45-AS-LmY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4586" y="-2048"/>
+            <point key="canvasLocation" x="4861" y="-2127"/>
         </scene>
         <!--Pagos Lista-->
         <scene sceneID="HEk-Gy-Ud1">
@@ -2528,7 +2536,9 @@
     <inferredMetricsTieBreakers>
         <segue reference="2rT-YG-AeO"/>
         <segue reference="0Zc-0E-btp"/>
+        <segue reference="0vZ-Nk-9B6"/>
         <segue reference="hCk-si-9i7"/>
+        <segue reference="tqs-RW-Xq3"/>
         <segue reference="FMc-NH-kMf"/>
         <segue reference="n2l-ff-MnN"/>
     </inferredMetricsTieBreakers>

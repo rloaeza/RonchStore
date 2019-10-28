@@ -19,16 +19,43 @@ protocol ProductosListaVCDelegate {
 class ProductosListaVC: UIViewController {
     
     var delegate: ProductosListaVCDelegate?
+    
     var valores: [NSDictionary] = []
+    var valoresParaMostrar: [NSDictionary] = []
+    var categoriaSeleccionada: String = ""
+    var marcaSeleccionada: String = ""
+    var tallaSeleccionada: String = ""
     
     @IBOutlet weak var productosViewController: UITableView!
     @IBOutlet weak var botonCategoria: UIButton!
+    @IBOutlet weak var botonMarca: UIButton!
+    @IBOutlet weak var botonTalla: UIButton!
     
     @IBAction func botonAgregar(_ sender: Any) {
         
         
         
     }
+    
+    private func actualizarDatos() {
+        valoresParaMostrar.removeAll()
+        for valor in valores {
+            let categoria: String = valor.value(forKey: Configuraciones.keyCategorias) as! String
+            if  categoria == categoriaSeleccionada  || categoriaSeleccionada.isEmpty {
+                let marca: String = valor.value(forKey: Configuraciones.keyMarca) as! String
+                if  marca == marcaSeleccionada  || marcaSeleccionada.isEmpty {
+                    let talla: String = valor.value(forKey: Configuraciones.keyTalla) as! String
+                    if  talla == tallaSeleccionada  || tallaSeleccionada.isEmpty {
+                        valoresParaMostrar.append(valor)
+                    }
+                }
+            }
+        }
+        productosViewController.reloadData()
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,16 +72,24 @@ class ProductosListaVC: UIViewController {
                     self.valores.append(dic!)
                 }
             }
-            self.productosViewController.reloadData()
+            self.actualizarDatos()
         }
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-           if segue.identifier == "CategoriaDesdeListaProducto",
-               let vc = segue.destination as? CategoriaVC {
-                   vc.delegate = self
-           }
+       if segue.identifier == "CategoriaDesdeListaProducto",
+           let vc = segue.destination as? CategoriaVC {
+               vc.delegate = self
+       }
+        if segue.identifier == "TallaDesdeListaProducto",
+            let vc = segue.destination as? TallaVC {
+                vc.delegate = self
+        }
+        if segue.identifier == "MarcaDesdeListaProducto",
+            let vc = segue.destination as? MarcaVC {
+                vc.delegate = self
+        }
     }
     
     
@@ -63,25 +98,25 @@ class ProductosListaVC: UIViewController {
 
 extension ProductosListaVC:UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return valores.count
+        return valoresParaMostrar.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath) as! ProductoCell
         
-        let nombre = valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String
-        let marca = valores[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String
+        let nombre = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String
+        let marca = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String
         //let categoria = valores[indexPath.row].value(forKey: Configuraciones.keyCategorias) as? String
-        let talla = valores[indexPath.row].value(forKey: Configuraciones.keyTalla) as? String
+        let talla = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyTalla) as? String
 
         celda.Nombre.text = "\(nombre!) "
         celda.Marca.text = "\(marca!)"
         celda.Talla.text = "\(talla!)"
-        celda.CostoVenta.text = "$ \( (valores[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as? String)! )"
+        celda.CostoVenta.text = "$ \( (valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as? String)! )"
         
         let storageRef = Storage.storage().reference()
         
-        let userRef = storageRef.child(Configuraciones.keyProductos).child(valores[indexPath.row].value(forKey: Configuraciones.keyId)! as! String)
+        let userRef = storageRef.child(Configuraciones.keyProductos).child(valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String)
         userRef.getData(maxSize: 10*1024*1024) { (data, error) in
             if error == nil {
                 let img = UIImage(data: data!)
@@ -98,7 +133,7 @@ extension ProductosListaVC:UITableViewDataSource {
         if (editingStyle == .delete) {
             var ref: DatabaseReference!
             ref = Database.database().reference()
-            ref.child(Configuraciones.keyProductos).child(valores[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+            ref.child(Configuraciones.keyProductos).child(valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
         }
     }
 }
@@ -107,7 +142,7 @@ extension ProductosListaVC:UITableViewDataSource {
 extension ProductosListaVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //self.performSegue(withIdentifier: "ProductoAgregarSegue", sender: valores[indexPath.row])
-        delegate?.productoSeleccionado(producto: valores[indexPath.row])
+        delegate?.productoSeleccionado(producto: valoresParaMostrar[indexPath.row])
         self.navigationController?.popViewController(animated: true)
         
     }
@@ -119,11 +154,22 @@ extension ProductosListaVC:UITableViewDelegate {
 extension ProductosListaVC: CategoriaVCDelegate {
     func categoriaSeleccionada(nombre: String) {
         botonCategoria.setTitle(nombre, for: .normal)
-        print( "categoria = \(nombre)")
-        
-       
+        categoriaSeleccionada = nombre
+        actualizarDatos()
     }
-    
-    
 }
 
+extension ProductosListaVC: MarcaVCDelegate {
+    func marcaSeleccionada(nombre: String) {
+        botonMarca.setTitle(nombre, for: .normal)
+        marcaSeleccionada = nombre
+        actualizarDatos()
+    }
+}
+extension ProductosListaVC: TallaVCDelegate {
+    func tallaSeleccionada(nombre: String) {
+        botonTalla.setTitle(nombre, for: .normal)
+        tallaSeleccionada = nombre
+        actualizarDatos()
+    }
+}
