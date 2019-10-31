@@ -18,6 +18,7 @@ class ProductoCompletoCell: UITableViewCell {
     @IBOutlet weak var Marca: UILabel!
     @IBOutlet weak var Talla: UILabel!
     @IBOutlet weak var CostoVenta: UILabel!
+    @IBOutlet weak var Existencia: UILabel!
     
     
 }

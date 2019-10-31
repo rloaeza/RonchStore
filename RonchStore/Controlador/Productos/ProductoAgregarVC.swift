@@ -101,17 +101,17 @@ class ProductoAgregarVC: UIViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "MarcaDesdeProducto",
+        if segue.identifier == "MarcaDesdeAgregarProducto",
             let vc = segue.destination as? MarcaVC {
                 vc.delegate = self
         }
         
-        if segue.identifier == "TallaDesdeProducto",
+        if segue.identifier == "TallaDesdeAgregarProducto",
             let vc = segue.destination as? TallaVC {
                 vc.delegate = self
         }
         
-        if segue.identifier == "CategoriaDesdeProducto",
+        if segue.identifier == "CategoriaDesdeAgregarProducto",
             let vc = segue.destination as? CategoriaVC {
             vc.delegate = self
         }

@@ -44,21 +44,16 @@ class ProductosListaVC: UIViewController {
         valoresParaMostrar.removeAll()
         
         for valor in valores {
-            let categoria: String = valor.value(forKey: Configuraciones.keyCategorias) as! String
-            if  categoria == categoriaSeleccionada  || categoriaSeleccionada.isEmpty {
-                let marca: String = valor.value(forKey: Configuraciones.keyMarca) as! String
-                if  marca == marcaSeleccionada  || marcaSeleccionada.isEmpty {
-                    let talla: String = valor.value(forKey: Configuraciones.keyTalla) as! String
-                    if  talla == tallaSeleccionada  || tallaSeleccionada.isEmpty {
-                        let nombre: String = valor.value(forKey: Configuraciones.keyNombre) as! String
-                        if nombre.lowercased().contains(textoSeleccionado.lowercased())||marca.lowercased().contains(textoSeleccionado.lowercased())||categoria.lowercased().contains(textoSeleccionado.lowercased())||textoSeleccionado.isEmpty{
-                            valoresParaMostrar.append(valor)
-                        }
-                        
-                    }
-                }
+            let talla: String = valor.value(forKey: Configuraciones.keyTalla) as? String ?? ""
+            let marca: String = valor.value(forKey: Configuraciones.keyMarca) as? String ?? ""
+            let categoria: String = valor.value(forKey: Configuraciones.keyCategorias) as? String ?? ""
+            let nombre: String = valor.value(forKey: Configuraciones.keyNombre) as? String ?? ""
+            
+            if talla.lowercased().contains(textoSeleccionado.lowercased())||nombre.lowercased().contains(textoSeleccionado.lowercased())||marca.lowercased().contains(textoSeleccionado.lowercased())||categoria.lowercased().contains(textoSeleccionado.lowercased())||textoSeleccionado.isEmpty{
+                valoresParaMostrar.append(valor)
             }
         }
+        
         productosViewController.reloadData()
     }
     
@@ -86,18 +81,7 @@ class ProductosListaVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       if segue.identifier == "CategoriaDesdeListaProducto",
-           let vc = segue.destination as? CategoriaVC {
-               vc.delegate = self
-       }
-        if segue.identifier == "TallaDesdeListaProducto",
-            let vc = segue.destination as? TallaVC {
-                vc.delegate = self
-        }
-        if segue.identifier == "MarcaDesdeListaProducto",
-            let vc = segue.destination as? MarcaVC {
-                vc.delegate = self
-        }
+     
     }
     
     
@@ -122,7 +106,10 @@ extension ProductosListaVC:UITableViewDataSource {
         celda.Talla.text = "\(talla!)"
         celda.CostoVenta.text = "$ \( (valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as? String)! )"
         
+        
+        
         let storageRef = Storage.storage().reference()
+        celda.Imagen.image = UIImage(named: "no_imagen")
         
         let userRef = storageRef.child(Configuraciones.keyProductos).child(valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String)
         userRef.getData(maxSize: 10*1024*1024) { (data, error) in
@@ -159,32 +146,9 @@ extension ProductosListaVC:UITableViewDelegate {
 
 
 
-extension ProductosListaVC: CategoriaVCDelegate {
-    func categoriaSeleccionada(nombre: String) {
-        botonCategoria.setTitle(nombre, for: .normal)
-        categoriaSeleccionada = nombre
-        actualizarDatos()
-    }
-}
-
-extension ProductosListaVC: MarcaVCDelegate {
-    func marcaSeleccionada(nombre: String) {
-        botonMarca.setTitle(nombre, for: .normal)
-        marcaSeleccionada = nombre
-        actualizarDatos()
-    }
-}
-extension ProductosListaVC: TallaVCDelegate {
-    func tallaSeleccionada(nombre: String) {
-        botonTalla.setTitle(nombre, for: .normal)
-        tallaSeleccionada = nombre
-        actualizarDatos()
-    }
-}
 
 extension ProductosListaVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(" Buscando: \(searchText)")
         textoSeleccionado = searchText
         actualizarDatos()
     }
