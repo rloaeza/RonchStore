@@ -105,22 +105,22 @@ extension ProductosListaVC:UITableViewDataSource {
         celda.Marca.text = "\(marca!)"
         celda.Talla.text = "\(talla!)"
         celda.CostoVenta.text = "$ \( (valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as? String)! )"
-        
-        
-        
-        let storageRef = Storage.storage().reference()
         celda.Imagen.image = UIImage(named: "no_imagen")
         
-        let userRef = storageRef.child(Configuraciones.keyProductos).child(valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String)
-        userRef.getData(maxSize: 10*1024*1024) { (data, error) in
-            if error == nil {
-                let img = UIImage(data: data!)
-                celda.Imagen.image = img
+        
+        let ruta: String = "\(Configuraciones.keyProductos)/\(valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String)"
+               
+               
+        NetworkManager.isReachableViaWiFi { (NetworkManager) in
+           
+            let userRef = Configuraciones.storageRef.child(ruta)
+            userRef.getData(maxSize: 10*1024*1024) { (data, error) in
+                if error == nil {
+                celda.Imagen.image = UIImage(data: data!)
+                  
+                }
             }
         }
-        
-        
-        
         return celda
     }
     

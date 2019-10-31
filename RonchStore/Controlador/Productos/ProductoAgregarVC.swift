@@ -139,7 +139,7 @@ extension ProductoAgregarVC: UIImagePickerControllerDelegate, UINavigationContro
         
         
         
-        let data = image!.jpegData(compressionQuality: 0.8)! as NSData
+        let data = image!.jpegData(compressionQuality: 0.25)! as NSData
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"

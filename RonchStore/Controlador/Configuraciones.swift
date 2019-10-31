@@ -63,6 +63,10 @@ class Configuraciones{
     static let txtSeleccionarCategoria = "Seleccionar categoria"
     static let txtMensajeDemora = "Total despues de  # semanas"
     
+    
+    
+    static let storageRef = Storage.storage().reference()
+    
     static func fecha() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = keyDateFormat
@@ -131,5 +135,8 @@ class Configuraciones{
         ref.child(key).child(child).delete(completion: nil)
     }
     
+    
+    
+ 
     
 }

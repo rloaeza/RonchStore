@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseStorage
+import FirebaseCore
 
 class ProductosVC: UIViewController {
     var valores: [NSDictionary] = []
@@ -40,6 +41,7 @@ class ProductosVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
         
         
         let ref = Database.database().reference().child(Configuraciones.keyProductos).queryOrdered(byChild: Configuraciones.keyMarca)
@@ -135,20 +137,21 @@ extension ProductosVC:UITableViewDataSource {
             
             celda.Existencia.textColor = UIColor.red
         }
+
+        
+        let ruta: String = "\(Configuraciones.keyProductos)/\(valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String)"
         
         
-        let storageRef = Storage.storage().reference()
-        let userRef = storageRef.child(Configuraciones.keyProductos).child(valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String)
-        userRef.getData(maxSize: 10*1024*1024) { (data, error) in
-            if error == nil {
-                let img = UIImage(data: data!)
-                celda.Imagen.image = img
-            }
+        NetworkManager.isReachableViaWiFi { (NetworkManager) in
+            
+            let userRef = Configuraciones.storageRef.child(ruta)
+            userRef.getData(maxSize: 10*1024*1024) { (data, error) in
+               if error == nil {
+                celda.Imagen.image = UIImage(data: data!)
+                   
+               }
+           }
         }
-        
-        
-        
-        
         
         
         
