@@ -13,6 +13,9 @@ import FirebaseStorage
 class ClientesVC: UIViewController {
     
     var valores: [NSDictionary] = []
+    var valoresParaMostrar: [NSDictionary] = []
+    var textoSeleccionado: String = ""
+    
     
     @IBOutlet weak var tableViewClientes: UITableView!
     override func viewDidLoad() {
@@ -30,7 +33,7 @@ class ClientesVC: UIViewController {
                     self.valores.append(dic!)
                 }
             }
-            self.tableViewClientes.reloadData()
+            self.actualizarDatos()
         }
 
         // Do any additional setup after loading the view.
@@ -42,17 +45,33 @@ class ClientesVC: UIViewController {
             vc.cliente = sender as? NSDictionary
         }
     }
+    
+    private func actualizarDatos() {
+        valoresParaMostrar.removeAll()
+        
+        for valor in valores {
+            let nombre: String = valor.value(forKey: Configuraciones.keyNombre) as? String ?? ""
+            let telefono: String = valor.value(forKey: Configuraciones.keyTelefono) as? String ?? ""
+            
+            
+            if nombre.lowercased().contains(textoSeleccionado.lowercased())||telefono.lowercased().contains(textoSeleccionado.lowercased())||textoSeleccionado.isEmpty{
+                valoresParaMostrar.append(valor)
+            }
+        }
+        
+        tableViewClientes.reloadData()
+    }
 
 }
 extension ClientesVC:UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return valores.count
+        return valoresParaMostrar.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celda = tableView.dequeueReusableCell(withIdentifier: "ClienteCelda", for: indexPath)
-        celda.textLabel?.text = valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String
-        celda.detailTextLabel?.text = valores[indexPath.row].value(forKey: Configuraciones.keyTelefono) as? String
+        celda.textLabel?.text = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String
+        celda.detailTextLabel?.text = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyTelefono) as? String
         return celda
     }
     
@@ -61,7 +80,7 @@ extension ClientesVC:UITableViewDataSource {
         if (editingStyle == .delete) {
             var ref: DatabaseReference!
             ref = Database.database().reference()
-            ref.child(Configuraciones.keyClientes).child(valores[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+            ref.child(Configuraciones.keyClientes).child(valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
             
          
             
@@ -78,7 +97,15 @@ extension ClientesVC:UITableViewDataSource {
 
 extension ClientesVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "ClienteAgregarSegue", sender: valores[indexPath.row])
+        self.performSegue(withIdentifier: "ClienteAgregarSegue", sender: valoresParaMostrar[indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
     }
+}
+extension ClientesVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        textoSeleccionado = searchText
+        actualizarDatos()
+    }
+  
+  
 }

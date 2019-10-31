@@ -13,5 +13,6 @@ class VideoCell: UITableViewCell {
     @IBOutlet weak var Titulo: UILabel!
     @IBOutlet weak var Adeudo: UILabel!
     @IBOutlet weak var Fecha: UILabel!
+    @IBOutlet weak var Total: UILabel!
     
 }

@@ -10,30 +10,39 @@ import UIKit
 import FirebaseDatabase
 
 class VentasVC: UIViewController {
-    var ventas: [NSDictionary] = []
+    var valores: [NSDictionary] = []
+    var valoresParaMostrar: [NSDictionary] = []
+    var textoSeleccionado: String = ""
+    
     var pagado = 0.0
+    var mostrarSoloDeudas: Bool! = false
     @IBOutlet weak var tableViewVentas: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let ref = Database.database().reference().child(Configuraciones.keyVentasBorrador).queryOrdered(byChild: "\(Configuraciones.keyCliente)/\(Configuraciones.keyNombre)")
+        let ref = Database.database().reference().child(Configuraciones.keyVentasBorrador).queryOrdered(byChild: "\(Configuraciones.keyFecha)")
         
         ref.observe(.value) { (DataSnapshot) in
-            self.ventas.removeAll()
+            self.valores.removeAll()
             for child in DataSnapshot.children {
                 if let snap = child as? DataSnapshot {
                     let dic = snap.value as! NSDictionary
                     dic.setValue(snap.key, forKey: Configuraciones.keyId)
-                    self.ventas.append(dic)
+                    self.valores.insert(dic, at: 0)
                 }
             }
-            self.tableViewVentas.reloadData()
+            self.actualizarDatos()
         
         }
         
       
     }
     
+    @IBAction func mostrarSinFinalizar(_ sender: Any) {
+        let select: UISwitch! = sender  as? UISwitch
+        mostrarSoloDeudas = select.isOn
+        actualizarDatos()
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AgregarVentaSegue",
@@ -42,18 +51,45 @@ class VentasVC: UIViewController {
         }
     }
     
+    private func actualizarDatos() {
+        valoresParaMostrar.removeAll()
+        
+        for valor in valores {
+            let cliente: NSDictionary = (valor.value(forKey: Configuraciones.keyCliente) as? NSDictionary)!
+            
+            let nombre: String = cliente.value(forKey: Configuraciones.keyNombre) as? String ?? ""
+            let telefono: String = cliente.value(forKey: Configuraciones.keyTelefono) as? String ?? ""
+            let ventaTerminada: Bool = valor.value(forKey: Configuraciones.keyPagosFinalizados) as? Bool ?? false
+            if nombre.lowercased().contains(textoSeleccionado.lowercased())||telefono.lowercased().contains(textoSeleccionado.lowercased())||textoSeleccionado.isEmpty{
+                if mostrarSoloDeudas {
+                    if !ventaTerminada {
+                        valoresParaMostrar.append(valor)
+                    }
+                }
+                else {
+                    valoresParaMostrar.append(valor)
+                }
+                
+            }
+        }
+        
+        tableViewVentas.reloadData()
+    }
+    
 }
 
 extension VentasVC:UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ventas.count
+        return valoresParaMostrar.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celda = tableView.dequeueReusableCell(withIdentifier: "VentaCelda", for: indexPath) as! VideoCell
         
-        let cliente = ventas[indexPath.row].value(forKey: Configuraciones.keyCliente) as! NSDictionary
-        let fecha = ventas[indexPath.row].value(forKey: Configuraciones.keyFecha) as! String
+        let cliente = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCliente) as! NSDictionary
+        let fecha = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyFecha) as! String
+        let pagosFinalizados = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyPagosFinalizados) as! Bool
+        
         
         let index = fecha.index(fecha.startIndex, offsetBy: 9)
 
@@ -63,14 +99,14 @@ extension VentasVC:UITableViewDataSource {
         //celda.textLabel?.text = cliente.value(forKey: Configuraciones.keyNombre) as? String
         //celda.detailTextLabel?.text = String( fecha2 )
         
-        let total: Double = (ventas[indexPath.row].value(forKey: Configuraciones.keyTotal) as! Double)
+        let total: Double = (valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyTotal) as! Double)
         
-        var adeudo: Double = ventas[indexPath.row].value(forKey: Configuraciones.keyPagoInicialV) as! Double
-        
-        
+        var adeudo: Double = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyPagoInicialV) as! Double
         
         
-        if let pagos = ventas[indexPath.row].value(forKey: Configuraciones.keyPagos) as? [NSDictionary] {
+        
+        
+        if let pagos = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyPagos) as? [NSDictionary] {
             for pago in pagos {
                 adeudo = adeudo + (Double(pago.value(forKey: Configuraciones.keyPago) as! String)!)
             }
@@ -82,6 +118,12 @@ extension VentasVC:UITableViewDataSource {
         celda.Titulo.text = cliente.value(forKey: Configuraciones.keyNombre) as? String
         celda.Fecha.text = String( fecha2 )
         celda.Adeudo.text = "\(Configuraciones.txtAdeudo): \(String( total - adeudo ))"
+        celda.Total.text = "\(Configuraciones.keyTotal): \(String( total ))"
+        
+        celda.Adeudo.textColor = UIColor.black
+        if adeudo<total&&(!pagosFinalizados) {
+            celda.Adeudo.textColor = UIColor.red
+        }
         
         return celda
     
@@ -93,7 +135,7 @@ extension VentasVC:UITableViewDataSource {
         if (editingStyle == .delete) {
             var ref: DatabaseReference!
             ref = Database.database().reference()
-            ref.child(Configuraciones.keyVentasBorrador).child(ventas[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+            ref.child(Configuraciones.keyVentasBorrador).child(valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
         }
         
     }
@@ -103,7 +145,15 @@ extension VentasVC:UITableViewDataSource {
 
 extension VentasVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "AgregarVentaSegue", sender: ventas[indexPath.row] as NSDictionary)
+        self.performSegue(withIdentifier: "AgregarVentaSegue", sender: valoresParaMostrar[indexPath.row] as NSDictionary)
         tableView.deselectRow(at: indexPath, animated: true)
     }
+}
+extension VentasVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        textoSeleccionado = searchText
+        actualizarDatos()
+    }
+  
+  
 }
