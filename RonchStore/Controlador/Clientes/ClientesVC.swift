@@ -106,6 +106,9 @@ extension ClientesVC: UISearchBarDelegate {
         textoSeleccionado = searchText
         actualizarDatos()
     }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
   
   
 }

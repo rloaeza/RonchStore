@@ -40,7 +40,7 @@
 		62CC2AF322E97F220042BE2D /* Mapas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CC2AF222E97F220042BE2D /* Mapas.swift */; };
 		62E5B32A22E2D9180080A4A0 /* TextFieldDeletage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E5B32922E2D9180080A4A0 /* TextFieldDeletage.swift */; };
 		62EADFC9232B177100E49BA6 /* ClienteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EADFC8232B177100E49BA6 /* ClienteVC.swift */; };
-		62FC219523668BB90022690C /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FC219423668BB90022690C /* VideoCell.swift */; };
+		62FC219523668BB90022690C /* VentaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FC219423668BB90022690C /* VentaCell.swift */; };
 		62FC219723669A0F0022690C /* ProductoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FC219623669A0F0022690C /* ProductoCell.swift */; };
 		62FC21992366A0FC0022690C /* ProductoCompletoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FC21982366A0FC0022690C /* ProductoCompletoCell.swift */; };
 		D0182B030A549135EAEED511 /* Pods_RonchStoreUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA3BD75B649D3F72D658339 /* Pods_RonchStoreUITests.framework */; };
@@ -103,7 +103,7 @@
 		62CC2AF222E97F220042BE2D /* Mapas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapas.swift; sourceTree = "<group>"; };
 		62E5B32922E2D9180080A4A0 /* TextFieldDeletage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDeletage.swift; sourceTree = "<group>"; };
 		62EADFC8232B177100E49BA6 /* ClienteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteVC.swift; sourceTree = "<group>"; };
-		62FC219423668BB90022690C /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
+		62FC219423668BB90022690C /* VentaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VentaCell.swift; sourceTree = "<group>"; };
 		62FC219623669A0F0022690C /* ProductoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductoCell.swift; sourceTree = "<group>"; };
 		62FC21982366A0FC0022690C /* ProductoCompletoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductoCompletoCell.swift; sourceTree = "<group>"; };
 		7CA3BD75B649D3F72D658339 /* Pods_RonchStoreUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RonchStoreUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -287,7 +287,7 @@
 			children = (
 				62793FB322DE40B600D2323C /* VentaAgregarVC.swift */,
 				621C6DD522DFEDB0003508EB /* VentasVC.swift */,
-				62FC219423668BB90022690C /* VideoCell.swift */,
+				62FC219423668BB90022690C /* VentaCell.swift */,
 			);
 			path = Ventas;
 			sourceTree = "<group>";
@@ -535,7 +535,7 @@
 				626FFB05232A9A1E00A445DA /* TallaVC.swift in Sources */,
 				62197CF922E15439007F6F7F /* PedidoAgregarVC.swift in Sources */,
 				621C6DD622DFEDB0003508EB /* VentasVC.swift in Sources */,
-				62FC219523668BB90022690C /* VideoCell.swift in Sources */,
+				62FC219523668BB90022690C /* VentaCell.swift in Sources */,
 				625579BF2326D765003EB955 /* MarcaVC.swift in Sources */,
 				62B266DA23341E06001DC5A2 /* ProductosVentaVC.swift in Sources */,
 				62197CFD22E17637007F6F7F /* Mensajes.swift in Sources */,

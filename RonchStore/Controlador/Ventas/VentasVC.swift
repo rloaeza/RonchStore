@@ -84,7 +84,7 @@ extension VentasVC:UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "VentaCelda", for: indexPath) as! VideoCell
+        let celda = tableView.dequeueReusableCell(withIdentifier: "VentaCelda", for: indexPath) as! VentaCell
         
         let cliente = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCliente) as! NSDictionary
         let fecha = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyFecha) as! String
@@ -153,6 +153,10 @@ extension VentasVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         textoSeleccionado = searchText
         actualizarDatos()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
     }
   
   

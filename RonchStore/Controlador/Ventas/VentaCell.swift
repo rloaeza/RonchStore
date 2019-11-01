@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VideoCell: UITableViewCell {
+class VentaCell: UITableViewCell {
     
     @IBOutlet weak var Titulo: UILabel!
     @IBOutlet weak var Adeudo: UILabel!
