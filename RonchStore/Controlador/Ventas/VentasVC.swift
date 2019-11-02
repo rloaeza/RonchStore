@@ -88,8 +88,9 @@ extension VentasVC:UITableViewDataSource {
         
         let cliente = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCliente) as! NSDictionary
         let fecha = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyFecha) as! String
-        let pagosFinalizados = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyPagosFinalizados) as! Bool
+        let pagosFinalizados = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyPagosFinalizados) as? Bool ?? false
         
+        let nVenta = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyContador) as? Int ?? -1
         
         let index = fecha.index(fecha.startIndex, offsetBy: 9)
 
@@ -119,6 +120,7 @@ extension VentasVC:UITableViewDataSource {
         celda.Fecha.text = String( fecha2 )
         celda.Adeudo.text = "\(Configuraciones.txtAdeudo): \(String( total - adeudo ))"
         celda.Total.text = "\(Configuraciones.keyTotal): \(String( total ))"
+        celda.NumVenta.text = "# \(nVenta)"
         
         celda.Adeudo.textColor = UIColor.black
         if adeudo<total&&(!pagosFinalizados) {

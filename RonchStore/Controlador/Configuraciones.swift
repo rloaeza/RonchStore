@@ -55,6 +55,7 @@ class Configuraciones{
     static let keyPagoSemanas = "Pago Semanas"
     static let keyPagosFinalizados = "Pagos Finalizados"
     
+    static let keyContador = "Contador"
     
     
     static let txtAdeudo = "Adeudo"
@@ -123,7 +124,13 @@ class Configuraciones{
         return newData.key!
     }
     
-    
+    static func guardarValorDirecto(Reference ref: DatabaseReference!, KeyNode keyNode: String, KeyValue keyValue: String, Value val: Any) {
+        var newData: DatabaseReference!    
+        newData = ref.child(keyNode)
+        newData.child(keyValue).setValue(val)
+        
+        
+    }
     static func calcularTotalPagos(Pagos pagos: [NSDictionary]) -> Double {
         var total: Double = 0.0
         for p in pagos {

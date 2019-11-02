@@ -29,6 +29,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     var venta: NSDictionary? = nil
     var ref: DatabaseReference!
     var codigo: String? = nil
+    var contador: Int? = nil
     
     var cliente: NSDictionary? = nil
     
@@ -145,6 +146,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         
         if venta != nil {
             codigo = venta?.value(forKey: Configuraciones.keyId) as? String
+            contador = venta?.value(forKey: Configuraciones.keyContador) as? Int
             cliente = venta?.value(forKey: Configuraciones.keyCliente) as? NSDictionary
             botonCliente.setTitle(cliente?.value(forKey: Configuraciones.keyNombre) as? String, for: .normal)
             productosVenta = venta?.value(forKey: Configuraciones.keyProductos) as? [NSDictionary] ?? []
@@ -249,6 +251,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     }
     
     func guardarValores() {
+        
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyProductos, Value: productosVenta)
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoSemanas, Value: pagoSemanas)
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoInicialP, Value: pagoInicialP)
@@ -256,6 +259,19 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyTotal, Value: totalVenta)
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFecha, Value: Configuraciones.fecha())
         
+        if contador == nil {
+            var ref: DatabaseReference!
+            ref = Database.database().reference()
+            ref.child(Configuraciones.keyContador).observeSingleEvent(of: .value) { (DataSnapshot) in
+                let dic  = DataSnapshot.value as! NSDictionary
+                self.contador = dic.value(forKey: "Venta") as? Int ?? 0
+                self.contador = self.contador! + 1
+                self.codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: self.codigo, KeyValue: Configuraciones.keyContador, Value: self.contador! )
+                
+                Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: Configuraciones.keyContador, KeyValue: "Venta", Value: self.contador!)
+            }
+            
+        }
         
     }
     
