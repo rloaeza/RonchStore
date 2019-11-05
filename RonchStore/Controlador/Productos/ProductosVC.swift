@@ -42,7 +42,7 @@ class ProductosVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        
+        /*
         
         let ref = Database.database().reference().child(Configuraciones.keyProductos).queryOrdered(byChild: Configuraciones.keyMarca)
         
@@ -56,7 +56,9 @@ class ProductosVC: UIViewController {
                 }
             }
             self.actualizarDatos()
-        }
+        }*/
+        valores = Datos.getProductos(Patron: "")
+        actualizarDatos()
     }
     
     
@@ -81,24 +83,8 @@ class ProductosVC: UIViewController {
     
     
     private func actualizarDatos() {
-        valoresParaMostrar.removeAll()
         
-        for valor in valores {
-            let categoria: String = valor.value(forKey: Configuraciones.keyCategorias) as? String ?? ""
-            if  categoria == categoriaSeleccionada  || categoriaSeleccionada.isEmpty {
-                let marca: String = valor.value(forKey: Configuraciones.keyMarca) as? String ?? ""
-                if  marca == marcaSeleccionada  || marcaSeleccionada.isEmpty {
-                    let talla: String = valor.value(forKey: Configuraciones.keyTalla) as? String ?? ""
-                    if  talla == tallaSeleccionada  || tallaSeleccionada.isEmpty {
-                        let nombre: String = valor.value(forKey: Configuraciones.keyNombre) as? String ?? ""
-                        if nombre.lowercased().contains(textoSeleccionado.lowercased())||marca.lowercased().contains(textoSeleccionado.lowercased())||categoria.lowercased().contains(textoSeleccionado.lowercased())||textoSeleccionado.isEmpty{
-                            valoresParaMostrar.append(valor)
-                        }
-                        
-                    }
-                }
-            }
-        }
+        valoresParaMostrar = Datos.getProductos(Patron: textoSeleccionado)
         productosViewControler.reloadData()
     }
     
@@ -138,7 +124,7 @@ extension ProductosVC:UITableViewDataSource {
             celda.Existencia.textColor = UIColor.red
         }
 
-        
+        /*
         let ruta: String = "\(Configuraciones.keyProductos)/\(valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String)"
         
         
@@ -153,6 +139,11 @@ extension ProductosVC:UITableViewDataSource {
            }
         }
         
+
+        */
+        if let imagen = Datos.ProductosFotos[valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String] as? Data {
+            celda.Imagen.image = UIImage(data: imagen)
+        }
         
         
         return celda

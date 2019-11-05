@@ -41,7 +41,7 @@ class ProductosListaVC: UIViewController {
     
     
     private func actualizarDatos() {
-        valoresParaMostrar.removeAll()
+        /*valoresParaMostrar.removeAll()
         
         for valor in valores {
             let talla: String = valor.value(forKey: Configuraciones.keyTalla) as? String ?? ""
@@ -53,7 +53,8 @@ class ProductosListaVC: UIViewController {
                 valoresParaMostrar.append(valor)
             }
         }
-        
+        */
+        valoresParaMostrar = Datos.getProductos(Patron: textoSeleccionado)
         productosViewController.reloadData()
     }
     
@@ -63,7 +64,7 @@ class ProductosListaVC: UIViewController {
         super.viewDidLoad()
         
         
-        
+        /*
         let ref = Database.database().reference().child(Configuraciones.keyProductos).queryOrdered(byChild: Configuraciones.keyNombre)
         
         ref.observe(.value) { (DataSnapshot) in
@@ -77,6 +78,9 @@ class ProductosListaVC: UIViewController {
             }
             self.actualizarDatos()
         }
+        */
+        valores = Datos.getProductos(Patron: "")
+        actualizarDatos()
         
     }
     
@@ -107,7 +111,7 @@ extension ProductosListaVC:UITableViewDataSource {
         celda.CostoVenta.text = "$ \( (valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as? String)! )"
         celda.Imagen.image = UIImage(named: "no_imagen")
         
-        
+        /*
         let ruta: String = "\(Configuraciones.keyProductos)/\(valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String)"
                
                
@@ -121,6 +125,13 @@ extension ProductosListaVC:UITableViewDataSource {
                 }
             }
         }
+        
+        
+        */
+        if let imagen = Datos.ProductosFotos[valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String] as? Data {
+                  celda.Imagen.image = UIImage(data: imagen)
+              }
+        
         return celda
     }
     
