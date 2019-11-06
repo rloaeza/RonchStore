@@ -55,6 +55,9 @@ class Configuraciones{
     static let keyPagoSemanas = "Pago Semanas"
     static let keyPagosFinalizados = "Pagos Finalizados"
     
+    static let keyListas = "Listas"
+    
+    
     static let keyContador = "Contador"
     
     

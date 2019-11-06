@@ -20,43 +20,13 @@ class ProductosVC: UIViewController {
     @IBOutlet weak var botonMarca: UIButton!
     @IBOutlet weak var botonTalla: UIButton!
     
-    var categoriaSeleccionada: String = ""
-    var marcaSeleccionada: String = ""
-    var tallaSeleccionada: String = ""
     var textoSeleccionado: String = ""
     
 
-    @IBAction func botonLimpiar(_ sender: Any) {
-        tallaSeleccionada = ""
-        marcaSeleccionada = ""
-        categoriaSeleccionada = ""
-        botonTalla.setTitle(Configuraciones.keyTalla, for: .normal)
-        botonMarca.setTitle(Configuraciones.keyMarca, for: .normal)
-        botonCategoria.setTitle(Configuraciones.keyCategorias, for: .normal)
-        actualizarDatos()
-    }
     @IBOutlet weak var productosViewControler: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
-        /*
-        
-        let ref = Database.database().reference().child(Configuraciones.keyProductos).queryOrdered(byChild: Configuraciones.keyMarca)
-        
-        ref.observe(.value) { (DataSnapshot) in
-            self.valores.removeAll()
-            for child in DataSnapshot.children {
-                if let snap = child as? DataSnapshot {
-                    let dic = snap.value as? NSDictionary
-                    dic?.setValue(snap.key, forKey: Configuraciones.keyId)
-                    self.valores.append(dic!)
-                }
-            }
-            self.actualizarDatos()
-        }*/
         valores = Datos.getProductos(Patron: "")
         actualizarDatos()
     }
@@ -66,19 +36,7 @@ class ProductosVC: UIViewController {
         if segue.identifier == "ProductoAgregarSegue",
             let vc = segue.destination as? ProductoAgregarVC {
             vc.producto = sender as? NSDictionary
-        }
-        if segue.identifier == "TallaDesdeProductos",
-           let vc = segue.destination as? TallaVC {
-            vc.delegate = self
-        }
-        if segue.identifier == "MarcaDesdeProducto",
-            let vc = segue.destination as? MarcaVC {
-            vc.delegate = self
-        }
-        if segue.identifier == "CategoriaDesdeProducto",
-            let vc = segue.destination as? CategoriaVC {
-            vc.delegate = self
-        }
+        }        
     }
     
     
@@ -123,24 +81,6 @@ extension ProductosVC:UITableViewDataSource {
             
             celda.Existencia.textColor = UIColor.red
         }
-
-        /*
-        let ruta: String = "\(Configuraciones.keyProductos)/\(valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String)"
-        
-        
-        NetworkManager.isReachableViaWiFi { (NetworkManager) in
-            
-            let userRef = Configuraciones.storageRef.child(ruta)
-            userRef.getData(maxSize: 10*1024*1024) { (data, error) in
-               if error == nil {
-                celda.Imagen.image = UIImage(data: data!)
-                   
-               }
-           }
-        }
-        
-
-        */
         if let imagen = Datos.ProductosFotos[valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String] as? Data {
             celda.Imagen.image = UIImage(data: imagen)
         }
@@ -166,32 +106,6 @@ extension ProductosVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "ProductoAgregarSegue", sender: valoresParaMostrar[indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-}
-
-
-
-
-extension ProductosVC: CategoriaVCDelegate {
-    func categoriaSeleccionada(nombre: String) {
-        botonCategoria.setTitle(nombre, for: .normal)
-        categoriaSeleccionada = nombre
-        actualizarDatos()
-    }
-}
-
-extension ProductosVC: MarcaVCDelegate {
-    func marcaSeleccionada(nombre: String) {
-        botonMarca.setTitle(nombre, for: .normal)
-        marcaSeleccionada = nombre
-        actualizarDatos()
-    }
-}
-extension ProductosVC: TallaVCDelegate {
-    func tallaSeleccionada(nombre: String) {
-        botonTalla.setTitle(nombre, for: .normal)
-        tallaSeleccionada = nombre
-        actualizarDatos()
     }
 }
 

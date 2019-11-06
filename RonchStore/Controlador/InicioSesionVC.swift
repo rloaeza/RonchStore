@@ -22,6 +22,7 @@ class InicioSesionVC: UIViewController {
             if error == nil {
                 Datos.cargarClientes()
                 Datos.cargarProductos()
+                Datos.cargarListas()
                 
                 
                 var ref: DatabaseReference!

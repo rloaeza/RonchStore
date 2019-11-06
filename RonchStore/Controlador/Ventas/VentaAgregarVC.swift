@@ -386,10 +386,13 @@ extension VentaAgregarVC: ClienteVCDelegate {
 
 
 extension VentaAgregarVC: ProductosListaVCDelegate {
-    func productoSeleccionado(producto: NSDictionary) {
-        productosVenta.append(producto)
-        self.tableViewProductos.reloadData()
-        totalVenta += Double(producto.value(forKey: Configuraciones.keyCostoVenta) as! String)!
-        calcularCostos(Guardar: true)
+    func productoSeleccionado(productos: [NSDictionary]) {
+        for producto in productos {
+            productosVenta.append(producto)
+            self.tableViewProductos.reloadData()
+            totalVenta += Double(producto.value(forKey: Configuraciones.keyCostoVenta) as! String)!
+            calcularCostos(Guardar: true)
+        }
+        
     }
 }

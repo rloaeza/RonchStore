@@ -48,8 +48,8 @@ class Datos {
     
     // MARK: - Productos
     
+    static var ProductosCargaInicial: Bool = true
     static var Productos: [NSDictionary] = []
-    
     static var ProductosFotos:Dictionary = [String:Any]()
     
     static func cargarProductos() {
@@ -62,19 +62,20 @@ class Datos {
                     let dic = snap.value as? NSDictionary
                     dic?.setValue(snap.key, forKey: Configuraciones.keyId)
                     Datos.Productos.append(dic!)
-
-
-                    let ruta: String = "\(Configuraciones.keyProductos)/\(dic!.value(forKey: Configuraciones.keyId)! as! String)"
-                    NetworkManager.isReachableViaWiFi { (NetworkManager) in
-                        let userRef = Configuraciones.storageRef.child(ruta)
-                        userRef.getData(maxSize: 10*1024*1024) { (data, error) in
-                           if error == nil {
-                            ProductosFotos[snap.key] = data
-                            }
-                       }
+                    if ProductosCargaInicial {
+                        let ruta: String = "\(Configuraciones.keyProductos)/\(dic!.value(forKey: Configuraciones.keyId)! as! String)"
+                        NetworkManager.isReachableViaWiFi { (NetworkManager) in
+                            let userRef = Configuraciones.storageRef.child(ruta)
+                            userRef.getData(maxSize: 10*1024*1024) { (data, error) in
+                               if error == nil {
+                                ProductosFotos[snap.key] = data
+                                }
+                           }
+                        }
                     }
                 }
             }
+            ProductosCargaInicial = false
         }
     }
     
@@ -94,6 +95,34 @@ class Datos {
         return ProductosConPatron
     }
     
+    // MARK: - Listas
     
+    static var Listas: [NSDictionary] = []
     
+    static func cargarListas() {
+        
+        let ref: DatabaseReference! = Database.database().reference().child(Configuraciones.keyListas)
+        
+        ref.observe(.value) { (DataSnapshot) in
+            Datos.Listas.removeAll()
+            for child in DataSnapshot.children {
+                if let snap = child as? DataSnapshot {
+                    let dic = snap.value as? NSDictionary
+                    dic?.setValue(snap.key, forKey: Configuraciones.keyId)
+                    Datos.Listas.append(dic!)
+                }
+            }
+        }
+    }
+    
+    static func getListas(Patron patron: String)->[NSDictionary] {
+        var ListasConPatron: [NSDictionary] = []
+        for lista in Datos.Listas {
+            let nombre: String = lista.value(forKey: Configuraciones.keyNombre) as? String ?? ""
+            if nombre.lowercased().contains(patron)||patron.isEmpty {
+                ListasConPatron.append(lista)
+            }
+        }
+        return ListasConPatron
+    }
 }
