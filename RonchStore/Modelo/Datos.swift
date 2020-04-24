@@ -4,7 +4,7 @@
 //
 //  Created by Roberto Loaeza Valerio on 04/11/19.
 //  Copyright © 2019 Roberto Loaeza Valerio. All rights reserved.
-// Ultimo cambio
+// 
 
 import Foundation
 import FirebaseDatabase
@@ -118,7 +118,11 @@ class Datos {
     static func getListas(Patron patron: String)->[NSDictionary] {
         var ListasConPatron: [NSDictionary] = []
         for lista in Datos.Listas {
-            let nombre: String = lista.value(forKey: Configuraciones.keyNombre) as? String ?? ""
+            let cliente: NSDictionary = lista.value(forKey: Configuraciones.keyCliente) as? NSDictionary ?? [:]
+            
+            //let nombre: String = cliente.value(forKey: Configuraciones.keyCliente) as? String ?? ""
+            
+            let nombre: String = cliente.value(forKey: Configuraciones.keyNombre) as? String ?? ""
             if nombre.lowercased().contains(patron)||patron.isEmpty {
                 ListasConPatron.append(lista)
             }

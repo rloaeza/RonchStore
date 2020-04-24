@@ -23,6 +23,9 @@ class InicioSesionVC: UIViewController {
                 Datos.cargarClientes()
                 Datos.cargarProductos()
                 Datos.cargarListas()
+                var valores: [NSDictionary] = []
+                valores = Datos.getListas(Patron: "")
+
                 
                 
                 var ref: DatabaseReference!

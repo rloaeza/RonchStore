@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OdQ-qk-vdL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OdQ-qk-vdL">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -435,10 +435,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PedidoCelda" textLabel="anQ-Ty-eYe" detailTextLabel="NUM-oV-BSO" style="IBUITableViewCellStyleValue1" id="ZaX-MD-8NM">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZaX-MD-8NM" id="Boa-iD-9ZW">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="anQ-Ty-eYe">
@@ -1495,10 +1495,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProductoCelda" textLabel="f9o-Q2-AyA" detailTextLabel="gO5-xu-8Pt" style="IBUITableViewCellStyleValue1" id="csO-IM-5VT">
-                                        <rect key="frame" x="0.0" y="28" width="281" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="281" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="csO-IM-5VT" id="ped-Rn-kDP">
-                                            <rect key="frame" x="0.0" y="0.0" width="281" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="281" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f9o-Q2-AyA">
@@ -1594,10 +1594,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PagoCelda" textLabel="udW-M2-PmG" detailTextLabel="Ewt-7E-Ycq" style="IBUITableViewCellStyleValue1" id="gH6-db-K5W">
-                                        <rect key="frame" x="0.0" y="28" width="281" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="281" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gH6-db-K5W" id="Ev6-mB-2gy">
-                                            <rect key="frame" x="0.0" y="0.0" width="281" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="281" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="udW-M2-PmG">
@@ -1684,10 +1684,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProductoCelda" textLabel="XEh-sN-dcD" detailTextLabel="rro-fr-Ug8" style="IBUITableViewCellStyleValue1" id="v1k-If-acJ">
-                                        <rect key="frame" x="0.0" y="28" width="281" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="281" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="v1k-If-acJ" id="foA-4r-JsS">
-                                            <rect key="frame" x="0.0" y="0.0" width="281" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="281" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XEh-sN-dcD">
@@ -2418,7 +2418,7 @@
                                     <constraint firstAttribute="height" constant="609" id="hJc-Lb-f1l"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="NmF-Di-hHs">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProductoCelda" id="NmF-Di-hHs">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NmF-Di-hHs" id="fzr-Yj-SGh">
@@ -2427,6 +2427,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="h7x-Mh-bwM" id="q5v-yd-jxh"/>
+                                    <outlet property="delegate" destination="h7x-Mh-bwM" id="CBj-WY-tnL"/>
+                                </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jp7-MO-pSh">
                                 <rect key="frame" x="81.5" y="65" width="312.5" height="30"/>
@@ -2460,12 +2464,13 @@
                     <navigationItem key="navigationItem" title="Lista de productos" id="9wg-0b-DBz">
                         <barButtonItem key="rightBarButtonItem" image="adicionar" id="MBx-ri-czB">
                             <connections>
-                                <segue destination="MZV-1O-sz6" kind="show" id="M6l-Nq-CfR"/>
+                                <segue destination="MZV-1O-sz6" kind="show" identifier="ProductosDesdeNuevaLista" id="M6l-Nq-CfR"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="botonCliente" destination="jp7-MO-pSh" id="zoa-uc-lip"/>
+                        <outlet property="tableViewProductos" destination="W7s-Os-ZNe" id="Aci-I7-DVh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OJE-M7-bFb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2511,12 +2516,13 @@
                     <navigationItem key="navigationItem" title="Listas de productos" id="32i-hm-tGi">
                         <barButtonItem key="rightBarButtonItem" image="adicionar" id="Bw2-M7-pqD">
                             <connections>
-                                <segue destination="h7x-Mh-bwM" kind="show" id="JYq-gO-qjw"/>
+                                <segue destination="h7x-Mh-bwM" kind="show" identifier="AgregarListaSegue" id="JYq-gO-qjw"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tablaVC" destination="prp-Te-zBC" id="54m-o0-WSj"/>
+                        <outlet property="tableViewLista" destination="prp-Te-zBC" id="hCu-yz-fSJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JeY-GG-9cI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2537,10 +2543,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UsuarioCelda" textLabel="VDH-dM-XQ8" detailTextLabel="JPw-fD-SnK" style="IBUITableViewCellStyleValue1" id="bwx-WJ-k4d">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bwx-WJ-k4d" id="i4q-Fr-Rwj">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VDH-dM-XQ8">
@@ -2787,6 +2793,14 @@
             <point key="canvasLocation" x="1330" y="-518"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="2rT-YG-AeO"/>
+        <segue reference="M6l-Nq-CfR"/>
+        <segue reference="4sc-Xf-C90"/>
+        <segue reference="gTH-1x-Y73"/>
+        <segue reference="QPv-37-d1C"/>
+        <segue reference="n2l-ff-MnN"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="adicionar" width="25" height="25"/>
         <image name="casa" width="100" height="100"/>
@@ -2801,12 +2815,4 @@
         <image name="tab_venta" width="25" height="25"/>
         <image name="user" width="75" height="75"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="2rT-YG-AeO"/>
-        <segue reference="M6l-Nq-CfR"/>
-        <segue reference="4sc-Xf-C90"/>
-        <segue reference="gTH-1x-Y73"/>
-        <segue reference="FMc-NH-kMf"/>
-        <segue reference="n2l-ff-MnN"/>
-    </inferredMetricsTieBreakers>
 </document>
