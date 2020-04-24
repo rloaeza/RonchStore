@@ -2410,6 +2410,9 @@
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Enviar lista"/>
+                                <connections>
+                                    <action selector="enviarLista:" destination="h7x-Mh-bwM" eventType="touchUpInside" id="JOS-fU-8Nm"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="W7s-Os-ZNe">
                                 <rect key="frame" x="0.0" y="99" width="414" height="609"/>

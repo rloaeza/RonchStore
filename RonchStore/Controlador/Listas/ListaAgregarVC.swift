@@ -9,7 +9,10 @@
 import UIKit
 import FirebaseDatabase
 
-class ListaAgregarVC: UIViewController {
+import MessageUI
+
+
+class ListaAgregarVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
     var lista: NSDictionary? = nil
     
@@ -24,6 +27,21 @@ class ListaAgregarVC: UIViewController {
     @IBOutlet weak var botonCliente: UIButton!
     @IBOutlet weak var tableViewProductos: UITableView!
     
+    @IBAction func enviarLista(_ sender: Any) {
+        if MFMessageComposeViewController.canSendText() {
+            var mensaje = "\(Configuraciones.Titulo) \n"
+            
+            mensaje += "Visita: http://url/lista.php?\(codigo!)\n"
+            let messageVC = MFMessageComposeViewController()
+                messageVC.body = mensaje
+                messageVC.recipients = [cliente?.value(forKey: Configuraciones.keyTelefono) as! String]
+                messageVC.messageComposeDelegate = self
+                self.present(messageVC, animated: true, completion: nil)
+            }
+            else {
+                Configuraciones.alert(Titulo: "Alerta", Mensaje: "No es posible enviar mensajes", self, popView: false)
+            }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +74,26 @@ class ListaAgregarVC: UIViewController {
                    vc.delegate = self
                }
     }
+    
+    
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+           var msg = ""
+           switch (result) {
+           case .cancelled:
+               msg = "Mensaje cancelado"
+           case .failed:
+               msg = "Error al enviar"
+           case .sent:
+               msg = "Mensaje enviado satisfactoriamente"
+           default:
+               break
+           }
+           
+           dismiss(animated: true, completion: nil)
+           Configuraciones.alert(Titulo: "Mensaje", Mensaje: msg, self, popView: true)
+       
+       }
     
 
 }
