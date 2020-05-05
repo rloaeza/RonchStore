@@ -22,7 +22,7 @@ class Configuraciones{
     static let keyCategorias = "Categorias"
     static let keyUsuarios = "Usuarios"
     static let keyAdmin = "Administrador"
-    
+    static let keyGastos = "Gastos"
     
     static let keyNombre = "Nombre"
     static let keyTelefono = "Telefono"

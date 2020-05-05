@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -102,9 +102,11 @@
                         <segue destination="MPy-Cb-G8M" kind="relationship" relationship="viewControllers" id="YMy-0H-H1J"/>
                         <segue destination="ca4-hg-1fw" kind="relationship" relationship="viewControllers" id="XRD-Wh-43U"/>
                         <segue destination="jFC-4C-bjv" kind="relationship" relationship="viewControllers" id="SlO-dY-yeI"/>
+                        <segue destination="NHN-Yz-r9h" kind="relationship" relationship="viewControllers" id="rT0-xO-jUr"/>
                         <segue destination="1As-Sh-qrv" kind="relationship" relationship="viewControllers" id="Zk6-c7-KLo"/>
                         <segue destination="ytc-ao-9Up" kind="relationship" relationship="viewControllers" id="gkE-fP-GQf"/>
                         <segue destination="llA-xA-lDd" kind="relationship" relationship="viewControllers" id="FDJ-M8-wSO"/>
+                        <segue destination="dMY-lO-SOL" kind="relationship" relationship="viewControllers" id="qsJ-TS-6HF"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DE7-dO-E14" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -126,7 +128,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S41-IG-MPb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="803" y="365"/>
+            <point key="canvasLocation" x="2623.1884057971015" y="364.95535714285711"/>
         </scene>
         <!--Clientes-->
         <scene sceneID="nAs-4k-OQc">
@@ -419,7 +421,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="brR-zo-9Tj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-549" y="-518"/>
+            <point key="canvasLocation" x="1271.0144927536232" y="-518.30357142857144"/>
         </scene>
         <!--Pedidos-->
         <scene sceneID="JGf-14-Lr3">
@@ -482,7 +484,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hDo-yV-9qH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-549" y="365"/>
+            <point key="canvasLocation" x="1271.0144927536232" y="364.95535714285711"/>
         </scene>
         <!--Ventas-->
         <scene sceneID="vpM-2C-CDp">
@@ -1223,7 +1225,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zJk-qZ-Y0N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3257.971014492754" y="364.95535714285711"/>
+            <point key="canvasLocation" x="5078.2608695652179" y="364.95535714285711"/>
         </scene>
         <!--Agregar Producto-->
         <scene sceneID="7M8-Mr-ebT">
@@ -1465,7 +1467,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Faq-4U-r9c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5989.8550724637689" y="-185.49107142857142"/>
+            <point key="canvasLocation" x="7810.1449275362329" y="-185.49107142857142"/>
         </scene>
         <!--Agregar Pago Venta-->
         <scene sceneID="zyU-VT-5V3">
@@ -1868,7 +1870,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LIg-fb-IlB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6849.275362318841" y="-185.49107142857142"/>
+            <point key="canvasLocation" x="8669.5652173913059" y="-185.49107142857142"/>
         </scene>
         <!--Categorias Lista-->
         <scene sceneID="9jX-6v-Ol3">
@@ -1928,7 +1930,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rYX-u3-oY0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5078.2608695652179" y="-185.49107142857142"/>
+            <point key="canvasLocation" x="6898.5507246376819" y="-185.49107142857142"/>
         </scene>
         <!--Clientes Lista-->
         <scene sceneID="FSH-hg-OZk">
@@ -2530,7 +2532,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JeY-GG-9cI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2742" y="-518"/>
+            <point key="canvasLocation" x="4560.8695652173919" y="-518.30357142857144"/>
         </scene>
         <!--Usuarios-->
         <scene sceneID="Tdp-WE-pu9">
@@ -2592,7 +2594,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wxV-cL-nFd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2039" y="345"/>
+            <point key="canvasLocation" x="-220.28985507246378" y="344.86607142857139"/>
         </scene>
         <!--Usuarios-->
         <scene sceneID="byc-Bd-IKZ">
@@ -2611,7 +2613,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rX0-EZ-tq9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2038" y="-518"/>
+            <point key="canvasLocation" x="-220.28985507246378" y="-518.30357142857144"/>
         </scene>
         <!--Usuario Venta Lista-->
         <scene sceneID="zhk-qG-ffp">
@@ -2793,13 +2795,311 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YcP-Hh-7Gt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1330" y="-518"/>
+            <point key="canvasLocation" x="3149.275362318841" y="-518.30357142857144"/>
+        </scene>
+        <!--Reportes-->
+        <scene sceneID="7Fs-UV-kHx">
+            <objects>
+                <viewController title="Reportes" id="c0H-wb-ze9" customClass="ReportesVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="btr-Ig-fwD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="v9d-IH-t4Z">
+                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="tEm-5V-Xx0">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tEm-5V-Xx0" id="Eaj-Jf-XAU">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="v9d-IH-t4Z" firstAttribute="top" secondItem="5fU-rH-rf3" secondAttribute="top" id="Pa2-7K-m1E"/>
+                            <constraint firstItem="v9d-IH-t4Z" firstAttribute="bottom" secondItem="5fU-rH-rf3" secondAttribute="bottom" id="Pbr-HH-GKY"/>
+                            <constraint firstItem="v9d-IH-t4Z" firstAttribute="leading" secondItem="5fU-rH-rf3" secondAttribute="leading" id="XeH-cp-KST"/>
+                            <constraint firstItem="v9d-IH-t4Z" firstAttribute="trailing" secondItem="5fU-rH-rf3" secondAttribute="trailing" id="eid-OZ-KaF"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="5fU-rH-rf3"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Reportes" id="fiG-c1-TXd">
+                        <rightBarButtonItems>
+                            <barButtonItem image="icon_finanzas" id="qck-d9-p3I"/>
+                            <barButtonItem image="icon_almacen" id="qae-0v-RZT">
+                                <connections>
+                                    <segue destination="kzp-YT-kSs" kind="show" id="dPQ-AO-mhv"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="05S-zW-A0T" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1526.0869565217392" y="344.86607142857139"/>
+        </scene>
+        <!--Reportes-->
+        <scene sceneID="QJu-08-zQs">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dMY-lO-SOL" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Reportes" image="tab_reportes" id="X8g-jW-Tap"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ocf-fX-Dyn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="c0H-wb-ze9" kind="relationship" relationship="rootViewController" id="Kbg-Cs-UY7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GCQ-Ya-NKR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1526.0869565217392" y="-518.30357142857144"/>
+        </scene>
+        <!--Reporte financiero-->
+        <scene sceneID="Whe-6M-xvX">
+            <objects>
+                <viewController title="Reporte financiero" id="kzp-YT-kSs" customClass="ReportesVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eEP-AF-l1z">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Periodo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ym-Rr-5L2">
+                                <rect key="frame" x="51" y="96" width="59" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Categoría" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qWu-jV-2IH">
+                                <rect key="frame" x="35" y="125" width="75" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Marca" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5hF-OI-Bp1">
+                                <rect key="frame" x="62" y="154" width="48" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Talla" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lr7-Lr-hAZ">
+                                <rect key="frame" x="75" y="183" width="35" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="boh-2z-Hqo">
+                                <rect key="frame" x="0.0" y="224" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o51-bA-2PC">
+                                <rect key="frame" x="118" y="91" width="276" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="¿Periodo?"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Raz-YK-AF9">
+                                <rect key="frame" x="118" y="120" width="276" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="¿Categoría?"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ao9-cc-wQL">
+                                <rect key="frame" x="118" y="149" width="276" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="¿Marca?"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WhY-Vq-jXN">
+                                <rect key="frame" x="118" y="178" width="276" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="¿Talla?"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="UbH-We-h1e"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Reportes" id="ccM-2D-U6V">
+                        <rightBarButtonItems>
+                            <barButtonItem image="icon_finanzas" id="KPG-4h-qbk"/>
+                            <barButtonItem image="icon_almacen" id="m3k-k1-MQR"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UtC-Ea-PD2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2981" y="1179"/>
+        </scene>
+        <!--Gastos-->
+        <scene sceneID="7Vx-6R-32L">
+            <objects>
+                <viewController title="Gastos" id="q0o-IP-3Xv" customClass="ReportesVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Qih-BC-LDX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dAf-GZ-fKH">
+                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ListaCelda" id="naa-f2-bVv">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="naa-f2-bVv" id="CGH-PJ-H8V">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="dAf-GZ-fKH" firstAttribute="trailing" secondItem="ITj-DV-fVh" secondAttribute="trailing" id="3qd-o6-coX"/>
+                            <constraint firstItem="dAf-GZ-fKH" firstAttribute="bottom" secondItem="ITj-DV-fVh" secondAttribute="bottom" id="4C0-Fe-FW6"/>
+                            <constraint firstItem="dAf-GZ-fKH" firstAttribute="top" secondItem="ITj-DV-fVh" secondAttribute="top" id="VFD-41-98e"/>
+                            <constraint firstItem="dAf-GZ-fKH" firstAttribute="leading" secondItem="ITj-DV-fVh" secondAttribute="leading" id="naH-87-Xaj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ITj-DV-fVh"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Gastos" id="OCQ-ce-M89">
+                        <barButtonItem key="rightBarButtonItem" image="adicionar" id="xHQ-fK-Awr">
+                            <connections>
+                                <segue destination="iDL-fq-2wz" kind="show" id="7ie-bu-kgJ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qpJ-8P-xUl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3016" y="345"/>
+        </scene>
+        <!--Gastos-->
+        <scene sceneID="Cwc-vf-2Xb">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NHN-Yz-r9h" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Gastos" image="icon_finanzas" id="UJZ-jD-bH8"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="y5g-jA-JGa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="q0o-IP-3Xv" kind="relationship" relationship="rootViewController" id="pm4-xC-UQ1"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pzX-jo-Ykd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3017" y="-518"/>
+        </scene>
+        <!--Gastos-->
+        <scene sceneID="C9o-Fm-eoT">
+            <objects>
+                <viewController title="Gastos" id="iDL-fq-2wz" customClass="GastoVC" customModule="RonchStore" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oTo-en-nxg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CUJ-eV-g8M">
+                                <rect key="frame" x="0.0" y="44" width="414" height="569"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ListaCelda" id="B17-PN-27o">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="B17-PN-27o" id="WDf-22-i4f">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="iDL-fq-2wz" id="YQ3-wR-RLd"/>
+                                    <outlet property="delegate" destination="iDL-fq-2wz" id="zss-aF-dvN"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hcE-ul-Poa">
+                                <rect key="frame" x="123" y="710" width="273" height="30"/>
+                                <state key="normal" title="Agregar gasto"/>
+                                <connections>
+                                    <action selector="AgregarGastoLista:" destination="iDL-fq-2wz" eventType="touchUpInside" id="BsE-9p-cJK"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fecha" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Gm-UV-AIn">
+                                <rect key="frame" x="63" y="633" width="47" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monto" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DTh-TM-0ec">
+                                <rect key="frame" x="61" y="675" width="49" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Yi-j7-qa7">
+                                <rect key="frame" x="123" y="628" width="273" height="30"/>
+                                <state key="normal" title="Asignar fecha"/>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VKQ-LM-cbn">
+                                <rect key="frame" x="123" y="668" width="273" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hcE-ul-Poa" firstAttribute="top" secondItem="VKQ-LM-cbn" secondAttribute="bottom" constant="8" id="16d-sH-7Mc"/>
+                            <constraint firstItem="VKQ-LM-cbn" firstAttribute="top" secondItem="1Yi-j7-qa7" secondAttribute="bottom" constant="10" id="2DR-qM-lwk"/>
+                            <constraint firstItem="1Yi-j7-qa7" firstAttribute="leading" secondItem="1Gm-UV-AIn" secondAttribute="trailing" constant="13" id="31K-oz-lcJ"/>
+                            <constraint firstItem="CUJ-eV-g8M" firstAttribute="leading" secondItem="aeT-Ea-QLh" secondAttribute="leading" id="5Hi-ak-FX2"/>
+                            <constraint firstItem="VKQ-LM-cbn" firstAttribute="leading" secondItem="DTh-TM-0ec" secondAttribute="trailing" constant="13" id="GDY-zj-IIJ"/>
+                            <constraint firstItem="1Gm-UV-AIn" firstAttribute="top" secondItem="CUJ-eV-g8M" secondAttribute="bottom" constant="20" id="S4F-Nc-Km9"/>
+                            <constraint firstItem="CUJ-eV-g8M" firstAttribute="top" secondItem="oTo-en-nxg" secondAttribute="topMargin" constant="-12" id="XQP-t3-D4L"/>
+                            <constraint firstItem="aeT-Ea-QLh" firstAttribute="trailing" secondItem="VKQ-LM-cbn" secondAttribute="trailing" constant="18" id="ZCY-bR-OHg"/>
+                            <constraint firstItem="CUJ-eV-g8M" firstAttribute="trailing" secondItem="aeT-Ea-QLh" secondAttribute="trailing" id="bcZ-bG-I6F"/>
+                            <constraint firstItem="1Yi-j7-qa7" firstAttribute="top" secondItem="CUJ-eV-g8M" secondAttribute="bottom" constant="15" id="cSe-uP-64G"/>
+                            <constraint firstItem="aeT-Ea-QLh" firstAttribute="trailing" secondItem="1Yi-j7-qa7" secondAttribute="trailing" constant="18" id="dwI-W3-mI5"/>
+                            <constraint firstItem="DTh-TM-0ec" firstAttribute="top" secondItem="1Gm-UV-AIn" secondAttribute="bottom" constant="21" id="eGg-IR-1wu"/>
+                            <constraint firstItem="DTh-TM-0ec" firstAttribute="leading" secondItem="aeT-Ea-QLh" secondAttribute="leading" constant="61" id="fUf-kp-rG5"/>
+                            <constraint firstItem="aeT-Ea-QLh" firstAttribute="bottom" secondItem="hcE-ul-Poa" secondAttribute="bottom" constant="19" id="hTi-A7-z3F"/>
+                            <constraint firstItem="aeT-Ea-QLh" firstAttribute="trailing" secondItem="hcE-ul-Poa" secondAttribute="trailing" constant="18" id="lvZ-pc-GsB"/>
+                            <constraint firstItem="1Gm-UV-AIn" firstAttribute="leading" secondItem="aeT-Ea-QLh" secondAttribute="leading" constant="63" id="obm-F5-Vbf"/>
+                            <constraint firstItem="aeT-Ea-QLh" firstAttribute="bottom" secondItem="DTh-TM-0ec" secondAttribute="bottom" constant="63" id="rVE-n9-Dng"/>
+                            <constraint firstItem="hcE-ul-Poa" firstAttribute="leading" secondItem="aeT-Ea-QLh" secondAttribute="leading" constant="123" id="zve-9j-uP3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aeT-Ea-QLh"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Gasto" id="JyZ-LH-gOW">
+                        <barButtonItem key="rightBarButtonItem" image="adicionar" id="c32-Ta-WwR">
+                            <connections>
+                                <action selector="agregarGasto:" destination="iDL-fq-2wz" id="qC4-RG-5oT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="CUJ-eV-g8M" id="gj7-tw-wjW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FkC-Mu-dXX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3954" y="1166"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="2rT-YG-AeO"/>
-        <segue reference="M6l-Nq-CfR"/>
-        <segue reference="4sc-Xf-C90"/>
+        <segue reference="Fc3-xQ-NyK"/>
+        <segue reference="Hxc-DF-0o7"/>
         <segue reference="gTH-1x-Y73"/>
         <segue reference="QPv-37-d1C"/>
         <segue reference="n2l-ff-MnN"/>
@@ -2809,11 +3109,14 @@
         <image name="casa" width="100" height="100"/>
         <image name="cliente_add" width="25" height="25"/>
         <image name="credencial" width="100" height="100"/>
+        <image name="icon_almacen" width="25" height="25"/>
+        <image name="icon_finanzas" width="25" height="25"/>
         <image name="ronchsotre" width="1207" height="707"/>
         <image name="tab_cliente" width="25" height="25"/>
         <image name="tab_lista" width="25" height="25"/>
         <image name="tab_pedidos" width="25" height="25"/>
         <image name="tab_producto" width="25" height="25"/>
+        <image name="tab_reportes" width="25" height="25"/>
         <image name="tab_usuario" width="25" height="25"/>
         <image name="tab_venta" width="25" height="25"/>
         <image name="user" width="75" height="75"/>
