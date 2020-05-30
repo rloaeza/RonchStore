@@ -225,9 +225,11 @@ class ClienteAgregarVC: UIViewController{
 extension ClienteAgregarVC: ClienteContactosSistemaVCDelegate {
     func contactoSeleccionado(contacto: Contacto) {
         self.nombre.text = contacto.nombre
-        self.telefono.text = contacto.numero
-        self.calle.text = contacto.domicilio
+        self.telefono.text = contacto.telefono
+        self.calle.text = contacto.calle
         self.email.text = contacto.email
+        self.ciudad.text = contacto.ciudad
+        self.pais.text = contacto.pais
         
     }
     

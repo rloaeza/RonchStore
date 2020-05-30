@@ -132,7 +132,8 @@ extension ListaAgregarVC:UITableViewDataSource {
         let nombre = productosLista[indexPath.row].value(forKey: Configuraciones.keyNombre) as! String
         let marca = productosLista[indexPath.row].value(forKey: Configuraciones.keyMarca) as! String
         let talla = productosLista[indexPath.row].value(forKey: Configuraciones.keyTalla) as! String
-        let costo = productosLista[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String
+       
+        //let costo = productosLista[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String
         
         
         celda.textLabel?.text = String(indexPath.row + 1) + ") \(nombre) (\(marca)/\(talla))"

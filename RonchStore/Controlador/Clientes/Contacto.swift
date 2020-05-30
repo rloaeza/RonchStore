@@ -10,8 +10,10 @@ import Foundation
 
 struct Contacto {
     let nombre      : String
-    let apellidos   : String
-    let numero      : String
+    let telefono    : String
     let email       : String
-    let domicilio   : String
+    let calle       : String
+    let colonia     : String
+    let ciudad      : String
+    let pais        : String
 }

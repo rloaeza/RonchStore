@@ -33,7 +33,7 @@ class ClienteContactosSistemaVC: UIViewController {
                 print( "Permisos denegados" )
             }
             
-            if let error = error {
+            if error != nil {
                 print( "Error en contacto" )
             }
         }
@@ -46,16 +46,17 @@ class ClienteContactosSistemaVC: UIViewController {
         let key = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey, CNContactEmailAddressesKey, CNContactPostalAddressesKey] as [CNKeyDescriptor]
         
         let request = CNContactFetchRequest(keysToFetch: key)
+        request.sortOrder = CNContactSortOrder.givenName
         
         try! contactStore.enumerateContacts(with: request, usingBlock: { (contacto, apuntador) in
-            let nombre = contacto.givenName
-            let apellidos = contacto.familyName
-            let numero = contacto.phoneNumbers.first?.value.stringValue ?? ""
-            let email = contacto.emailAddresses.first?.value.uppercased ?? ""
-            let direccion = contacto.postalAddresses.first?.value.street ?? ""
+            let nombre = "\(contacto.givenName) \(contacto.familyName)"
+            let telefono = contacto.phoneNumbers.first?.value.stringValue ?? ""
+            let email = contacto.emailAddresses.first?.value.description ?? ""
+            let calle = contacto.postalAddresses.first?.value.street ?? ""
+            let ciudad = contacto.postalAddresses.first?.value.city ?? ""
+            let pais = contacto.postalAddresses.first?.value.country ?? ""
             
-            let contactoNuevo = Contacto(nombre: nombre, apellidos: apellidos, numero: numero, email: email, domicilio: direccion)
-            
+            let contactoNuevo = Contacto(nombre: nombre, telefono: telefono, email: email, calle: calle, colonia: "", ciudad: ciudad, pais: pais)
             self.listaContactos.append(contactoNuevo)
         })
     }
@@ -72,8 +73,8 @@ extension ClienteContactosSistemaVC:UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celda = tableView.dequeueReusableCell(withIdentifier: "Celda", for: indexPath)
         let contacto = listaContactos[indexPath.row]
-        celda.textLabel?.text = "\(contacto.nombre) \(contacto.apellidos)"
-        celda.detailTextLabel?.text = "\(contacto.numero)"
+        celda.textLabel?.text = "\(contacto.nombre) "
+        celda.detailTextLabel?.text = "\(contacto.telefono)"
         return celda
     }
     
@@ -81,7 +82,7 @@ extension ClienteContactosSistemaVC:UITableViewDataSource {
 }
 extension ClienteContactosSistemaVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var contacto = listaContactos[indexPath.row]
+        let contacto = listaContactos[indexPath.row]
         delegate?.contactoSeleccionado(contacto: contacto)
         
         self.navigationController?.popViewController(animated: true)
