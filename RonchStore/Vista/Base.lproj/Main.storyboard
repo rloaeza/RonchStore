@@ -99,12 +99,12 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="MPy-Cb-G8M" kind="relationship" relationship="viewControllers" id="YMy-0H-H1J"/>
                         <segue destination="ca4-hg-1fw" kind="relationship" relationship="viewControllers" id="XRD-Wh-43U"/>
-                        <segue destination="jFC-4C-bjv" kind="relationship" relationship="viewControllers" id="SlO-dY-yeI"/>
-                        <segue destination="NHN-Yz-r9h" kind="relationship" relationship="viewControllers" id="rT0-xO-jUr"/>
-                        <segue destination="1As-Sh-qrv" kind="relationship" relationship="viewControllers" id="Zk6-c7-KLo"/>
                         <segue destination="ytc-ao-9Up" kind="relationship" relationship="viewControllers" id="gkE-fP-GQf"/>
+                        <segue destination="1As-Sh-qrv" kind="relationship" relationship="viewControllers" id="Zk6-c7-KLo"/>
+                        <segue destination="jFC-4C-bjv" kind="relationship" relationship="viewControllers" id="SlO-dY-yeI"/>
+                        <segue destination="MPy-Cb-G8M" kind="relationship" relationship="viewControllers" id="YMy-0H-H1J"/>
+                        <segue destination="NHN-Yz-r9h" kind="relationship" relationship="viewControllers" id="rT0-xO-jUr"/>
                         <segue destination="llA-xA-lDd" kind="relationship" relationship="viewControllers" id="FDJ-M8-wSO"/>
                         <segue destination="dMY-lO-SOL" kind="relationship" relationship="viewControllers" id="qsJ-TS-6HF"/>
                     </connections>
@@ -387,7 +387,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lWv-kE-lwv"/>
                     </view>
-                    <navigationItem key="navigationItem" id="id8-9k-4Ze"/>
+                    <navigationItem key="navigationItem" id="id8-9k-4Ze">
+                        <barButtonItem key="rightBarButtonItem" image="agenda" id="UsF-nm-Frd">
+                            <connections>
+                                <segue destination="k5U-HO-66s" kind="show" id="bma-zn-wpH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <size key="freeformSize" width="414" height="896"/>
                     <connections>
                         <outlet property="calle" destination="9nQ-hf-zo1" id="Gel-7E-juk"/>
@@ -404,7 +410,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fAy-cb-SWK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4528" y="-1854"/>
+            <point key="canvasLocation" x="4094" y="-1838"/>
         </scene>
         <!--Pedidos-->
         <scene sceneID="97C-P9-9CN">
@@ -3095,17 +3101,76 @@
             </objects>
             <point key="canvasLocation" x="-3954" y="1166"/>
         </scene>
+        <!--Conctactos Lista-->
+        <scene sceneID="LUV-eC-ibg">
+            <objects>
+                <viewController title="Conctactos Lista" id="k5U-HO-66s" customClass="ClienteContactosSistemaVC" customModule="RonchStore" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JdP-aZ-meB">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JG5-u4-kBT">
+                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Celda" textLabel="nEz-W2-Hor" detailTextLabel="mVM-ml-JYO" style="IBUITableViewCellStyleSubtitle" id="THe-kH-nxl">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="THe-kH-nxl" id="haQ-pa-D9j">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nEz-W2-Hor">
+                                                    <rect key="frame" x="20" y="10" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mVM-ml-JYO">
+                                                    <rect key="frame" x="20" y="31.5" width="33" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="k5U-HO-66s" id="ekT-9U-ypG"/>
+                                    <outlet property="delegate" destination="k5U-HO-66s" id="1de-d8-wV0"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="JG5-u4-kBT" firstAttribute="leading" secondItem="p7s-io-Uzi" secondAttribute="leading" id="3BA-qH-L5L"/>
+                            <constraint firstItem="JG5-u4-kBT" firstAttribute="top" secondItem="p7s-io-Uzi" secondAttribute="top" id="55j-O1-Kj6"/>
+                            <constraint firstItem="JG5-u4-kBT" firstAttribute="trailing" secondItem="p7s-io-Uzi" secondAttribute="trailing" id="OdF-oA-0ML"/>
+                            <constraint firstItem="JG5-u4-kBT" firstAttribute="bottom" secondItem="p7s-io-Uzi" secondAttribute="bottom" id="taY-ka-qZC"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="p7s-io-Uzi"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Contactos" id="xAh-b8-u44"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oML-dn-WhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4886" y="-2285"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="2rT-YG-AeO"/>
         <segue reference="Fc3-xQ-NyK"/>
         <segue reference="Hxc-DF-0o7"/>
         <segue reference="gTH-1x-Y73"/>
-        <segue reference="QPv-37-d1C"/>
+        <segue reference="FMc-NH-kMf"/>
         <segue reference="n2l-ff-MnN"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="adicionar" width="25" height="25"/>
+        <image name="agenda" width="25" height="25"/>
         <image name="casa" width="100" height="100"/>
         <image name="cliente_add" width="25" height="25"/>
         <image name="credencial" width="100" height="100"/>
