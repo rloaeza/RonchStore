@@ -390,7 +390,7 @@
                     <navigationItem key="navigationItem" id="id8-9k-4Ze">
                         <barButtonItem key="rightBarButtonItem" image="agenda" id="UsF-nm-Frd">
                             <connections>
-                                <segue destination="k5U-HO-66s" kind="show" id="bma-zn-wpH"/>
+                                <segue destination="k5U-HO-66s" kind="show" identifier="ContactosDesdeAgregarCliente" id="bma-zn-wpH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -3162,7 +3162,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="2rT-YG-AeO"/>
-        <segue reference="Fc3-xQ-NyK"/>
+        <segue reference="M6l-Nq-CfR"/>
         <segue reference="Hxc-DF-0o7"/>
         <segue reference="gTH-1x-Y73"/>
         <segue reference="FMc-NH-kMf"/>

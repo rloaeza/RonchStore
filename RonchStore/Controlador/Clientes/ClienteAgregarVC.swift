@@ -207,7 +207,34 @@ class ClienteAgregarVC: UIViewController{
             limpiar()
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ContactosDesdeAgregarCliente",
+            let vc = segue.destination as? ClienteContactosSistemaVC {
+            vc.delegate = self
+        }
+    }
+
+    
+    
+    
 }
+
+
+
+extension ClienteAgregarVC: ClienteContactosSistemaVCDelegate {
+    func contactoSeleccionado(contacto: Contacto) {
+        self.nombre.text = contacto.nombre
+        self.telefono.text = contacto.numero
+        self.calle.text = contacto.domicilio
+        self.email.text = contacto.email
+        
+    }
+    
+    
+}
+
+
 
 
 extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

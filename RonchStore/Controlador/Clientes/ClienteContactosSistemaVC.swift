@@ -9,7 +9,14 @@
 import UIKit
 import Contacts
 
+protocol ClienteContactosSistemaVCDelegate {
+    func contactoSeleccionado(contacto: Contacto)
+}
+
 class ClienteContactosSistemaVC: UIViewController {
+    
+    var delegate: ClienteContactosSistemaVCDelegate?
+    
     
     var listaContactos = [Contacto]()
     var contactStore = CNContactStore()
@@ -52,6 +59,8 @@ class ClienteContactosSistemaVC: UIViewController {
             self.listaContactos.append(contactoNuevo)
         })
     }
+    
+    
 
 
 }
@@ -71,5 +80,11 @@ extension ClienteContactosSistemaVC:UITableViewDataSource {
     
 }
 extension ClienteContactosSistemaVC:UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var contacto = listaContactos[indexPath.row]
+        delegate?.contactoSeleccionado(contacto: contacto)
+        
+        self.navigationController?.popViewController(animated: true)
+    }
 }
+
