@@ -14,7 +14,7 @@ class Datos {
     
     
     // MARK: - Clientes
-    
+    /*
     static var Clientes: [NSDictionary] = []
     
     static func cargarClientes() {
@@ -45,6 +45,8 @@ class Datos {
         }
         return ClientesConPatron
     }
+ 
+ */
     
     // MARK: - Productos
     

@@ -20,7 +20,7 @@ class ClientesVC: UIViewController {
     @IBOutlet weak var tableViewClientes: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        /*
+        
         var ref: DatabaseReference!
         ref = Database.database().reference().child(Configuraciones.keyClientes)
         
@@ -36,8 +36,8 @@ class ClientesVC: UIViewController {
             self.actualizarDatos()
         }
         
-        */
-        valores = Datos.getClientes(Patron: "")
+        
+        //valores = Datos.getClientes(Patron: "")
         actualizarDatos()
     }
     

@@ -20,7 +20,7 @@ class InicioSesionVC: UIViewController {
     @IBAction func botonAcceder(_ sender: Any) {
         Auth.auth().signIn(withEmail: usuario.text!, password: clave.text!) { (user, error) in
             if error == nil {
-                Datos.cargarClientes()
+                //Datos.cargarClientes()
                 Datos.cargarProductos()
                 Datos.cargarListas()
                 
