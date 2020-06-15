@@ -11,7 +11,6 @@ import FirebaseDatabase
 
 class ListasVC: UIViewController {
 
-    var valores: [NSDictionary] = []
     var valoresParaMostrar: [NSDictionary] = []
     var textoSeleccionado: String = ""
 
@@ -23,25 +22,23 @@ class ListasVC: UIViewController {
         super.viewDidLoad()
         let ref = Database.database().reference().child(Configuraciones.keyListas)
         ref.observe(.value) { (DataSnapshot) in
-            self.valores.removeAll()
+            self.valoresParaMostrar.removeAll()
             for child in DataSnapshot.children {
                 if let snap = child as? DataSnapshot {
                     let dic = snap.value as! NSDictionary
                     dic.setValue(snap.key, forKey: Configuraciones.keyId)
-                    self.valores.insert(dic, at: 0)
+                    self.valoresParaMostrar.insert(dic, at: 0)
                 }
             }
-            self.actualizarDatos()
+            
+            self.tablaVC.reloadData()
         
         }
         
         
         
     }
-    private func actualizarDatos() {
-           valoresParaMostrar = valores
-           tablaVC.reloadData()
-       }
+ 
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

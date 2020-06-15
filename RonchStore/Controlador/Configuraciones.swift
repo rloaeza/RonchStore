@@ -146,7 +146,30 @@ class Configuraciones{
     }
     
     
+    static func guardarImagen(KeyNode key: String, Child child: String, Data data: NSData) {
+        UserDefaults.standard.set(data, forKey: "\(key)-\(child)")
+        
+    }
     
+    
+    static func cargarImagen(KeyNode key: String, Child child: String, Image image: UIImageView){
+        
+        
+        let dataIMG = UserDefaults.standard.object(forKey: "\(key)-\(child)") as? NSData
+        if dataIMG != nil {
+            image.image =  UIImage(data: dataIMG! as Data)
+        }
+        else {
+            let userRef = storageRef.child(key).child(child)
+            userRef.getData(maxSize: 10*1024*1024) { (data, error) in
+                if error == nil {
+                    image.image = UIImage(data: data!)
+                    guardarImagen(KeyNode: key, Child: child, Data: data! as NSData)
+                }
+            }
+        }
+        
+    }
  
     
 }

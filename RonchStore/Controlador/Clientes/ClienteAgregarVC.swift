@@ -164,6 +164,7 @@ class ClienteAgregarVC: UIViewController{
             
             let storageRef = Storage.storage().reference()
             
+            /*
             let userRef = storageRef.child(Configuraciones.keyClientes).child(codigo!)
             userRef.getData(maxSize: 10*1024*1024) { (data, error) in
                 if error == nil {
@@ -173,7 +174,18 @@ class ClienteAgregarVC: UIViewController{
                 }
             }
             
+       
             
+            let dataIMG = UserDefaults.standard.object(forKey: codigo!) as? NSData
+            if dataIMG != nil {
+                self.imagenPersona.image =  UIImage(data: dataIMG as! Data)
+            }
+                 */
+
+            
+            Configuraciones.cargarImagen(KeyNode: Configuraciones.keyClientes, Child: codigo!, Image: self.imagenPersona)
+            Configuraciones.cargarImagen(KeyNode: Configuraciones.keyCasas, Child: codigo!, Image: self.imagenCasa)
+            /*
             let homeRef = storageRef.child(Configuraciones.keyCasas).child(codigo!)
             homeRef.getData(maxSize: 10*1024*1024) { (data, error) in
                 if error == nil {
@@ -182,7 +194,7 @@ class ClienteAgregarVC: UIViewController{
                     //self.imagenCasa.setImage(img, for: UIControl.State.normal)
                 }
             }
-            
+            */
             mapView.delegate = self
             
             
@@ -231,6 +243,17 @@ extension ClienteAgregarVC: ClienteContactosSistemaVCDelegate {
         self.ciudad.text = contacto.ciudad
         self.pais.text = contacto.pais
         
+        
+        
+        guardarNombre(self)
+        guardarTelefono(self)
+        guardarCalle(self)
+        guardarEmail(self)
+        guardarCiudad(self)
+        guardarPais(self)
+        
+        
+        
     }
     
     
@@ -263,6 +286,11 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
         
         let userRef = storageRef.child(key).child(codigo!)
         
+        // Esta linea
+        Configuraciones.guardarImagen(KeyNode: key, Child: codigo!, Data: data)
+        
+        
+        
         navigationController?.navigationBar.isUserInteractionEnabled = false
         navigationController?.navigationBar.tintColor = UIColor.lightGray
         
@@ -280,6 +308,8 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
             self.navigationController?.navigationBar.tintColor = UIColor.blue
 
         }
+        
+        
 
 
         
