@@ -27,8 +27,23 @@ class ProductosVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        valores = Datos.getProductos(Patron: "")
-        actualizarDatos()
+        
+  
+        let ref: DatabaseReference! = Database.database().reference().child(Configuraciones.keyProductos)
+
+        ref.observe(.value) { (DataSnapshot) in
+            self.valores.removeAll()
+            for child in DataSnapshot.children {
+                if let snap = child as? DataSnapshot {
+                    let dic = snap.value as? NSDictionary
+                    dic?.setValue(snap.key, forKey: Configuraciones.keyId)
+                    self.valores.append(dic!)
+                }
+            }
+            self.actualizarDatos()
+        }
+        
+    
     }
     
     
@@ -42,7 +57,7 @@ class ProductosVC: UIViewController {
     
     private func actualizarDatos() {
         
-        valoresParaMostrar = Datos.getProductos(Patron: textoSeleccionado)
+        valoresParaMostrar = Datos.getProductos(Patron: textoSeleccionado,  Productos: valores)
         productosViewControler.reloadData()
     }
     
@@ -60,30 +75,33 @@ extension ProductosVC:UITableViewDataSource {
         let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath) as! ProductoCompletoCell
         
     
-        
-        let nombre = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String
-        let marca = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String
-        let categoria = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCategorias) as? String
-        let talla = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyTalla) as? String
-        let existencia = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyExistencia) as? String
-        let costoVenta = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as? String
-        celda.Nombre.text = "\(nombre!) "
-        celda.Categoria.text = "\(categoria!)"
-        celda.Marca.text = "\(marca!)"
-        celda.Talla.text = "\(talla!)"
-        celda.Existencia.text = "\(existencia!)"
-        celda.CostoVenta.text = "$ \(costoVenta!)"
+        let codigo = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId) as? String
+        let nombre = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String ?? ""
+        let marca = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String ?? ""
+        let categoria = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCategorias) as? String ?? ""
+        let talla = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyTalla) as? String ?? ""
+        let existencia = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyExistencia) as? String ?? "0"
+        let costoVenta = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as? String ?? "0"
+        celda.Nombre.text = "\(nombre) "
+        celda.Categoria.text = "\(categoria)"
+        celda.Marca.text = "\(marca)"
+        celda.Talla.text = "\(talla)"
+        celda.Existencia.text = "\(existencia)"
+        celda.CostoVenta.text = "$ \(costoVenta)"
         celda.Imagen.image = UIImage(named: "no_imagen")
 
-        let existenciaInt = Int( existencia! )!
+        let existenciaInt = Int( existencia )!
         celda.Existencia.textColor = UIColor.black
         if existenciaInt <= 0 {
             
             celda.Existencia.textColor = UIColor.red
         }
-        if let imagen = Datos.ProductosFotos[valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String] as? Data {
-            celda.Imagen.image = UIImage(data: imagen)
-        }
+        
+        Configuraciones.cargarImagen(KeyNode: Configuraciones.keyProductos, Child: codigo!, Image: celda.Imagen)
+        
+        //if let imagen = Datos.ProductosFotos[valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String] as? Data {
+       //     celda.Imagen.image = UIImage(data: imagen)
+        //}
         
         
         return celda
@@ -96,7 +114,7 @@ extension ProductosVC:UITableViewDataSource {
             ref = Database.database().reference()
             ref.child(Configuraciones.keyProductos).child(valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
             
-            Configuraciones.eliminarFoto(Reference: Storage.storage().reference(), KeyNode: Configuraciones.keyProductos, Child: valoresParaMostrar[indexPath.row].value(forKey: "key") as! String)
+            Configuraciones.eliminarImagen(Reference: Storage.storage().reference(), KeyNode: Configuraciones.keyProductos, Child: valoresParaMostrar[indexPath.row].value(forKey: "key") as! String)
         }
     }
 }

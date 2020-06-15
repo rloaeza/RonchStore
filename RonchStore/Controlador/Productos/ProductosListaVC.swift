@@ -30,7 +30,7 @@ class ProductosListaVC: UIViewController {
     @IBOutlet weak var productosViewController: UITableView!
     
     private func actualizarDatos() {
-        valoresParaMostrar = Datos.getProductos(Patron: textoSeleccionado)
+        valoresParaMostrar = Datos.getProductos(Patron: textoSeleccionado, Productos: valores)
         productosViewController.reloadData()
     }
     
@@ -38,9 +38,19 @@ class ProductosListaVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        valores = Datos.getProductos(Patron: "")
-        actualizarDatos()
-        
+        let ref: DatabaseReference! = Database.database().reference().child(Configuraciones.keyProductos)
+
+        ref.observe(.value) { (DataSnapshot) in
+            self.valores.removeAll()
+            for child in DataSnapshot.children {
+                if let snap = child as? DataSnapshot {
+                    let dic = snap.value as? NSDictionary
+                    dic?.setValue(snap.key, forKey: Configuraciones.keyId)
+                    self.valores.append(dic!)
+                }
+            }
+            self.actualizarDatos()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -70,9 +80,13 @@ extension ProductosListaVC:UITableViewDataSource {
         celda.CostoVenta.text = "$ \( (valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as? String ?? "0") )"
         
         celda.Imagen.image = UIImage(named: "no_imagen")
+        Configuraciones.cargarImagen(KeyNode: Configuraciones.keyProductos, Child: (valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId) as? String)!, Image: celda.Imagen)
+        
+        /*
         if let imagen = Datos.ProductosFotos[valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId)! as! String] as? Data {
                   celda.Imagen.image = UIImage(data: imagen)
               }
+ */
         return celda
     }
     

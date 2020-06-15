@@ -286,8 +286,7 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
         
         let userRef = storageRef.child(key).child(codigo!)
         
-        // Esta linea
-        Configuraciones.guardarImagen(KeyNode: key, Child: codigo!, Data: data)
+        Configuraciones.guardarImagenLocal(KeyNode: key, Child: codigo!, Data: data)
         
         
         

@@ -49,7 +49,7 @@ class Datos {
  */
     
     // MARK: - Productos
-    
+    /*
     static var ProductosCargaInicial: Bool = true
     static var Productos: [NSDictionary] = []
     static var ProductosFotos:Dictionary = [String:Any]()
@@ -80,11 +80,11 @@ class Datos {
             ProductosCargaInicial = false
         }
     }
-    
-    static func getProductos(Patron pattern: String)->[NSDictionary] {
+    */
+    static func getProductos(Patron pattern: String, Productos productos: [NSDictionary])->[NSDictionary] {
         let patron = pattern.lowercased()
         var ProductosConPatron: [NSDictionary] = []
-        for producto in Datos.Productos {
+        for producto in productos {
             let nombre: String = (producto.value(forKey: Configuraciones.keyNombre) as? String ?? "").lowercased()
             let marca: String = (producto.value(forKey: Configuraciones.keyMarca) as? String ?? "").lowercased()
             let categoria: String = (producto.value(forKey: Configuraciones.keyCategorias) as? String ?? "").lowercased()

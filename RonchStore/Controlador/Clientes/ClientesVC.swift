@@ -87,8 +87,8 @@ extension ClientesVC:UITableViewDataSource {
          
             
             
-            Configuraciones.eliminarFoto(Reference: Storage.storage().reference(), KeyNode: Configuraciones.keyClientes, Child: valores[indexPath.row].value(forKey: "key") as! String)
-            Configuraciones.eliminarFoto(Reference: Storage.storage().reference(), KeyNode: Configuraciones.keyCasas, Child: valores[indexPath.row].value(forKey: "key") as! String)
+            Configuraciones.eliminarImagen(Reference: Storage.storage().reference(), KeyNode: Configuraciones.keyClientes, Child: valores[indexPath.row].value(forKey: "key") as! String)
+            Configuraciones.eliminarImagen(Reference: Storage.storage().reference(), KeyNode: Configuraciones.keyCasas, Child: valores[indexPath.row].value(forKey: "key") as! String)
             
             
             

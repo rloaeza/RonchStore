@@ -141,16 +141,22 @@ class Configuraciones{
         }        
         return total
     }
-    static func eliminarFoto(Reference ref: StorageReference, KeyNode key: String, Child child: String) {
+    static func eliminarImagen(Reference ref: StorageReference, KeyNode key: String, Child child: String) {
         ref.child(key).child(child).delete(completion: nil)
+        eliminarImagenLocal(KeyNode: key, Child: child)
     }
     
     
-    static func guardarImagen(KeyNode key: String, Child child: String, Data data: NSData) {
+    static func guardarImagenLocal(KeyNode key: String, Child child: String, Data data: NSData) {
         UserDefaults.standard.set(data, forKey: "\(key)-\(child)")
         
     }
     
+    
+    
+    static func eliminarImagenLocal(KeyNode key: String, Child child: String){
+        UserDefaults.standard.removeObject(forKey: "\(key)-\(child)")
+    }
     
     static func cargarImagen(KeyNode key: String, Child child: String, Image image: UIImageView){
         
@@ -164,12 +170,32 @@ class Configuraciones{
             userRef.getData(maxSize: 10*1024*1024) { (data, error) in
                 if error == nil {
                     image.image = UIImage(data: data!)
-                    guardarImagen(KeyNode: key, Child: child, Data: data! as NSData)
+                    guardarImagenLocal(KeyNode: key, Child: child, Data: data! as NSData)
                 }
             }
         }
         
     }
+    
+    
+    static func cargarImagenEnBoton(KeyNode key: String, Child child: String, Boton boton: UIButton){
+           
+           
+           let dataIMG = UserDefaults.standard.object(forKey: "\(key)-\(child)") as? NSData
+           if dataIMG != nil {
+            boton.setImage(UIImage(data: dataIMG! as Data), for: .normal)
+           }
+           else {
+               let userRef = storageRef.child(key).child(child)
+               userRef.getData(maxSize: 10*1024*1024) { (data, error) in
+                   if error == nil {
+                       boton.setImage(UIImage(data: data! as Data), for: .normal)
+                       guardarImagenLocal(KeyNode: key, Child: child, Data: data! as NSData)
+                   }
+               }
+           }
+           
+       }
  
     
 }

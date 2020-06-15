@@ -76,6 +76,8 @@ class ProductoAgregarVC: UIViewController {
             producto = nil
             
             //cargando imagen
+            
+            /*
             let storageRef = Storage.storage().reference()
             
             let userRef = storageRef.child(Configuraciones.keyProductos).child(codigo!)
@@ -85,6 +87,11 @@ class ProductoAgregarVC: UIViewController {
                     self.imagenProducto.setImage(img, for: UIControl.State.normal)
                 }
             }
+            */
+            Configuraciones.cargarImagenEnBoton(KeyNode: Configuraciones.keyProductos, Child: codigo!, Boton: self.imagenProducto)
+
+            
+            
             
         }
         else {
@@ -147,7 +154,13 @@ extension ProductoAgregarVC: UIImagePickerControllerDelegate, UINavigationContro
         let storageRef = Storage.storage().reference()
         let key = Configuraciones.keyProductos
         
+        if codigo == nil {
+            guardarNombre(self)
+        }
         let userRef = storageRef.child(key).child(codigo!)
+        
+        
+        Configuraciones.guardarImagenLocal(KeyNode: key, Child: codigo!, Data: data)
         
         navigationController?.navigationBar.isUserInteractionEnabled = false
         navigationController?.navigationBar.tintColor = UIColor.lightGray

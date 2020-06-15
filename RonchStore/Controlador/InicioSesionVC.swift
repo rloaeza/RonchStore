@@ -21,7 +21,7 @@ class InicioSesionVC: UIViewController {
         Auth.auth().signIn(withEmail: usuario.text!, password: clave.text!) { (user, error) in
             if error == nil {
                 //Datos.cargarClientes()
-                Datos.cargarProductos()
+                //Datos.cargarProductos()
                 Datos.cargarListas()
                 
                 
