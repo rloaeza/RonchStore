@@ -362,6 +362,14 @@
                                                 <rect key="frame" x="0.0" y="339" width="414" height="614"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </mapView>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xo-Pm-ZdQ">
+                                                <rect key="frame" x="66" y="132" width="46" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <segue destination="Id9-iI-W1V" kind="show" identifier="MapaDesdeAgregarCliente" id="qmM-AQ-Kjo"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -411,6 +419,45 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fAy-cb-SWK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4094" y="-1838"/>
+        </scene>
+        <!--MapaVC-->
+        <scene sceneID="bAC-gp-Y0s">
+            <objects>
+                <viewController id="Id9-iI-W1V" customClass="MapaVC" customModule="RonchStore" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="POK-Ug-BX8">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6Zk-id-gqa">
+                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="oXH-uh-F56" appends="YES" id="RRl-gp-UCZ"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Zk-id-gqa" firstAttribute="height" secondItem="POK-Ug-BX8" secondAttribute="height" multiplier="0.834917" id="QDY-Of-GRH"/>
+                            <constraint firstItem="6Zk-id-gqa" firstAttribute="centerX" secondItem="UXQ-0E-BR0" secondAttribute="centerX" id="e7n-Xd-WII"/>
+                            <constraint firstItem="6Zk-id-gqa" firstAttribute="width" secondItem="POK-Ug-BX8" secondAttribute="width" id="oLL-4t-AuI"/>
+                            <constraint firstItem="6Zk-id-gqa" firstAttribute="centerY" secondItem="UXQ-0E-BR0" secondAttribute="centerY" id="vZ5-ZR-9zb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="UXQ-0E-BR0"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="A7V-uu-ySA"/>
+                    <connections>
+                        <outlet property="Mapa" destination="6Zk-id-gqa" id="U3D-wa-jcR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oPi-hz-3P6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="oXH-uh-F56">
+                    <connections>
+                        <action selector="fijarPIN:" destination="Id9-iI-W1V" id="nYH-7B-q2d"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="4886.9565217391309" y="-1599.1071428571429"/>
         </scene>
         <!--Pedidos-->
         <scene sceneID="97C-P9-9CN">

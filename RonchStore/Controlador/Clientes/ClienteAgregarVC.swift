@@ -225,6 +225,13 @@ class ClienteAgregarVC: UIViewController{
             let vc = segue.destination as? ClienteContactosSistemaVC {
             vc.delegate = self
         }
+        
+        if segue.identifier == "MapaDesdeAgregarCliente",
+            let vc = segue.destination as? MapaVC {
+                vc.codigo = self.codigo
+        
+        }
+        
     }
 
     

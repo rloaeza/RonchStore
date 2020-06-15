@@ -38,6 +38,7 @@
 		628A229B248190A5008E23B0 /* ClienteContactosSistemaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628A229A248190A5008E23B0 /* ClienteContactosSistemaVC.swift */; };
 		628E2D3F24536AC4000EDF93 /* ReportesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628E2D3E24536AC4000EDF93 /* ReportesVC.swift */; };
 		6296ECEB2461DEC200A7F597 /* GastoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6296ECEA2461DEC200A7F597 /* GastoVC.swift */; };
+		62A1727E2497E21000CCA9DA /* MapaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A1727D2497E21000CCA9DA /* MapaVC.swift */; };
 		62A5D9B72334740C00A58A6F /* UsuariosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A5D9B62334740C00A58A6F /* UsuariosVC.swift */; };
 		62A5D9B923348CE000A58A6F /* VentasListadoCobradorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A5D9B823348CE000A58A6F /* VentasListadoCobradorVC.swift */; };
 		62A5D9BB233496CF00A58A6F /* ClienteUbicacionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A5D9BA233496CF00A58A6F /* ClienteUbicacionVC.swift */; };
@@ -108,6 +109,7 @@
 		628A229A248190A5008E23B0 /* ClienteContactosSistemaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteContactosSistemaVC.swift; sourceTree = "<group>"; };
 		628E2D3E24536AC4000EDF93 /* ReportesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportesVC.swift; sourceTree = "<group>"; };
 		6296ECEA2461DEC200A7F597 /* GastoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GastoVC.swift; sourceTree = "<group>"; };
+		62A1727D2497E21000CCA9DA /* MapaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapaVC.swift; sourceTree = "<group>"; };
 		62A5D9B62334740C00A58A6F /* UsuariosVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsuariosVC.swift; sourceTree = "<group>"; };
 		62A5D9B823348CE000A58A6F /* VentasListadoCobradorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VentasListadoCobradorVC.swift; sourceTree = "<group>"; };
 		62A5D9BA233496CF00A58A6F /* ClienteUbicacionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteUbicacionVC.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				6263986422DAE0A90080C243 /* ClientesVC.swift */,
 				628A229424818FAA008E23B0 /* Contacto.swift */,
 				628A229A248190A5008E23B0 /* ClienteContactosSistemaVC.swift */,
+				62A1727D2497E21000CCA9DA /* MapaVC.swift */,
 			);
 			path = Clientes;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				6271EF9623711EB700BCA3AE /* Datos.swift in Sources */,
 				626FFB05232A9A1E00A445DA /* TallaVC.swift in Sources */,
 				62197CF922E15439007F6F7F /* PedidoAgregarVC.swift in Sources */,
+				62A1727E2497E21000CCA9DA /* MapaVC.swift in Sources */,
 				621C6DD622DFEDB0003508EB /* VentasVC.swift in Sources */,
 				62FC219523668BB90022690C /* VentaCell.swift in Sources */,
 				625579BF2326D765003EB955 /* MarcaVC.swift in Sources */,
