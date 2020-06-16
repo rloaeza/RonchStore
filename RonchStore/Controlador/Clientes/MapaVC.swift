@@ -32,9 +32,9 @@ class MapaVC: UIViewController {
             PIN.title = nombre ?? "Casa"
                         
             
-            var location = CLLocationCoordinate2D(latitude: lat1!, longitude:  coord1!)
-            var span = MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002)
-            var region =  MKCoordinateRegion(center: location, span: span)
+            let location = CLLocationCoordinate2D(latitude: lat1!, longitude:  coord1!)
+            let span = MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002)
+            let region =  MKCoordinateRegion(center: location, span: span)
             self.Mapa.setRegion(region, animated: true)
             
             PIN.coordinate = location
@@ -53,9 +53,6 @@ class MapaVC: UIViewController {
         
         let PIN = MKPointAnnotation()
         PIN.title = nombre ?? "Casa"
-        let lat = coord.latitude as Double
-        let long = coord.longitude as Double
-        
         PIN.coordinate = coord
         self.Mapa.removeAnnotations(Mapa.annotations)
         self.Mapa.addAnnotation(PIN)
