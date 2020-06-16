@@ -31,6 +31,7 @@ class Configuraciones{
     static let keyColonia = "Colonia"
     static let keyCiudad = "Ciudad"
     static let keyPais = "Pais"
+    static let keyMaximoCredito = "MaximoCredito"
     
     static let keyLat = "Lat"
     static let keyLong = "Long"

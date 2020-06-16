@@ -16,12 +16,31 @@ class MapaVC: UIViewController {
     @IBOutlet weak var Mapa: MKMapView!
     
     var codigo: String? = nil
+    var nombre: String? = nil
+    var lat1: Double? = nil
+    var coord1: Double? = nil
     var ref: DatabaseReference!
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
+        
+        if lat1 != nil {
+        
+            let PIN = MKPointAnnotation()
+            PIN.title = nombre ?? "Casa"
+                        
+            
+            var location = CLLocationCoordinate2D(latitude: lat1!, longitude:  coord1!)
+            var span = MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002)
+            var region =  MKCoordinateRegion(center: location, span: span)
+            self.Mapa.setRegion(region, animated: true)
+            
+            PIN.coordinate = location
+            self.Mapa.removeAnnotations(Mapa.annotations)
+            self.Mapa.addAnnotation(PIN)
+        }
 
 
         // Do any additional setup after loading the view.
@@ -33,10 +52,9 @@ class MapaVC: UIViewController {
         let coord = self.Mapa.convert(loc, toCoordinateFrom: self.Mapa)
         
         let PIN = MKPointAnnotation()
-        PIN.title = "CASA"
+        PIN.title = nombre ?? "Casa"
         let lat = coord.latitude as Double
         let long = coord.longitude as Double
-        PIN.subtitle = "Lat=\(lat),Long=\(long)"
         
         PIN.coordinate = coord
         self.Mapa.removeAnnotations(Mapa.annotations)

@@ -243,11 +243,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cm1-81-a9j">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cm1-81-a9j">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r7n-ob-WhU">
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r7n-ob-WhU">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Correo" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="haS-rq-ATd">
                                                 <rect key="frame" x="170" y="89" width="222" height="30"/>
@@ -350,49 +352,30 @@
                                                     <outlet property="delegate" destination="r1W-dT-uSc" id="tEw-Od-IBm"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WyU-LY-gUr">
-                                                <rect key="frame" x="170" y="301" width="222" height="30"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Monto máximo de crédito" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wz1-TT-ZR3">
+                                                <rect key="frame" x="170" y="309" width="222" height="34"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Ubicacion"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
                                                 <connections>
-                                                    <action selector="botonGPS:" destination="r1W-dT-uSc" eventType="touchUpInside" id="gbi-om-hOG"/>
+                                                    <action selector="guardarMontoCredito:" destination="r1W-dT-uSc" eventType="editingDidEnd" id="cL6-gr-XRf"/>
                                                 </connections>
-                                            </button>
-                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Rqd-5b-gxS">
-                                                <rect key="frame" x="0.0" y="339" width="414" height="614"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            </mapView>
+                                            </textField>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xo-Pm-ZdQ">
-                                                <rect key="frame" x="66" y="132" width="46" height="30"/>
+                                                <rect key="frame" x="170" y="356" width="222" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Button"/>
+                                                <state key="normal" title="Ubicación"/>
                                                 <connections>
                                                     <segue destination="Id9-iI-W1V" kind="show" identifier="MapaDesdeAgregarCliente" id="qmM-AQ-Kjo"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="896" id="4cr-nM-dqb"/>
-                                        </constraints>
                                     </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="r7n-ob-WhU" firstAttribute="top" secondItem="Cm1-81-a9j" secondAttribute="top" id="3UV-QV-T7W"/>
-                                    <constraint firstAttribute="bottom" secondItem="r7n-ob-WhU" secondAttribute="bottom" id="Tjc-9D-dcY"/>
-                                    <constraint firstItem="r7n-ob-WhU" firstAttribute="leading" secondItem="Cm1-81-a9j" secondAttribute="leading" id="pve-rt-nr7"/>
-                                    <constraint firstAttribute="trailing" secondItem="r7n-ob-WhU" secondAttribute="trailing" id="rWM-8c-6TI"/>
-                                </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="Cm1-81-a9j" firstAttribute="leading" secondItem="lWv-kE-lwv" secondAttribute="leading" id="12u-hE-C9L"/>
-                            <constraint firstItem="Cm1-81-a9j" firstAttribute="top" secondItem="Aos-i4-eAX" secondAttribute="top" id="OZq-3b-97E"/>
-                            <constraint firstItem="Cm1-81-a9j" firstAttribute="trailing" secondItem="lWv-kE-lwv" secondAttribute="trailing" id="RlG-M3-a7U"/>
-                            <constraint firstAttribute="bottom" secondItem="Cm1-81-a9j" secondAttribute="bottom" id="Vpg-en-nec"/>
-                            <constraint firstItem="r7n-ob-WhU" firstAttribute="width" secondItem="Aos-i4-eAX" secondAttribute="width" id="ehh-6O-kMs"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="lWv-kE-lwv"/>
                     </view>
                     <navigationItem key="navigationItem" id="id8-9k-4Ze">
@@ -410,7 +393,7 @@
                         <outlet property="email" destination="haS-rq-ATd" id="M4d-Pl-fpi"/>
                         <outlet property="imagenCasa" destination="aRy-tB-eiW" id="R4X-3N-218"/>
                         <outlet property="imagenPersona" destination="yrZ-ex-Fns" id="bF0-Jl-Gey"/>
-                        <outlet property="mapView" destination="Rqd-5b-gxS" id="Rce-TB-vV4"/>
+                        <outlet property="montoCredito" destination="Wz1-TT-ZR3" id="WtD-Ha-6LW"/>
                         <outlet property="nombre" destination="mBW-2j-C6J" id="9JZ-e3-5gh"/>
                         <outlet property="pais" destination="XF5-DO-zyJ" id="2Ig-yS-3WO"/>
                         <outlet property="telefono" destination="u3E-w0-e4f" id="dG1-HW-JQE"/>
@@ -418,7 +401,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fAy-cb-SWK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4094" y="-1838"/>
+            <point key="canvasLocation" x="4089.8550724637685" y="-1816.0714285714284"/>
         </scene>
         <!--MapaVC-->
         <scene sceneID="bAC-gp-Y0s">

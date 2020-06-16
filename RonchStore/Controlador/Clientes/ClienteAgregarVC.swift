@@ -17,6 +17,9 @@ class ClienteAgregarVC: UIViewController{
     var codigo: String? = nil
     var ref: DatabaseReference!
     
+    var lat: Double? = nil
+    var long: Double? = nil
+    
     
 
     @IBOutlet weak var telefono: UITextField!
@@ -25,12 +28,12 @@ class ClienteAgregarVC: UIViewController{
     @IBOutlet weak var email: UITextField!
     //@IBOutlet weak var imagenPersona: UIImageView!
     //@IBOutlet weak var imagenCasa: UIImageView!
-    @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var calle: UITextField!
     @IBOutlet weak var colonia: UITextField!
     @IBOutlet weak var ciudad: UITextField!
     @IBOutlet weak var pais: UITextField!
+    @IBOutlet weak var montoCredito: UITextField!
     
     @IBOutlet weak var imagenCasa: UIImageView!
     
@@ -40,6 +43,9 @@ class ClienteAgregarVC: UIViewController{
     var imagenMostrar: UIImageView!
     var ubicacion: CLLocationCoordinate2D!
     
+    @IBAction func guardarMontoCredito(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyMaximoCredito, Value: montoCredito.text!)
+    }
     
     @IBAction func guardarTelefono(_ sender: Any) {
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyTelefono, Value: telefono.text!)
@@ -66,28 +72,7 @@ class ClienteAgregarVC: UIViewController{
     }
     
     
-    @IBAction func botonGPS(_ sender: Any) {
-        
-        ubicacion = mapView.convert(CGPoint(x: mapView.bounds.width / 2, y: mapView.bounds.height / 2), toCoordinateFrom: mapView)
-
-        mapView.removeAnnotations(mapView.annotations)
-        let artwork = Mapas(title: nombre.text!,
-                            locationName: calle.text!,
-                            coordinate: ubicacion)
-        
-        
-        mapView.addAnnotation(artwork)
-        let coordinateRegion = MKCoordinateRegion(center: ubicacion,
-                                                  latitudinalMeters: 100, longitudinalMeters: 100)
-        mapView.setRegion(coordinateRegion, animated: true)
-        
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyLat, Value: "\(ubicacion.latitude)")
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyLong, Value: "\(ubicacion.longitude)")
-        
-        
-        
-
-    }
+   
     @IBAction func botonTomarFotoCasa(_ sender: Any) {
         if codigo == nil {
             Configuraciones.alert(Titulo: "Error", Mensaje: "Debe llenar al menos un campo", self, popView: false)
@@ -127,7 +112,9 @@ class ClienteAgregarVC: UIViewController{
         ciudad.text = ""
         pais.text = ""
         email.text = ""
+        montoCredito.text = ""
         telefono.select(nil)
+        
     }
     
     
@@ -147,72 +134,22 @@ class ClienteAgregarVC: UIViewController{
             colonia.text = cliente!.value(forKey: Configuraciones.keyColonia) as? String
             ciudad.text = cliente!.value(forKey: Configuraciones.keyCiudad) as? String
             pais.text = cliente!.value(forKey: Configuraciones.keyPais) as? String
+            montoCredito.text = cliente!.value(forKey: Configuraciones.keyMaximoCredito) as? String
             
             
             
             if let lat = cliente!.value(forKey: Configuraciones.keyLat) as? String,
                let long = cliente!.value(forKey: Configuraciones.keyLong) as? String {
-                
-                let latitude = Double( lat ) ?? 0.0
-                let longitude = Double( long ) ?? 0.0
-                
-                ubicacion = CLLocationCoordinate2DMake(latitude, longitude)
+                self.lat = Double( lat ) ?? 0.0
+                self.long = Double( long ) ?? 0.0
             }
             
     
             cliente = nil
             
-            let storageRef = Storage.storage().reference()
-            
-            /*
-            let userRef = storageRef.child(Configuraciones.keyClientes).child(codigo!)
-            userRef.getData(maxSize: 10*1024*1024) { (data, error) in
-                if error == nil {
-                    let img = UIImage(data: data!)
-                    self.imagenPersona.image = img
-                    //self.imagenPersona.setImage(img, for: UIControl.State.normal)
-                }
-            }
-            
-       
-            
-            let dataIMG = UserDefaults.standard.object(forKey: codigo!) as? NSData
-            if dataIMG != nil {
-                self.imagenPersona.image =  UIImage(data: dataIMG as! Data)
-            }
-                 */
-
             
             Configuraciones.cargarImagen(KeyNode: Configuraciones.keyClientes, Child: codigo!, Image: self.imagenPersona)
             Configuraciones.cargarImagen(KeyNode: Configuraciones.keyCasas, Child: codigo!, Image: self.imagenCasa)
-            /*
-            let homeRef = storageRef.child(Configuraciones.keyCasas).child(codigo!)
-            homeRef.getData(maxSize: 10*1024*1024) { (data, error) in
-                if error == nil {
-                    let img = UIImage(data: data!)
-                    self.imagenCasa.image = img
-                    //self.imagenCasa.setImage(img, for: UIControl.State.normal)
-                }
-            }
-            */
-            mapView.delegate = self
-            
-            
-            
-            if ubicacion != nil {
-                //let regionRadius: CLLocationDistance = 1000
-                mapView.removeAnnotations(mapView.annotations)
-                let artwork = Mapas(title: nombre.text!,
-                                      locationName: calle.text!,
-                                      coordinate: ubicacion)
-                
-                
-                mapView.addAnnotation(artwork)
-                let coordinateRegion = MKCoordinateRegion(center: ubicacion,
-                                                          latitudinalMeters: 1000, longitudinalMeters: 1000)
-                mapView.setRegion(coordinateRegion, animated: true)
-            }
-            
             
         }
         else {
@@ -228,7 +165,10 @@ class ClienteAgregarVC: UIViewController{
         
         if segue.identifier == "MapaDesdeAgregarCliente",
             let vc = segue.destination as? MapaVC {
-                vc.codigo = self.codigo
+            vc.codigo = self.codigo
+            vc.lat1 = self.lat
+            vc.coord1 = self.long
+            vc.nombre = self.nombre.text!
         
         }
         
@@ -327,36 +267,4 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
 }
 
 
-extension ClienteAgregarVC:MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
-                 calloutAccessoryControlTapped control: UIControl) {
-        
-        let location = view.annotation as! Mapas
-        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-        location.mapItem().openInMaps(launchOptions: launchOptions)
-    }
-    
-    
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        // 2
-        guard let annotation = annotation as? Mapas else { return nil }
-        // 3
-        let identifier = "marker"
-        var view: MKMarkerAnnotationView
-        // 4
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-            as? MKMarkerAnnotationView {
-            dequeuedView.annotation = annotation
-            view = dequeuedView
-        } else {
-            // 5
-            view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            view.canShowCallout = true
-            view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-        }
-        return view
-    }
-    
-}
+
