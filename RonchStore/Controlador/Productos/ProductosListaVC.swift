@@ -46,6 +46,7 @@ class ProductosListaVC: UIViewController {
                 if let snap = child as? DataSnapshot {
                     let dic = snap.value as? NSDictionary
                     dic?.setValue(snap.key, forKey: Configuraciones.keyId)
+                    dic?.setValue("0", forKey: Configuraciones.keyContador)
                     self.valores.append(dic!)
                 }
             }
@@ -59,7 +60,20 @@ class ProductosListaVC: UIViewController {
     
     
     @IBAction func agregarTodos(_ sender: Any) {
-        delegate?.productoSeleccionado(productos: valoresParaMostrar)
+        var productos: [NSDictionary] = []
+        
+        for producto in valoresParaMostrar {
+            let contador: Int = Int( (producto.value(forKey: Configuraciones.keyContador) as! String) )!
+            if  contador != 0 {
+                for _ in 1...contador {
+                    productos.append(producto)
+                }
+            }
+        }
+        
+        //delegate?.productoSeleccionado(productos: valoresParaMostrar)
+        
+        delegate?.productoSeleccionado(productos: productos)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -78,7 +92,14 @@ extension ProductosListaVC:UITableViewDataSource {
         celda.Marca.text = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String ?? ""
         celda.Talla.text = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyTalla) as? String ?? ""
         celda.CostoVenta.text = "$ \( (valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as? String ?? "0") )"
-        
+        let contador: Int = Int(valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyContador) as! String)!
+        if contador != 0 {
+            celda.Contador.text = "x \(contador)"
+        }
+        else {
+            celda.Contador.text = ""
+        }
+
         celda.Imagen.image = UIImage(named: "no_imagen")
         Configuraciones.cargarImagen(KeyNode: Configuraciones.keyProductos, Child: (valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyId) as? String)!, Image: celda.Imagen)
         
@@ -92,9 +113,11 @@ extension ProductosListaVC:UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            var ref: DatabaseReference!
-            ref = Database.database().reference()
-            ref.child(Configuraciones.keyProductos).child(valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+            valoresParaMostrar[indexPath.row].setValue("0", forKey: Configuraciones.keyContador)
+            self.productosViewController.reloadData()
+            //var ref: DatabaseReference!
+            //ref = Database.database().reference()
+            //ref.child(Configuraciones.keyProductos).child(valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
         }
     }
     
@@ -104,10 +127,14 @@ extension ProductosListaVC:UITableViewDataSource {
 extension ProductosListaVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //self.performSegue(withIdentifier: "ProductoAgregarSegue", sender: valores[indexPath.row])
-        var productos: [NSDictionary] = []
-        productos.append(valoresParaMostrar[indexPath.row])
-        delegate?.productoSeleccionado(productos: productos)
-        self.navigationController?.popViewController(animated: true)
+        
+        let contador: Int = Int( valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyContador) as! String )! + 1
+        valoresParaMostrar[indexPath.row].setValue("\(contador)", forKey: Configuraciones.keyContador)
+        self.productosViewController.reloadData()
+        //var productos: [NSDictionary] = []
+        //productos.append(valoresParaMostrar[indexPath.row])
+        //delegate?.productoSeleccionado(productos: productos)
+        //self.navigationController?.popViewController(animated: true)
         
     }
 }

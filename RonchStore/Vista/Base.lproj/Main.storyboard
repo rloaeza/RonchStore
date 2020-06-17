@@ -2264,9 +2264,21 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contador" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9EZ-69-KDI">
+                                                    <rect key="frame" x="333" y="56" width="61" height="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="17" id="lwv-yu-u0g"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="WIw-LY-O9X" firstAttribute="leading" secondItem="beW-8f-5Tl" secondAttribute="trailing" constant="8" id="1AC-T9-Xy3"/>
+                                                <constraint firstAttribute="bottom" secondItem="9EZ-69-KDI" secondAttribute="bottom" constant="7" id="1m2-ay-bh8"/>
+                                                <constraint firstItem="9EZ-69-KDI" firstAttribute="top" secondItem="2Az-8f-u9d" secondAttribute="bottom" constant="5" id="3lF-8z-Rfq"/>
+                                                <constraint firstItem="9EZ-69-KDI" firstAttribute="leading" secondItem="WIw-LY-O9X" secondAttribute="trailing" constant="59" id="HRH-xB-kFD"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="2Az-8f-u9d" secondAttribute="bottom" constant="18" id="HyI-da-MkL"/>
                                                 <constraint firstItem="8LW-rA-guo" firstAttribute="trailing" secondItem="xSq-6E-jFV" secondAttribute="trailingMargin" id="PFo-sw-yfa"/>
                                                 <constraint firstItem="2Az-8f-u9d" firstAttribute="trailing" secondItem="xSq-6E-jFV" secondAttribute="trailingMargin" id="Vry-A8-GRb"/>
@@ -2277,6 +2289,7 @@
                                                 <constraint firstItem="WIw-LY-O9X" firstAttribute="top" secondItem="vpV-ul-piw" secondAttribute="bottom" constant="4" id="kb9-dQ-eUA"/>
                                                 <constraint firstItem="beW-8f-5Tl" firstAttribute="leading" secondItem="xSq-6E-jFV" secondAttribute="leadingMargin" id="kkV-o1-VGj"/>
                                                 <constraint firstItem="2Az-8f-u9d" firstAttribute="leading" secondItem="vpV-ul-piw" secondAttribute="trailing" constant="8" id="mlM-mJ-BKO"/>
+                                                <constraint firstAttribute="trailing" secondItem="9EZ-69-KDI" secondAttribute="trailing" constant="20" id="n55-ez-YGW"/>
                                                 <constraint firstItem="vpV-ul-piw" firstAttribute="top" secondItem="8LW-rA-guo" secondAttribute="bottom" constant="1" id="nl3-98-4Ic"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="beW-8f-5Tl" secondAttribute="bottom" constant="-11" id="ofd-uD-Kmi"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="WIw-LY-O9X" secondAttribute="trailing" constant="120" id="pAi-b9-NIA"/>
@@ -2285,6 +2298,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="Contador" destination="9EZ-69-KDI" id="63z-Ye-nSz"/>
                                             <outlet property="CostoVenta" destination="2Az-8f-u9d" id="fxF-qY-jWH"/>
                                             <outlet property="Imagen" destination="beW-8f-5Tl" id="5bL-OR-mba"/>
                                             <outlet property="Marca" destination="vpV-ul-piw" id="gTv-lt-dp9"/>
@@ -2315,7 +2329,7 @@
                                     <constraint firstAttribute="height" constant="30" id="JEi-1h-foj"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Agregar todos"/>
+                                <state key="normal" title="Agregar productos"/>
                                 <connections>
                                     <action selector="agregarTodos:" destination="MZV-1O-sz6" eventType="touchUpInside" id="ne8-gl-dWl"/>
                                 </connections>
@@ -3435,7 +3449,7 @@
         <segue reference="M6l-Nq-CfR"/>
         <segue reference="Hxc-DF-0o7"/>
         <segue reference="gTH-1x-Y73"/>
-        <segue reference="QPv-37-d1C"/>
+        <segue reference="FMc-NH-kMf"/>
         <segue reference="n2l-ff-MnN"/>
     </inferredMetricsTieBreakers>
     <resources>
