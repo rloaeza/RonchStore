@@ -59,10 +59,27 @@ class Configuraciones{
     static let keyListas = "Listas"
     
     
+    
+    static let keyDetalleProductoCategoria = "ProductoDetalle/Categoria"
+    static let keyDetalleProductoMarca = "ProductoDetalle/Marca"
+    static let keyDetalleProductoTalla = "ProductoDetalle/Talla"
+    static let keyDetalleProductoNombre = "ProductoDetalle/Nombre"
+    static let keyDetalleProductoCosto = "ProductoDetalle/Costo"
+    static let keyDetalleProductoCostoVenta = "ProductoDetalle/CostoVenta"
+    static let keyDetalleProductoExistencia = "ProductoDetalle/Existencia"
+
+    
+    
     static let keyContador = "Contador"
     
     
     static let txtAdeudo = "Adeudo"
+    
+    
+    static let txtSeleccionarNombre = "Seleccionar nombre"
+    static let txtSeleccionarCosto = "Seleccionar costo"
+    static let txtSeleccionarCostoVenta = "Seleccionar costo de venta"
+    static let txtSeleccionarExistencia = "Seleccionar existencias"
     static let txtSeleccionarMarca = "Seleccionar marca"
     static let txtSeleccionarTalla = "Seleccionar talla"
     static let txtSeleccionarCategoria = "Seleccionar categoria"

@@ -26,6 +26,13 @@ class ProductoAgregarVC: UIViewController {
     @IBOutlet weak var botonTalla: UIButton!
     @IBOutlet weak var botonCategoria: UIButton!
     
+    @IBOutlet weak var botonNombre: UIButton!
+    @IBOutlet weak var botonCosto: UIButton!
+    @IBOutlet weak var botonCostoVenta: UIButton!
+    @IBOutlet weak var botonExistencia: UIButton!
+    
+    
+    
     @IBAction func botonTomarFotoProducto(_ sender: Any) {
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
@@ -64,15 +71,16 @@ class ProductoAgregarVC: UIViewController {
         // Do any additional setup after loading the view.
         if producto != nil {
             codigo =  producto!.value(forKey: Configuraciones.keyId) as? String
-            nombre.text = producto!.value(forKey: Configuraciones.keyNombre) as? String
             
             botonMarca.setTitle(producto!.value(forKey: Configuraciones.keyMarca) as? String, for: .normal)
             botonTalla.setTitle(producto!.value(forKey: Configuraciones.keyTalla) as? String, for: .normal)
-            
             botonCategoria.setTitle(producto!.value(forKey: Configuraciones.keyCategorias) as? String, for: .normal)
-            costo.text = producto!.value(forKey: Configuraciones.keyCosto) as? String
-            costoVenta.text = producto!.value(forKey: Configuraciones.keyCostoVenta) as? String
-            existencia.text = producto!.value(forKey: Configuraciones.keyExistencia) as? String
+            botonNombre.setTitle(producto!.value(forKey: Configuraciones.keyNombre) as? String, for: .normal)
+            botonCosto.setTitle(producto!.value(forKey: Configuraciones.keyCosto) as? String, for: .normal)
+            botonCostoVenta.setTitle(producto!.value(forKey: Configuraciones.keyCostoVenta) as? String, for: .normal)
+            botonExistencia.setTitle(producto!.value(forKey: Configuraciones.keyExistencia) as? String, for: .normal)
+
+     
             producto = nil
             
             //cargando imagen
@@ -96,18 +104,23 @@ class ProductoAgregarVC: UIViewController {
         }
         else {
             codigo = nil
-            nombre.text = ""
+            
+            
+            
+            botonNombre.titleLabel?.text = Configuraciones.txtSeleccionarNombre
             botonMarca.titleLabel?.text = Configuraciones.txtSeleccionarMarca
             botonTalla.titleLabel?.text = Configuraciones.txtSeleccionarTalla
-            costo.text = ""
-            costoVenta.text = ""
-            existencia.text = ""
-            nombre.select(nil)
+            botonCosto.titleLabel?.text = Configuraciones.txtSeleccionarCosto
+            botonCostoVenta.titleLabel?.text = Configuraciones.txtSeleccionarCostoVenta
+            botonExistencia.titleLabel?.text = Configuraciones.txtSeleccionarExistencia
+            
+            //nombre.select(nil)
         }
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        /*
         if segue.identifier == "MarcaDesdeAgregarProducto",
             let vc = segue.destination as? MarcaVC {
                 vc.delegate = self
@@ -122,6 +135,53 @@ class ProductoAgregarVC: UIViewController {
             let vc = segue.destination as? CategoriaVC {
             vc.delegate = self
         }
+        */
+        
+        if segue.identifier == "DetallesProductoListaDesdeProductosParaCategoria",
+            let vc = segue.destination as? DetallesProductoListaVC {
+            vc.delegate = self
+            vc.title = "Categoria"
+            vc.detalleKey = Configuraciones.keyDetalleProductoCategoria
+        }
+        if segue.identifier == "DetallesProductoListaDesdeProductosParaMarca",
+            let vc = segue.destination as? DetallesProductoListaVC {
+            vc.delegate = self
+            vc.title = "Marca"
+            vc.detalleKey = Configuraciones.keyDetalleProductoMarca
+        }
+        if segue.identifier == "DetallesProductoListaDesdeProductosParaTalla",
+            let vc = segue.destination as? DetallesProductoListaVC {
+            vc.delegate = self
+            vc.title = "Talla"
+            vc.detalleKey = Configuraciones.keyDetalleProductoTalla
+        }
+        if segue.identifier == "DetallesProductoListaDesdeProductosParaNombre",
+            let vc = segue.destination as? DetallesProductoListaVC {
+            vc.delegate = self
+            vc.title = "Nombre"
+            vc.detalleKey = Configuraciones.keyDetalleProductoNombre
+        }
+        if segue.identifier == "DetallesProductoListaDesdeProductosParaCosto",
+            let vc = segue.destination as? DetallesProductoListaVC {
+            vc.delegate = self
+            vc.title = "Costo"
+            vc.detalleKey = Configuraciones.keyDetalleProductoCosto
+        }
+        if segue.identifier == "DetallesProductoListaDesdeProductosParaCostoVenta",
+                  let vc = segue.destination as? DetallesProductoListaVC {
+                  vc.delegate = self
+                  vc.title = "Costo de venta"
+                  vc.detalleKey = Configuraciones.keyDetalleProductoCostoVenta
+        }
+        if segue.identifier == "DetallesProductoListaDesdeProductosParaExistencia",
+              let vc = segue.destination as? DetallesProductoListaVC {
+              vc.delegate = self
+              vc.title = "Existencia"
+              vc.detalleKey = Configuraciones.keyDetalleProductoExistencia
+        }
+        
+        
+        //
     }
     
 
@@ -221,3 +281,47 @@ extension ProductoAgregarVC: CategoriaVCDelegate {
     
 }
 
+
+
+
+extension ProductoAgregarVC: DetallesProductoListaVCDelegate {
+    func valorSeleccionado(nombre: String, detalle: String) {
+        
+        switch detalle {
+            
+        case Configuraciones.keyDetalleProductoMarca:
+             botonMarca.setTitle(nombre, for: .normal)
+             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyMarca, Value: nombre)
+             break
+        case Configuraciones.keyDetalleProductoTalla:
+            botonTalla.setTitle(nombre, for: .normal)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyTalla, Value: nombre)
+            break
+        case Configuraciones.keyDetalleProductoCategoria:
+            botonCategoria.setTitle(nombre, for: .normal)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCategorias, Value: nombre)
+            break
+        case Configuraciones.keyDetalleProductoNombre:
+            botonNombre.setTitle(nombre, for: .normal)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyNombre, Value: nombre)
+            break
+        case Configuraciones.keyDetalleProductoCosto:
+            botonCosto.setTitle(nombre, for: .normal)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCosto, Value: nombre)
+            break
+        case Configuraciones.keyDetalleProductoCostoVenta:
+            botonCostoVenta.setTitle(nombre, for: .normal)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCostoVenta, Value: nombre)
+            break
+        case Configuraciones.keyDetalleProductoExistencia:
+               botonExistencia.setTitle(nombre, for: .normal)
+               codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyExistencia, Value: nombre)
+               break
+        default:
+            break
+        }
+        
+    }
+    
+    
+}
