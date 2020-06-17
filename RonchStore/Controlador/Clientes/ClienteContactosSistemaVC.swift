@@ -18,9 +18,28 @@ class ClienteContactosSistemaVC: UIViewController {
     var delegate: ClienteContactosSistemaVCDelegate?
     
     
+    var textoSeleccionado: String = ""
+    
     var listaContactos = [Contacto]()
+    var listaContactosTabla = [Contacto]()
     var contactStore = CNContactStore()
 
+    @IBOutlet weak var tablaValores: UITableView!
+    
+    func actualizarDatos() {
+        listaContactosTabla.removeAll()
+        if textoSeleccionado.isEmpty {
+            listaContactosTabla.append(contentsOf: listaContactos)
+        }
+        for contacto in listaContactos {
+            if contacto.nombre.uppercased().contains(textoSeleccionado.uppercased()) {
+                listaContactosTabla.append(contacto)
+            }
+        }
+        tablaValores.reloadData()
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,6 +58,7 @@ class ClienteContactosSistemaVC: UIViewController {
         }
         
         fetchContactos()
+        actualizarDatos()
         
     }
     
@@ -67,12 +87,12 @@ class ClienteContactosSistemaVC: UIViewController {
 }
 extension ClienteContactosSistemaVC:UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listaContactos.count
+        return listaContactosTabla.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celda = tableView.dequeueReusableCell(withIdentifier: "Celda", for: indexPath)
-        let contacto = listaContactos[indexPath.row]
+        let contacto = listaContactosTabla[indexPath.row]
         celda.textLabel?.text = "\(contacto.nombre) "
         celda.detailTextLabel?.text = "\(contacto.telefono)"
         return celda
@@ -82,10 +102,21 @@ extension ClienteContactosSistemaVC:UITableViewDataSource {
 }
 extension ClienteContactosSistemaVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let contacto = listaContactos[indexPath.row]
+        let contacto = listaContactosTabla[indexPath.row]
         delegate?.contactoSeleccionado(contacto: contacto)
         
         self.navigationController?.popViewController(animated: true)
     }
 }
 
+
+
+extension ClienteContactosSistemaVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        textoSeleccionado = searchText
+        actualizarDatos()
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
+}

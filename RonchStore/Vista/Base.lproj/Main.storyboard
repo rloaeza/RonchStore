@@ -2433,7 +2433,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="Actualmente se han pagado $3500 de $7000">
                                         <attributes>
-                                            <font key="NSFont" metaFont="system" size="14"/>
+                                            <font key="NSFont" metaFont="menu" size="14"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -3299,8 +3299,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JG5-u4-kBT">
-                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
+                                <rect key="frame" x="0.0" y="100" width="414" height="659"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="659" id="10J-Yf-KAT"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Celda" textLabel="nEz-W2-Hor" detailTextLabel="mVM-ml-JYO" style="IBUITableViewCellStyleSubtitle" id="THe-kH-nxl">
                                         <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
@@ -3332,21 +3335,38 @@
                                     <outlet property="delegate" destination="k5U-HO-66s" id="1de-d8-wV0"/>
                                 </connections>
                             </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="nsM-9E-ad1">
+                                <rect key="frame" x="0.0" y="56" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="BW1-Bs-CDD"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="k5U-HO-66s" id="glz-ql-RpE"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="JG5-u4-kBT" firstAttribute="leading" secondItem="p7s-io-Uzi" secondAttribute="leading" id="3BA-qH-L5L"/>
-                            <constraint firstItem="JG5-u4-kBT" firstAttribute="top" secondItem="p7s-io-Uzi" secondAttribute="top" id="55j-O1-Kj6"/>
-                            <constraint firstItem="JG5-u4-kBT" firstAttribute="trailing" secondItem="p7s-io-Uzi" secondAttribute="trailing" id="OdF-oA-0ML"/>
-                            <constraint firstItem="JG5-u4-kBT" firstAttribute="bottom" secondItem="p7s-io-Uzi" secondAttribute="bottom" id="taY-ka-qZC"/>
+                            <constraint firstItem="JG5-u4-kBT" firstAttribute="top" secondItem="nsM-9E-ad1" secondAttribute="bottom" id="3fo-uH-tWo"/>
+                            <constraint firstItem="nsM-9E-ad1" firstAttribute="top" secondItem="p7s-io-Uzi" secondAttribute="top" id="5Ch-r9-YKX"/>
+                            <constraint firstItem="JG5-u4-kBT" firstAttribute="width" secondItem="JdP-aZ-meB" secondAttribute="width" id="5QJ-YG-HQ8"/>
+                            <constraint firstItem="nsM-9E-ad1" firstAttribute="trailing" secondItem="p7s-io-Uzi" secondAttribute="trailing" id="5eH-Uv-IIx"/>
+                            <constraint firstItem="JG5-u4-kBT" firstAttribute="trailing" secondItem="p7s-io-Uzi" secondAttribute="trailing" id="PhI-O9-6nR"/>
+                            <constraint firstItem="JG5-u4-kBT" firstAttribute="bottom" secondItem="p7s-io-Uzi" secondAttribute="bottom" id="axS-Vr-f2O"/>
+                            <constraint firstItem="nsM-9E-ad1" firstAttribute="leading" secondItem="p7s-io-Uzi" secondAttribute="leading" id="cRX-o7-MCV"/>
+                            <constraint firstItem="JG5-u4-kBT" firstAttribute="leading" secondItem="p7s-io-Uzi" secondAttribute="leading" id="qXf-Ne-zsg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="p7s-io-Uzi"/>
                     </view>
                     <navigationItem key="navigationItem" title="Contactos" id="xAh-b8-u44"/>
+                    <connections>
+                        <outlet property="tablaValores" destination="JG5-u4-kBT" id="49X-T3-UFU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oML-dn-WhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4886" y="-2285"/>
+            <point key="canvasLocation" x="4885.507246376812" y="-2285.4910714285711"/>
         </scene>
         <!--Detalle Producto Lista-->
         <scene sceneID="Yw2-o7-3Gt">
@@ -3415,7 +3435,7 @@
         <segue reference="M6l-Nq-CfR"/>
         <segue reference="Hxc-DF-0o7"/>
         <segue reference="gTH-1x-Y73"/>
-        <segue reference="FMc-NH-kMf"/>
+        <segue reference="QPv-37-d1C"/>
         <segue reference="n2l-ff-MnN"/>
     </inferredMetricsTieBreakers>
     <resources>
