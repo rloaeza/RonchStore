@@ -27,6 +27,8 @@ class ProductosListaVC: UIViewController {
     var tallaSeleccionada: String = ""
     var textoSeleccionado: String = ""
     
+    var montoDisponible: Double = 0.0
+    var validarCantidades: Bool = false
     @IBOutlet weak var productosViewController: UITableView!
     
     private func actualizarDatos() {
@@ -58,6 +60,16 @@ class ProductosListaVC: UIViewController {
      
     }
     
+    func validarMonto() -> Bool {
+        var montoAcumulado: Double = 0.0
+        for producto in valoresParaMostrar {
+            let contador: Int = Int( (producto.value(forKey: Configuraciones.keyContador) as! String) )!
+            if  contador != 0 {
+                montoAcumulado += Double(contador) * Double (producto.value(forKey: Configuraciones.keyCostoVenta) as! String)!
+            }
+        }
+        return self.montoDisponible >= montoAcumulado
+    }
     
     @IBAction func agregarTodos(_ sender: Any) {
         var productos: [NSDictionary] = []
@@ -80,6 +92,7 @@ class ProductosListaVC: UIViewController {
 }
 
 
+
 extension ProductosListaVC:UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return valoresParaMostrar.count
@@ -87,7 +100,7 @@ extension ProductosListaVC:UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath) as! ProductoCell
-        
+
         celda.Nombre.text = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String ?? ""
         celda.Marca.text = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String ?? ""
         celda.Talla.text = valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyTalla) as? String ?? ""
@@ -128,8 +141,22 @@ extension ProductosListaVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //self.performSegue(withIdentifier: "ProductoAgregarSegue", sender: valores[indexPath.row])
         
-        let contador: Int = Int( valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyContador) as! String )! + 1
-        valoresParaMostrar[indexPath.row].setValue("\(contador)", forKey: Configuraciones.keyContador)
+        if validarCantidades {
+            var contador: Int = Int( valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyContador) as! String )! + 1
+            valoresParaMostrar[indexPath.row].setValue("\(contador)", forKey: Configuraciones.keyContador)
+            
+            if !validarMonto() {
+                contador -=  1
+                valoresParaMostrar[indexPath.row].setValue("\(contador)", forKey: Configuraciones.keyContador)
+                Configuraciones.alert(Titulo: "Error", Mensaje: "Se ha superado el límite de crédito", self, popView: false)
+            }
+        }
+        else {            
+            valoresParaMostrar[indexPath.row].setValue("1", forKey: Configuraciones.keyContador)
+        }
+        
+        
+        
         self.productosViewController.reloadData()
         //var productos: [NSDictionary] = []
         //productos.append(valoresParaMostrar[indexPath.row])

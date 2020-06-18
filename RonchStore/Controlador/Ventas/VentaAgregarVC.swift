@@ -24,6 +24,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     var pagoSemanasV: Double = 0.0
     var pagoDemora1: Double = 0.0
     var pagoDemora2: Double = 0.0
+
     
     var totalVenta: Double = 0
     var venta: NSDictionary? = nil
@@ -183,6 +184,9 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         
         if segue.identifier == "ProductoDesdeNuevaVenta",
             let vc = segue.destination as? ProductosListaVC {
+            let montoMaximo: Double = Double( cliente?.value(forKey: Configuraciones.keyMontoMaximo) as? String ?? "0" )!
+            vc.montoDisponible = montoMaximo - totalVenta
+            vc.validarCantidades = true
             vc.delegate = self
         }
         

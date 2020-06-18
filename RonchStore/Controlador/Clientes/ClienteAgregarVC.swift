@@ -44,7 +44,7 @@ class ClienteAgregarVC: UIViewController{
     var ubicacion: CLLocationCoordinate2D!
     
     @IBAction func guardarMontoCredito(_ sender: Any) {
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyMaximoCredito, Value: montoCredito.text!)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyMontoMaximo, Value: montoCredito.text!)
     }
     
     @IBAction func guardarTelefono(_ sender: Any) {
@@ -134,7 +134,7 @@ class ClienteAgregarVC: UIViewController{
             colonia.text = cliente!.value(forKey: Configuraciones.keyColonia) as? String
             ciudad.text = cliente!.value(forKey: Configuraciones.keyCiudad) as? String
             pais.text = cliente!.value(forKey: Configuraciones.keyPais) as? String
-            montoCredito.text = cliente!.value(forKey: Configuraciones.keyMaximoCredito) as? String
+            montoCredito.text = cliente!.value(forKey: Configuraciones.keyMontoMaximo) as? String
             
             
             
