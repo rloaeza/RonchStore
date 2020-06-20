@@ -78,13 +78,42 @@ class ClienteAgregarVC: UIViewController{
             Configuraciones.alert(Titulo: "Error", Mensaje: "Debe llenar al menos un campo", self, popView: false)
             return
         }
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            imagenMostrar = imagenCasa
-            let imagePickerController = UIImagePickerController()
-            imagePickerController.delegate = self;
-            imagePickerController.sourceType = .camera
+        //imagenMostrar = imagenCasa
+        //let imagePickerController = UIImagePickerController()
+        //imagePickerController.delegate = self;
+        //imagePickerController.sourceType = .camera
+        //self.present(imagePickerController, animated: true, completion: nil)
+        
+        
+        
+        imagenMostrar = imagenCasa
+
+        let alertaOrigenImagen = UIAlertController(title: "Adquirir imagen", message: "Seleccione la fuente de la imagen", preferredStyle: UIAlertController.Style.alert)
+
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self;
+        alertaOrigenImagen.addAction(UIAlertAction(title: "Cámara", style: .default, handler: { (action: UIAlertAction!) in
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                imagePickerController.sourceType = .camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            }
+        }))
+
+        alertaOrigenImagen.addAction(UIAlertAction(title: "Galería", style: .default, handler: { (action: UIAlertAction!) in
+            imagePickerController.sourceType = .photoLibrary
             self.present(imagePickerController, animated: true, completion: nil)
-        }
+        }))
+
+        present(alertaOrigenImagen, animated: true, completion: nil )
+        
+            
+            
+            
+            
+            
+            
+        
     }
     
     @IBAction func botonTomarFoto(_ sender: Any) {
@@ -92,13 +121,31 @@ class ClienteAgregarVC: UIViewController{
             Configuraciones.alert(Titulo: "Error", Mensaje: "Debe llenar al menos un campo", self, popView: false)
             return
         }
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            imagenMostrar = imagenPersona
-            let imagePickerController = UIImagePickerController()
-            imagePickerController.delegate = self;
-            imagePickerController.sourceType = .camera
+        imagenMostrar = imagenPersona
+        //let imagePickerController = UIImagePickerController()
+        //imagePickerController.delegate = self;
+        //imagePickerController.sourceType = .camera
+        //self.present(imagePickerController, animated: true, completion: nil)
+        
+        let alertaOrigenImagen = UIAlertController(title: "Adquirir imagen", message: "Seleccione la fuente de la imagen", preferredStyle: UIAlertController.Style.alert)
+
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self;
+        alertaOrigenImagen.addAction(UIAlertAction(title: "Cámara", style: .default, handler: { (action: UIAlertAction!) in
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                imagePickerController.sourceType = .camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            }
+        }))
+
+        alertaOrigenImagen.addAction(UIAlertAction(title: "Galería", style: .default, handler: { (action: UIAlertAction!) in
+            imagePickerController.sourceType = .photoLibrary
             self.present(imagePickerController, animated: true, completion: nil)
-        }
+        }))
+
+        present(alertaOrigenImagen, animated: true, completion: nil )
+        
         
     }
     

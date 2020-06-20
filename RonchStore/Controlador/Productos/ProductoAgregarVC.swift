@@ -35,13 +35,25 @@ class ProductoAgregarVC: UIViewController {
     
     @IBAction func botonTomarFotoProducto(_ sender: Any) {
         
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            let imagePickerController = UIImagePickerController()
-            imagePickerController.delegate = self;
-            imagePickerController.sourceType = .camera
-            self.present(imagePickerController, animated: true, completion: nil)
-        }
         
+        let alertaOrigenImagen = UIAlertController(title: "Adquirir imagen", message: "Seleccione la fuente de la imagen", preferredStyle: UIAlertController.Style.alert)
+
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self;
+        alertaOrigenImagen.addAction(UIAlertAction(title: "Cámara", style: .default, handler: { (action: UIAlertAction!) in
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                imagePickerController.sourceType = .camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            }
+        }))
+
+        alertaOrigenImagen.addAction(UIAlertAction(title: "Galería", style: .default, handler: { (action: UIAlertAction!) in
+            imagePickerController.sourceType = .photoLibrary
+            self.present(imagePickerController, animated: true, completion: nil)
+        }))
+
+        present(alertaOrigenImagen, animated: true, completion: nil )
         
     }
     
