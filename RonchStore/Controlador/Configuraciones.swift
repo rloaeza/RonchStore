@@ -44,6 +44,8 @@ class Configuraciones{
     static let keyCliente = "Cliente"
     static let keyTotal = "Total"
     static let keyDateFormat = "yyyy-MM-dd HH:mm"
+    
+    static let keyDateFormatReducido = "dd/MM/yy"
     static let keyDateFormatExte = "yyyy-MM-dd HH:mm:ss"
     static let keyPagos = "Pagos"
     static let keyPago = "Pago"
@@ -105,6 +107,21 @@ class Configuraciones{
         return formatter.string(from: Date().addingTimeInterval(semanas*60*60*24*7))
     }
     
+    static func fechaReducida(Fecha fecha: String) -> String {
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "es_MX")
+        dateFormatter.dateFormat = keyDateFormat
+        let date = dateFormatter.date(from:fecha)!
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = keyDateFormat
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        formatter.locale = NSLocale(localeIdentifier: "es_MX") as Locale
+        return formatter.string(from: date)
+        
+    }
     
     
     

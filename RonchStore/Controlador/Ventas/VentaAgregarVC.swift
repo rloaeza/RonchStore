@@ -34,6 +34,8 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     
     var cliente: NSDictionary? = nil
     
+    @IBOutlet weak var tfDescuento: UITextField!
+    @IBOutlet weak var tfSubTotal: UITextField!
     @IBOutlet weak var tfPagoInicialP: UITextField!
     @IBOutlet weak var tfPagoInicialV: UITextField!
     @IBOutlet weak var tfPagoSemanas: UITextField!
@@ -44,6 +46,8 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     @IBOutlet weak var labelDemora2: UILabel!
     @IBOutlet weak var labelDescripcionFinal: UILabel!
     
+    @IBOutlet weak var labelFecha: UILabel!
+    @IBOutlet weak var labelTicket: UILabel!
     @IBOutlet weak var total: UITextField!
     @IBOutlet weak var tableViewProductos: UITableView!
     
@@ -52,8 +56,9 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     @IBOutlet weak var pickerViewProductos: UIPickerView!
     
     @IBOutlet weak var botonCliente: UIButton!
-    @IBOutlet weak var botonProductos: UIButton!
+    //@IBOutlet weak var botonProductos: UIButton!
     
+    @IBOutlet weak var botonProductos: UIBarButtonItem!
     
     @IBOutlet weak var botonFinalizar: UIButton!
     @IBOutlet weak var botonEditar: UIButton!
@@ -147,7 +152,9 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         
         if venta != nil {
             codigo = venta?.value(forKey: Configuraciones.keyId) as? String
-            contador = venta?.value(forKey: Configuraciones.keyContador) as? Int
+            contador = venta?.value(forKey: Configuraciones.keyContador) as? Int ?? 0
+            labelTicket.text = "Ticket \(contador!)"
+            labelFecha.text = Configuraciones.fechaReducida(Fecha: venta?.value(forKey: Configuraciones.keyFecha) as? String ?? "2020-01-01 00:00")
             cliente = venta?.value(forKey: Configuraciones.keyCliente) as? NSDictionary
             botonCliente.setTitle(cliente?.value(forKey: Configuraciones.keyNombre) as? String, for: .normal)
             productosVenta = venta?.value(forKey: Configuraciones.keyProductos) as? [NSDictionary] ?? []
@@ -273,6 +280,13 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
                 self.codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: self.codigo, KeyValue: Configuraciones.keyContador, Value: self.contador! )
                 
                 Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: Configuraciones.keyContador, KeyValue: "Venta", Value: self.contador!)
+                
+                
+                
+                
+                self.labelTicket.text = "Ticket \(self.contador!)"
+             
+                
             }
             
         }
