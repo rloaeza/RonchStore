@@ -45,6 +45,8 @@ class Configuraciones{
     static let keyTotal = "Total"
     static let keyDateFormat = "yyyy-MM-dd HH:mm"
     
+    static let keyDescuentoTipo = "DescuentoTipo"
+    static let keyDescuento = "Descuento"
     static let keyDateFormatReducido = "dd/MM/yy"
     static let keyDateFormatExte = "yyyy-MM-dd HH:mm:ss"
     static let keyPagos = "Pagos"

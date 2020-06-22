@@ -17,7 +17,9 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     var productos: [NSDictionary] = []
     var productosVenta: [NSDictionary] = []
     var ventaFinalizada: Bool = false
+    var descuentoPorcentaje: Bool = true
     
+    var descuento: Double = 0.0
     var pagoInicialP: Double = 30.0
     var pagoInicialV: Double = 0.0
     var pagoSemanas: Int = 6
@@ -26,6 +28,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     var pagoDemora2: Double = 0.0
 
     
+    var subTotalVenta: Double = 0
     var totalVenta: Double = 0
     var venta: NSDictionary? = nil
     var ref: DatabaseReference!
@@ -63,6 +66,21 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     @IBOutlet weak var botonFinalizar: UIButton!
     @IBOutlet weak var botonEditar: UIButton!
     @IBOutlet weak var botonVerPagos: UIButton!
+    @IBOutlet weak var tipoDescuento: UIButton!
+    
+    
+    
+    @IBAction func cambiarTipoDescuento(_ sender: Any) {
+        descuentoPorcentaje = !descuentoPorcentaje
+        
+        if descuentoPorcentaje {
+            tipoDescuento.setTitle("Desc (%)", for: .normal)
+        }
+        else {
+            tipoDescuento.setTitle("Desc ($)", for: .normal)
+        }
+        calcularCostos(Guardar: true)
+    }
     
     
     @IBAction func finalizarVenta(_ sender: Any) {
@@ -121,6 +139,11 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     }
     
     
+    @IBAction func actualizarDescuento(_ sender: Any) {
+        calcularDescuento()
+        calcularCostos(Guardar: true)
+        
+    }
     @IBAction func actualizarPagoInicial(_ sender: Any) {
         tfPagoInicialV.text = ""
         calcularCostos(Guardar: true)
@@ -147,7 +170,8 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         // Do any additional setup after loading the view.
         
         ref = Database.database().reference()
-        totalVenta = 0
+        subTotalVenta = 0
+        
         productosVenta.removeAll()
         
         if venta != nil {
@@ -157,15 +181,28 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             labelFecha.text = Configuraciones.fechaReducida(Fecha: venta?.value(forKey: Configuraciones.keyFecha) as? String ?? "2020-01-01 00:00")
             cliente = venta?.value(forKey: Configuraciones.keyCliente) as? NSDictionary
             botonCliente.setTitle(cliente?.value(forKey: Configuraciones.keyNombre) as? String, for: .normal)
+            
+            tfDescuento.text = String(venta?.value(forKey: Configuraciones.keyDescuento) as? Double ?? 0.0)
+            
+            descuentoPorcentaje = Bool( venta?.value(forKey: Configuraciones.keyDescuentoTipo) as? Bool ?? true )
+            if descuentoPorcentaje {
+                tipoDescuento.setTitle("Desc (%)", for: .normal)
+            }
+            else {
+                tipoDescuento.setTitle("Desc ($)", for: .normal)
+            }
+            
             productosVenta = venta?.value(forKey: Configuraciones.keyProductos) as? [NSDictionary] ?? []
             
             for p in productosVenta {
-                totalVenta += Double(p.value(forKey: Configuraciones.keyCostoVenta) as! String)!
+                subTotalVenta += Double(p.value(forKey: Configuraciones.keyCostoVenta) as! String)!
             }
             tableViewProductos.reloadData()
             
             tfPagoInicialP.text = String(venta?.value(forKey: Configuraciones.keyPagoInicialP) as? Double ?? 0.0)
             tfPagoInicialV.text = String(venta?.value(forKey: Configuraciones.keyPagoInicialV) as? Double ?? 0.0)
+            
+            
             
             calcularCostos(Guardar: false)
             
@@ -216,6 +253,8 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             venta?.setValue(false, forKey: Configuraciones.keyPagosFinalizados)
         }
         
+        
+        
         labelDescripcionFinal.isHidden = !finalizar
         
         botonFinalizar.isHidden = finalizar
@@ -228,7 +267,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         
         
         
-        
+        tfDescuento.isEnabled = !finalizar
         botonCliente.isEnabled = !finalizar
         botonProductos.isEnabled = !finalizar
         
@@ -239,7 +278,10 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     
     
     func calcularCostos(Guardar guardar: Bool) {
-        total.text = "$ \(totalVenta)"
+        tfSubTotal.text = "$ \(subTotalVenta)"
+        
+        
+        calcularDescuento()
         calcularPagoInicial()
         tfPagoInicialV.text = "\(String(format: "%.1f",pagoInicialV))"
         tfPagoInicialP.text = "\(pagoInicialP)"
@@ -269,6 +311,10 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoInicialV, Value: pagoInicialV)
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyTotal, Value: totalVenta)
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFecha, Value: Configuraciones.fecha())
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyDescuento, Value: descuento)
+        
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyDescuentoTipo, Value: descuentoPorcentaje)
+        
         
         if contador == nil {
             var ref: DatabaseReference!
@@ -293,6 +339,27 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         
     }
     
+
+    func calcularDescuento() {
+        
+        if !tfDescuento.text!.isEmpty {
+            
+            descuento = Double(tfDescuento.text!) ?? 0.0
+            if descuentoPorcentaje {
+                totalVenta = subTotalVenta - ((subTotalVenta*Double(tfDescuento.text!)!)/100)
+            }
+            else {
+                totalVenta = subTotalVenta - Double(tfDescuento.text!)!
+            }
+        }
+        else {
+            descuento = 0.0
+            totalVenta = subTotalVenta
+        }
+        
+        total.text = "$ \(totalVenta)"
+    }
+
     func calcularPagoInicial() {
         if tfPagoInicialP.text!.isEmpty {
             if tfPagoInicialV.text!.isEmpty {
@@ -381,7 +448,7 @@ extension VentaAgregarVC:UITableViewDataSource {
             if self.ventaFinalizada {
                 Configuraciones.alert(Titulo: "Error", Mensaje: "Venta finalizada, no se puede editar", self, popView: false)
             }else {
-                totalVenta -= Double(productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String)!
+                subTotalVenta -= Double(productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String)!
                 productosVenta.remove(at: indexPath.row)
                 self.tableViewProductos.reloadData()
                 calcularCostos(Guardar: true)
@@ -408,7 +475,7 @@ extension VentaAgregarVC: ProductosListaVCDelegate {
         for producto in productos {
             productosVenta.append(producto)
             self.tableViewProductos.reloadData()
-            totalVenta += Double(producto.value(forKey: Configuraciones.keyCostoVenta) as! String)!
+            subTotalVenta += Double(producto.value(forKey: Configuraciones.keyCostoVenta) as! String)!
             calcularCostos(Guardar: true)
         }
         
