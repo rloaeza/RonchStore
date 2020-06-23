@@ -452,14 +452,27 @@ extension VentaAgregarVC:UITableViewDataSource {
         return productosVenta.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath)
-        
+        //let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath)
+    
         let nombre = productosVenta[indexPath.row].value(forKey: Configuraciones.keyNombre) as! String
         let marca = productosVenta[indexPath.row].value(forKey: Configuraciones.keyMarca) as! String
         let talla = productosVenta[indexPath.row].value(forKey: Configuraciones.keyTalla) as! String
-        let costo = productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String
-        celda.textLabel?.text = String(indexPath.row + 1) + ") \(nombre) (\(marca)/\(talla))"
-        celda.detailTextLabel?.text = costo
+        let costoVenta = productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String
+        let costoConDescuento = productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoConDescuento) as? String ?? ""
+        //celda.textLabel?.text = String(indexPath.row + 1) + ") \(nombre) (\(marca)/\(talla))"
+        //celda.detailTextLabel?.text = costo
+        let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath) as! VentaProductoCell
+        celda.nombre.text = nombre
+        celda.marca.text = marca
+        celda.talla.text = talla
+        
+        celda.costoVenta.text = costoVenta
+        celda.costoConDescuento.text = costoConDescuento
+        
+        celda.imagen.image = UIImage(named: "no_imagen")
+        Configuraciones.cargarImagen(KeyNode: Configuraciones.keyProductos, Child: (productosVenta[indexPath.row].value(forKey: Configuraciones.keyId) as? String)!, Image: celda.imagen)
+        
+        
         return celda
     }
     
