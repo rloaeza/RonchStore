@@ -239,6 +239,15 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             let vc = segue.destination as? PagosListaVC {
             vc.venta = venta
         }
+        
+        if segue.identifier == "ProductoDescuentoDesdeNuevaVenta",
+            let vc = segue.destination as? ProductoDescuentoVC {
+            print( sender  )
+            vc.producto = self.productosVenta[ self.tableViewProductos.indexPathForSelectedRow!.row ]
+            vc.delegate = self
+        }
+        
+        //
     }
     
     func finalizarStatusVenta(Finalizar finalizar: Bool) {
@@ -337,6 +346,18 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             
         }
         
+    }
+    
+    func calcularSubTotal() {
+        subTotalVenta = 0
+        for producto in productosVenta {
+            if let costo: String = producto.value(forKey: Configuraciones.keyCostoConDescuento) as? String {
+                subTotalVenta += Double( costo )!
+            }
+            else {
+                subTotalVenta += Double( producto.value(forKey: Configuraciones.keyCostoVenta) as! String )!
+            }
+        }
     }
     
 
@@ -448,9 +469,10 @@ extension VentaAgregarVC:UITableViewDataSource {
             if self.ventaFinalizada {
                 Configuraciones.alert(Titulo: "Error", Mensaje: "Venta finalizada, no se puede editar", self, popView: false)
             }else {
-                subTotalVenta -= Double(productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String)!
-                productosVenta.remove(at: indexPath.row)
+                //subTotalVenta -= Double(productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String)!
+                productosVenta.remove(at: indexPath.row)                
                 self.tableViewProductos.reloadData()
+                calcularSubTotal()
                 calcularCostos(Guardar: true)
             }
         }
@@ -473,11 +495,28 @@ extension VentaAgregarVC: ClienteVCDelegate {
 extension VentaAgregarVC: ProductosListaVCDelegate {
     func productoSeleccionado(productos: [NSDictionary]) {
         for producto in productos {
-            productosVenta.append(producto)
+            productosVenta.append(producto.mutableCopy() as! NSDictionary)
             self.tableViewProductos.reloadData()
-            subTotalVenta += Double(producto.value(forKey: Configuraciones.keyCostoVenta) as! String)!
+            calcularSubTotal()
             calcularCostos(Guardar: true)
         }
         
+    }
+}
+
+extension VentaAgregarVC: ProductoConDescuentoVCDelegate {
+    func productoConDescuento(tipoDescuento: Bool, descuento: Double, costoConDescuento: Double) {
+        let indice = self.tableViewProductos.indexPathForSelectedRow!.row
+        
+        let producto: NSDictionary = productosVenta[indice]
+        producto.setValue(tipoDescuento, forKey: Configuraciones.keyDescuentoTipo)
+        producto.setValue(String(descuento), forKey: Configuraciones.keyDescuento)
+        producto.setValue(String(costoConDescuento), forKey: Configuraciones.keyCostoConDescuento)
+        print( "Costo con descuento: \(costoConDescuento)" )
+        //productosVenta.remove(at: indice)
+        //productosVenta.insert(producto, at: indice)
+        calcularSubTotal()
+        calcularCostos(Guardar: true)
+        self.tableViewProductos.reloadData()
     }
 }

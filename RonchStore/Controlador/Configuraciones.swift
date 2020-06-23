@@ -39,6 +39,7 @@ class Configuraciones{
     static let keyTalla = "Talla"
     static let keyCosto = "Costo"
     static let keyCostoVenta = "CostoVenta"
+    static let keyCostoConDescuento = "Costo con descuento"
     static let keyExistencia = "Existencia"
     static let keyId = "key"
     static let keyCliente = "Cliente"
