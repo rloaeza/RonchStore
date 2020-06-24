@@ -22,6 +22,7 @@ class ClienteAgregarVC: UIViewController{
     
     
     @IBOutlet weak var botonDiaCobro: UIButton!
+    @IBOutlet weak var swPremium: UISwitch!
     
     @IBOutlet weak var botonHoraCobro: UIButton!
     @IBOutlet weak var telefono: UITextField!
@@ -49,6 +50,9 @@ class ClienteAgregarVC: UIViewController{
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyMontoMaximo, Value: montoCredito.text!)
     }
     
+    @IBAction func actualizarPremium(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyPremium, Value: swPremium.isOn)
+    }
     @IBAction func guardarTelefono(_ sender: Any) {
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyTelefono, Value: telefono.text!)
     }
@@ -188,6 +192,11 @@ class ClienteAgregarVC: UIViewController{
             botonDiaCobro.setTitle(cliente!.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "Día de cobro", for: .normal)
             
             botonHoraCobro.setTitle(cliente!.value(forKey: Configuraciones.keyHoraCobro) as? String ?? "Hora de cobro", for: .normal)
+            
+            
+            let premium: Bool =  cliente!.value(forKey: Configuraciones.keyPremium) as? Bool ?? false
+            
+            swPremium.setOn(premium, animated: true)
             
             if let lat = cliente!.value(forKey: Configuraciones.keyLat) as? String,
                let long = cliente!.value(forKey: Configuraciones.keyLong) as? String {

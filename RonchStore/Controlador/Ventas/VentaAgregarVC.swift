@@ -19,6 +19,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     var ventaFinalizada: Bool = false
     var descuentoPorcentaje: Bool = true
     var fechaFijada: Bool = false
+    var premium: Bool = false
     
     var descuento: Double = 0.0
     var pagoInicialP: Double = 30.0
@@ -87,10 +88,55 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     @IBAction func finalizarVenta(_ sender: Any) {
         finalizarStatusVenta(Finalizar: true)
         
+      
+        var mensajePremium: String  = Configuraciones.txtMensajeVenta
+        
+        mensajePremium = mensajePremium.replacingOccurrences(of: "$ticket", with: "\(contador!)")
+        mensajePremium = mensajePremium.replacingOccurrences(of: "$fecha", with: labelFecha.text!)
+        
+        var productosMSG: String = ""
+        for p in productosVenta {
+            let pNombre: String = p.value(forKey: Configuraciones.keyNombre) as? String ?? ""
+            let pCostoVenta: String = p.value(forKey: Configuraciones.keyCostoVenta) as? String ?? ""
+            let pCostoDescuento: String = p.value(forKey: Configuraciones.keyCostoConDescuento) as? String ?? ""
+            
+            productosMSG += "  1 x \(pNombre) $ \(pCostoVenta)\(!pCostoDescuento.isEmpty ? " / $ \(pCostoDescuento)" : "" )\n"
+        }
+        mensajePremium = mensajePremium.replacingOccurrences(of: "$productos", with: productosMSG)
+        
+        
+        if descuento != 0 {
+            mensajePremium = mensajePremium.replacingOccurrences(of: "$subtotal", with: "\n SubTotal: \(tfSubTotal.text!)\n")
+            mensajePremium = mensajePremium.replacingOccurrences(of: "$descuento", with:"Descuento: \(descuentoPorcentaje ? "%" : "$") \(tfDescuento.text!)")
+        }
+        else {
+            mensajePremium = mensajePremium.replacingOccurrences(of: "$subtotal", with: "")
+            mensajePremium = mensajePremium.replacingOccurrences(of: "$descuento", with: "")
+        }
+        mensajePremium = mensajePremium.replacingOccurrences(of: "$total", with: total.text!)
+        
+        let diaCobro: String = cliente?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "x"
+        mensajePremium = mensajePremium.replacingOccurrences(of: "$diaCobro", with: diaCobro)
+        
+        
+        let saldo: Double = totalVenta - pagoInicialV
+        mensajePremium = mensajePremium.replacingOccurrences(of: "$anticipo", with: premium ? "" : " Anticipo: $ \(tfPagoInicialV.text!)\n")
+        mensajePremium = mensajePremium.replacingOccurrences(of: "$saldo", with: premium ? "" :  "    Saldo: $ \(String(saldo))")
+        
+        
+        if !premium {
+            mensajePremium += "\n\nDespues de \(labelDemora1.text!): \(tfPagoDemora1.text!)\n"
+            mensajePremium += "Despues de \(labelDemora2.text!): \(tfPagoDemora2.text!)\n"
+        }
+        
+       
+
+        
+        
         if MFMessageComposeViewController.canSendText() {
             //let nProductos = productosVenta.count
             
-            
+            /*
             var mensaje = "\(Configuraciones.Titulo) \n"
             
             for p in productosVenta {
@@ -103,8 +149,14 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             mensaje += "Despues de \(labelDemora2.text!): \(tfPagoDemora2.text!)\n"
             
             
+            
+            
+            
+            
+            */
+            
             let messageVC = MFMessageComposeViewController()
-            messageVC.body = mensaje
+            messageVC.body = mensajePremium
             messageVC.recipients = [cliente?.value(forKey: Configuraciones.keyTelefono) as! String]
             messageVC.messageComposeDelegate = self
             self.present(messageVC, animated: true, completion: nil)
@@ -181,6 +233,8 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             
             tfDescuento.text = String(venta?.value(forKey: Configuraciones.keyDescuento) as? Double ?? 0.0)
             
+            premium = cliente?.value(forKey: Configuraciones.keyPremium) as? Bool ?? false
+            
             descuentoPorcentaje = Bool( venta?.value(forKey: Configuraciones.keyDescuentoTipo) as? Bool ?? true )
             if descuentoPorcentaje {
                 tipoDescuento.setTitle("Desc (%)", for: .normal)
@@ -191,9 +245,8 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             
             productosVenta = venta?.value(forKey: Configuraciones.keyProductos) as? [NSDictionary] ?? []
             
-            for p in productosVenta {
-                subTotalVenta += Double(p.value(forKey: Configuraciones.keyCostoVenta) as! String)!
-            }
+            calcularSubTotal()
+            
             tableViewProductos.reloadData()
             
             tfPagoInicialP.text = String(venta?.value(forKey: Configuraciones.keyPagoInicialP) as? Double ?? 0.0)
@@ -472,6 +525,9 @@ extension VentaAgregarVC:UITableViewDataSource {
         if !costoConDescuento.isEmpty {
             celda.costoConDescuento.text = "$ \(Double(costoConDescuento) ?? 0.0)"
         }
+        else {
+            celda.costoConDescuento.text = ""
+        }
         celda.imagen.image = UIImage(named: "no_imagen")
         Configuraciones.cargarImagen(KeyNode: Configuraciones.keyProductos, Child: (productosVenta[indexPath.row].value(forKey: Configuraciones.keyId) as? String)!, Image: celda.imagen)
         
@@ -501,6 +557,7 @@ extension VentaAgregarVC: ClienteVCDelegate {
     func clienteSeleccionado(cliente: NSDictionary) {
         botonCliente.setTitle(cliente.value(forKey: Configuraciones.keyNombre) as? String , for: .normal)
         self.cliente = cliente
+        self.premium = cliente.value(forKey: Configuraciones.keyPremium) as? Bool ?? false
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyCliente, Value: cliente)
         calcularCostos(Guardar: true)
     }

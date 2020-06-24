@@ -94,15 +94,32 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     func enviarPagoSMS(Pago pago: NSDictionary) {
         if MFMessageComposeViewController.canSendText() {
-            let fechaVenta = self.venta?.value(forKey: Configuraciones.keyFecha) as! String
+            //let fechaVenta = self.venta?.value(forKey: Configuraciones.keyFecha) as! String
+            let fechaVenta = Configuraciones.fechaReducida(Fecha: venta?.value(forKey: Configuraciones.keyFecha) as? String ?? "2020-01-01 00:00")
+
+            let ticket = String(self.venta?.value(forKey: Configuraciones.keyContador) as? Int ?? 0)
             let total = self.venta?.value(forKey: Configuraciones.keyTotal) as! Double
             let fechaPago = pago.value(forKey: Configuraciones.keyFecha)
             let monto = pago.value(forKey: Configuraciones.keyPago)
             
-            let msg = "Confirmacion de pago por $\(monto!) de \(self.botonCliente.currentTitle!) de la venta del dia \(fechaVenta) por la cantidad de: $\(total). Realizado el: \(fechaPago!)"
+            totalPagos = Configuraciones.calcularTotalPagos(Pagos: pagos)
+            let saldo: Double = total - (totalPagos + anticipo)
+            var mensaje: String = Configuraciones.txtMensajeAbono
+            mensaje = mensaje.replacingOccurrences(of: "$fecha", with: fechaVenta)
+            mensaje = mensaje.replacingOccurrences(of: "$ticket", with: ticket)
+            
+            mensaje = mensaje.replacingOccurrences(of: "$abono", with: "\(monto!)")
+            mensaje = mensaje.replacingOccurrences(of: "$fAbono", with: "\(fechaPago!)")
+            
+            mensaje = mensaje.replacingOccurrences(of: "$total", with: String(total) )
+            mensaje = mensaje.replacingOccurrences(of: "$totAbonos", with: String(totalPagos+anticipo) )
+            mensaje = mensaje.replacingOccurrences(of: "$saldo", with: String(saldo) )
+            
+            
+            //let msg = "Confirmacion de pago por $\(monto!) de \(self.botonCliente.currentTitle!) de la venta del dia \(fechaVenta) por la cantidad de: $\(total). Realizado el: \(fechaPago!)"
             
             let messageVC = MFMessageComposeViewController()
-            messageVC.body = msg
+            messageVC.body = mensaje
             let cliente = self.venta?.value(forKey: Configuraciones.keyCliente) as! NSDictionary
             messageVC.recipients = [cliente.value(forKey: Configuraciones.keyTelefono) as! String]
             messageVC.messageComposeDelegate = self

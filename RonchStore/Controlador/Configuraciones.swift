@@ -32,6 +32,7 @@ class Configuraciones{
     static let keyCiudad = "Ciudad"
     static let keyPais = "Pais"
     static let keyMontoMaximo = "MaximoCredito"
+    static let keyPremium = "Premium"
     
     static let keyLat = "Lat"
     static let keyLong = "Long"
@@ -97,6 +98,29 @@ class Configuraciones{
     static let txtSeleccionarCategoria = "Seleccionar categoria"
     static let txtMensajeDemora = "Total despues de  # semanas"
     
+    
+    
+    
+    static let txtMensajeVenta = """
+      .::RonchStore::.
+Ticket: $ticket, Fecha: $fecha
+
+Produtos
+$productos$subtotal$descuento
+    Total: $total
+$anticipo$saldo
+Dia de cobro: $diaCobro
+"""
+    static let txtMensajeAbono = """
+      .::RonchStore::.
+Ticket: $ticket, Fecha: $fecha
+
+Confirmación de pago por $ $abono. Realizado el $fAbono
+
+ Total: $total
+Abonos: $totAbonos
+ Saldo: $saldo
+"""
     
     
     static let storageRef = Storage.storage().reference()
