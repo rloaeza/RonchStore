@@ -51,6 +51,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     @IBOutlet weak var labelDemora2: UILabel!
     @IBOutlet weak var labelDescripcionFinal: UILabel!
     
+    @IBOutlet weak var labelPremium: UILabel!
     @IBOutlet weak var labelFecha: UILabel!
     @IBOutlet weak var labelTicket: UILabel!
     @IBOutlet weak var total: UITextField!
@@ -69,6 +70,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     @IBOutlet weak var botonEditar: UIButton!
     @IBOutlet weak var botonVerPagos: UIButton!
     @IBOutlet weak var tipoDescuento: UIButton!
+    @IBOutlet weak var viewDetalleCredito: UIView!
     
     
     
@@ -237,7 +239,16 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             
             premium = cliente?.value(forKey: Configuraciones.keyPremium) as? Bool ?? false
             
-            
+            if premium {
+                viewDetalleCredito.isHidden = true
+                tfPagoInicialV.text = "0"
+                tfPagoInicialP.text = "0"
+                labelPremium.isHidden = false
+            }
+            else {
+                viewDetalleCredito.isHidden = false
+                labelPremium.isHidden = true
+            }
             descuentoPorcentaje = Bool( venta?.value(forKey: Configuraciones.keyDescuentoTipo) as? Bool ?? true )
             if descuentoPorcentaje {
                 tipoDescuento.setTitle("Desc (%)", for: .normal)
@@ -567,6 +578,18 @@ extension VentaAgregarVC: ClienteVCDelegate {
         self.cliente = cliente
         self.premium = cliente.value(forKey: Configuraciones.keyPremium) as? Bool ?? false
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyCliente, Value: cliente)
+        
+        if premium {
+            viewDetalleCredito.isHidden = true
+            tfPagoInicialV.text = "0"
+            tfPagoInicialP.text = "0"
+            labelPremium.isHidden = false
+        }else {
+            viewDetalleCredito.isHidden = false            
+            tfPagoInicialP.text = "30"
+            labelPremium.isHidden = true
+        }
+        
         calcularCostos(Guardar: true)
     }
 }
