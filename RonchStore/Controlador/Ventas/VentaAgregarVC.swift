@@ -18,6 +18,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     var productosVenta: [NSDictionary] = []
     var ventaFinalizada: Bool = false
     var descuentoPorcentaje: Bool = true
+    var fechaFijada: Bool = false
     
     var descuento: Double = 0.0
     var pagoInicialP: Double = 30.0
@@ -159,11 +160,6 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     }
     
     
-    
-    @IBAction func botonFinalizarVenta(_ sender: Any) {
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -175,6 +171,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         productosVenta.removeAll()
         
         if venta != nil {
+            fechaFijada = true
             codigo = venta?.value(forKey: Configuraciones.keyId) as? String
             contador = venta?.value(forKey: Configuraciones.keyContador) as? Int ?? 0
             labelTicket.text = "Ticket \(contador!)"
@@ -242,7 +239,6 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         
         if segue.identifier == "ProductoDescuentoDesdeNuevaVenta",
             let vc = segue.destination as? ProductoDescuentoVC {
-            print( sender  )
             vc.producto = self.productosVenta[ self.tableViewProductos.indexPathForSelectedRow!.row ]
             vc.delegate = self
         }
@@ -319,10 +315,13 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoInicialP, Value: pagoInicialP)
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoInicialV, Value: pagoInicialV)
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyTotal, Value: totalVenta)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFecha, Value: Configuraciones.fecha())
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyDescuento, Value: descuento)
-        
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyDescuentoTipo, Value: descuentoPorcentaje)
+        
+        if !fechaFijada {
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFecha, Value: Configuraciones.fecha())
+            fechaFijada = true
+        }
         
         
         if contador == nil {
@@ -459,16 +458,20 @@ extension VentaAgregarVC:UITableViewDataSource {
         let talla = productosVenta[indexPath.row].value(forKey: Configuraciones.keyTalla) as! String
         let costoVenta = productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String
         let costoConDescuento = productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoConDescuento) as? String ?? ""
+        let fecha = productosVenta[indexPath.row].value(forKey: Configuraciones.keyFecha) as? String ?? ""
+        
         //celda.textLabel?.text = String(indexPath.row + 1) + ") \(nombre) (\(marca)/\(talla))"
         //celda.detailTextLabel?.text = costo
         let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath) as! VentaProductoCell
         celda.nombre.text = nombre
         celda.marca.text = marca
         celda.talla.text = talla
+        celda.fecha.text = fecha
         
-        celda.costoVenta.text = costoVenta
-        celda.costoConDescuento.text = costoConDescuento
-        
+        celda.costoVenta.text = "$ \(Double(costoVenta) ?? 0.0)"
+        if !costoConDescuento.isEmpty {
+            celda.costoConDescuento.text = "$ \(Double(costoConDescuento) ?? 0.0)"
+        }
         celda.imagen.image = UIImage(named: "no_imagen")
         Configuraciones.cargarImagen(KeyNode: Configuraciones.keyProductos, Child: (productosVenta[indexPath.row].value(forKey: Configuraciones.keyId) as? String)!, Image: celda.imagen)
         
@@ -508,7 +511,9 @@ extension VentaAgregarVC: ClienteVCDelegate {
 extension VentaAgregarVC: ProductosListaVCDelegate {
     func productoSeleccionado(productos: [NSDictionary]) {
         for producto in productos {
-            productosVenta.append(producto.mutableCopy() as! NSDictionary)
+            let p: NSDictionary = producto.mutableCopy() as! NSDictionary
+            p.setValue(Configuraciones.fecha(), forKey: Configuraciones.keyFecha)
+            productosVenta.append(p)
             self.tableViewProductos.reloadData()
             calcularSubTotal()
             calcularCostos(Guardar: true)

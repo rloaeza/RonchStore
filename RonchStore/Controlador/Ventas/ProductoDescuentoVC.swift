@@ -55,9 +55,13 @@ class ProductoDescuentoVC: UIViewController {
         //producto?.setValue( "\(costoConDescuento)", forKey: Configuraciones.keyCostoConDescuento)
         //producto?.setValue("\(descuento)", forKey: Configuraciones.keyDescuento)
         
-        
-        delegate?.productoConDescuento(tipoDescuento: descuentoPorcentaje, descuento: descuento, costoConDescuento: costoConDescuento)
-        self.navigationController?.popViewController(animated: true)
+        if costoConDescuento < 0 {
+            Configuraciones.alert(Titulo: "Error", Mensaje: "No se puede realizar dicho descuento", self, popView: false)
+        }
+        else {
+            delegate?.productoConDescuento(tipoDescuento: descuentoPorcentaje, descuento: descuento, costoConDescuento: costoConDescuento)
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 
     override func viewDidLoad() {

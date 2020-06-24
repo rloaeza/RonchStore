@@ -20,6 +20,7 @@ class DetallesProductoListaVC: UIViewController {
     
     var titulo: String? = nil
     var detalleKey: String? = nil
+    var ordenarPor: String? = nil
     
 
     @IBOutlet weak var tablaValores: UITableView!
@@ -60,9 +61,14 @@ class DetallesProductoListaVC: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let ref = Database.database().reference().child(detalleKey!).queryOrdered(byChild: Configuraciones.keyNombre)
-        
+        var ref: DatabaseQuery
+        if ordenarPor == nil  {
+            ref = Database.database().reference().child(detalleKey!)
+        }
+        else {
+            ref = Database.database().reference().child(detalleKey!).queryOrdered(byChild: ordenarPor!)
+            
+        }
         ref.observe(.value) { (DataSnapshot) in
             self.valores.removeAll()
             for child in DataSnapshot.children {

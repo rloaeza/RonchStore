@@ -19,4 +19,5 @@ class VentaProductoCell: UITableViewCell {
     
     @IBOutlet weak var costoConDescuento: UILabel!
     
+    @IBOutlet weak var fecha: UILabel!
 }

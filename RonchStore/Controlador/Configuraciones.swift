@@ -72,6 +72,13 @@ class Configuraciones{
     static let keyDetalleProductoCosto = "ProductoDetalle/Costo"
     static let keyDetalleProductoCostoVenta = "ProductoDetalle/CostoVenta"
     static let keyDetalleProductoExistencia = "ProductoDetalle/Existencia"
+    
+    
+    static let keyDatosDiaCobro = "Datos/Dias de cobro"
+    static let keyDatosHoraCobro = "Datos/Horas de cobro"
+    
+    static let keyDiaCobro = "Dias de cobro"
+    static let keyHoraCobro = "Horas de cobro"
 
     
     

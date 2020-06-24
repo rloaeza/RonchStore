@@ -21,7 +21,9 @@ class ClienteAgregarVC: UIViewController{
     var long: Double? = nil
     
     
-
+    @IBOutlet weak var botonDiaCobro: UIButton!
+    
+    @IBOutlet weak var botonHoraCobro: UIButton!
     @IBOutlet weak var telefono: UITextField!
     @IBOutlet weak var nombre: UITextField!
 
@@ -183,7 +185,9 @@ class ClienteAgregarVC: UIViewController{
             pais.text = cliente!.value(forKey: Configuraciones.keyPais) as? String
             montoCredito.text = cliente!.value(forKey: Configuraciones.keyMontoMaximo) as? String
             
+            botonDiaCobro.setTitle(cliente!.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "Día de cobro", for: .normal)
             
+            botonHoraCobro.setTitle(cliente!.value(forKey: Configuraciones.keyHoraCobro) as? String ?? "Hora de cobro", for: .normal)
             
             if let lat = cliente!.value(forKey: Configuraciones.keyLat) as? String,
                let long = cliente!.value(forKey: Configuraciones.keyLong) as? String {
@@ -217,6 +221,22 @@ class ClienteAgregarVC: UIViewController{
             vc.coord1 = self.long
             vc.nombre = self.nombre.text!
         
+        }
+        
+        if segue.identifier == "DiaCobroDesdeClientes",
+            let vc = segue.destination as? DetallesProductoListaVC {
+            vc.delegate = self
+            vc.title = "Días de cobro"
+            vc.ordenarPor = nil
+            vc.detalleKey = Configuraciones.keyDatosDiaCobro
+        }
+        
+        if segue.identifier == "HoraCobroDesdeClientes",
+            let vc = segue.destination as? DetallesProductoListaVC {
+            vc.delegate = self
+            vc.ordenarPor = nil
+            vc.title = "Hora de cobro"
+            vc.detalleKey = Configuraciones.keyDatosHoraCobro
         }
         
     }
@@ -315,3 +335,21 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
 
 
 
+extension ClienteAgregarVC: DetallesProductoListaVCDelegate {
+    func valorSeleccionado(nombre: String, detalle: String) {
+        
+        switch detalle {
+            
+        case Configuraciones.keyDatosHoraCobro:
+             botonHoraCobro.setTitle(nombre, for: .normal)
+             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyHoraCobro, Value: nombre)
+             break
+        case Configuraciones.keyDatosDiaCobro:
+            botonDiaCobro.setTitle(nombre, for: .normal)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: nombre)
+        break
+        default:
+            break
+        }
+    }
+}

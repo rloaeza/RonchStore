@@ -153,43 +153,50 @@ class ProductoAgregarVC: UIViewController {
             let vc = segue.destination as? DetallesProductoListaVC {
             vc.delegate = self
             vc.title = "Categoria"
+            vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDetalleProductoCategoria
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaMarca",
             let vc = segue.destination as? DetallesProductoListaVC {
             vc.delegate = self
             vc.title = "Marca"
+            vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDetalleProductoMarca
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaTalla",
             let vc = segue.destination as? DetallesProductoListaVC {
             vc.delegate = self
             vc.title = "Talla"
+            vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDetalleProductoTalla
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaNombre",
             let vc = segue.destination as? DetallesProductoListaVC {
             vc.delegate = self
             vc.title = "Nombre"
+            vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDetalleProductoNombre
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaCosto",
             let vc = segue.destination as? DetallesProductoListaVC {
             vc.delegate = self
             vc.title = "Costo"
+            vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDetalleProductoCosto
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaCostoVenta",
-                  let vc = segue.destination as? DetallesProductoListaVC {
-                  vc.delegate = self
-                  vc.title = "Costo de venta"
-                  vc.detalleKey = Configuraciones.keyDetalleProductoCostoVenta
+            let vc = segue.destination as? DetallesProductoListaVC {
+            vc.delegate = self
+            vc.title = "Costo de venta"
+            vc.ordenarPor = Configuraciones.keyNombre
+            vc.detalleKey = Configuraciones.keyDetalleProductoCostoVenta
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaExistencia",
-              let vc = segue.destination as? DetallesProductoListaVC {
-              vc.delegate = self
-              vc.title = "Existencia"
-              vc.detalleKey = Configuraciones.keyDetalleProductoExistencia
+            let vc = segue.destination as? DetallesProductoListaVC {
+            vc.delegate = self
+            vc.title = "Existencia"
+            vc.ordenarPor = Configuraciones.keyNombre
+            vc.detalleKey = Configuraciones.keyDetalleProductoExistencia
         }
         
         
