@@ -166,7 +166,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
         if venta != nil {
             botonFinalizar.isHidden = !isAdmin
             
-            cliente = venta?.value(forKey: Configuraciones.keyCliente) as! NSDictionary
+            cliente = venta?.value(forKey: Configuraciones.keyCliente) as? NSDictionary
             botonCliente.setTitle(cliente?.value(forKey: Configuraciones.keyNombre) as? String, for: .normal)
             
             let productos = venta?.value(forKey: Configuraciones.keyProductos) as! [NSDictionary]
