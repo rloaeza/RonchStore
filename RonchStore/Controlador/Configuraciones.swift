@@ -33,6 +33,7 @@ class Configuraciones{
     static let keyPais = "Pais"
     static let keyMontoMaximo = "MaximoCredito"
     static let keyPremium = "Premium"
+    static let keyApellidos = "Apellidos"
     
     static let keyLat = "Lat"
     static let keyLong = "Long"
@@ -104,6 +105,7 @@ class Configuraciones{
     static let txtMensajeVenta = """
       .::RonchStore::.
 Ticket: $ticket, Fecha: $fecha
+Cliente: $cliente
 
 Produtos
 $productos$subtotal$descuento
@@ -114,6 +116,7 @@ Dia de cobro: $diaCobro
     static let txtMensajeAbono = """
       .::RonchStore::.
 Ticket: $ticket, Fecha: $fecha
+Cliente: $cliente
 
 Confirmación de pago por $ $abono. Realizado el $fAbono
 

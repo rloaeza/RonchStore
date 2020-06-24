@@ -94,6 +94,8 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         mensajePremium = mensajePremium.replacingOccurrences(of: "$ticket", with: "\(contador!)")
         mensajePremium = mensajePremium.replacingOccurrences(of: "$fecha", with: labelFecha.text!)
         
+        mensajePremium = mensajePremium.replacingOccurrences(of: "$cliente", with: cliente?.value(forKey: Configuraciones.keyApellidos) as? String ?? "Mostrador")
+        
         var productosMSG: String = ""
         for p in productosVenta {
             let pNombre: String = p.value(forKey: Configuraciones.keyNombre) as? String ?? ""
@@ -235,6 +237,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             
             premium = cliente?.value(forKey: Configuraciones.keyPremium) as? Bool ?? false
             
+            
             descuentoPorcentaje = Bool( venta?.value(forKey: Configuraciones.keyDescuentoTipo) as? Bool ?? true )
             if descuentoPorcentaje {
                 tipoDescuento.setTitle("Desc (%)", for: .normal)
@@ -297,6 +300,11 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         }
         
         //
+    }
+    
+    
+    func ocultarModoCredito(Ocultar ocultar: Bool) {
+        
     }
     
     func finalizarStatusVenta(Finalizar finalizar: Bool) {

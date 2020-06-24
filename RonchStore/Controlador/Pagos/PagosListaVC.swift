@@ -14,6 +14,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     var ref: DatabaseReference!
     var venta: NSDictionary? = nil
+    var cliente: NSDictionary? = nil
     var pagos: [NSDictionary] = []
     var codigo: String? = nil
     var pagosFinalizados: Bool = false
@@ -101,12 +102,16 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             let total = self.venta?.value(forKey: Configuraciones.keyTotal) as! Double
             let fechaPago = pago.value(forKey: Configuraciones.keyFecha)
             let monto = pago.value(forKey: Configuraciones.keyPago)
+            let apellidos = cliente?.value(forKey: Configuraciones.keyApellidos) as? String ?? "Mostrador"
+            
             
             totalPagos = Configuraciones.calcularTotalPagos(Pagos: pagos)
             let saldo: Double = total - (totalPagos + anticipo)
             var mensaje: String = Configuraciones.txtMensajeAbono
             mensaje = mensaje.replacingOccurrences(of: "$fecha", with: fechaVenta)
             mensaje = mensaje.replacingOccurrences(of: "$ticket", with: ticket)
+            mensaje = mensaje.replacingOccurrences(of: "$cliente", with: apellidos)
+            
             
             mensaje = mensaje.replacingOccurrences(of: "$abono", with: "\(monto!)")
             mensaje = mensaje.replacingOccurrences(of: "$fAbono", with: "\(fechaPago!)")
@@ -161,8 +166,8 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
         if venta != nil {
             botonFinalizar.isHidden = !isAdmin
             
-            let cliente = venta?.value(forKey: Configuraciones.keyCliente) as! NSDictionary
-            botonCliente.setTitle(cliente.value(forKey: Configuraciones.keyNombre) as? String, for: .normal)
+            cliente = venta?.value(forKey: Configuraciones.keyCliente) as! NSDictionary
+            botonCliente.setTitle(cliente?.value(forKey: Configuraciones.keyNombre) as? String, for: .normal)
             
             let productos = venta?.value(forKey: Configuraciones.keyProductos) as! [NSDictionary]
             botonProductos.setTitle("\(productos.count) Productos", for: .normal)
@@ -182,6 +187,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             if let ps = venta?.value(forKey: Configuraciones.keyPagos) as? [NSDictionary] {
                 pagos = ps
             }
+            
             
             calcularTotales()
             

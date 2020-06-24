@@ -24,10 +24,11 @@ class ClienteAgregarVC: UIViewController{
     @IBOutlet weak var botonDiaCobro: UIButton!
     @IBOutlet weak var swPremium: UISwitch!
     
+    @IBOutlet weak var apellidos: UITextField!
     @IBOutlet weak var botonHoraCobro: UIButton!
     @IBOutlet weak var telefono: UITextField!
     @IBOutlet weak var nombre: UITextField!
-
+    
     @IBOutlet weak var email: UITextField!
     //@IBOutlet weak var imagenPersona: UIImageView!
     //@IBOutlet weak var imagenCasa: UIImageView!
@@ -46,6 +47,8 @@ class ClienteAgregarVC: UIViewController{
     var imagenMostrar: UIImageView!
     var ubicacion: CLLocationCoordinate2D!
     
+    
+    
     @IBAction func guardarMontoCredito(_ sender: Any) {
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyMontoMaximo, Value: montoCredito.text!)
     }
@@ -57,6 +60,9 @@ class ClienteAgregarVC: UIViewController{
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyTelefono, Value: telefono.text!)
     }
     
+    @IBAction func guardarApellidos(_ sender: Any) {
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyApellidos, Value: apellidos.text!)
+    }
     @IBAction func guardarNombre(_ sender: Any) {
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyNombre, Value: nombre.text!)
     }
@@ -182,6 +188,7 @@ class ClienteAgregarVC: UIViewController{
             codigo =  cliente!.value(forKey: Configuraciones.keyId) as? String
             telefono.text = cliente!.value(forKey: Configuraciones.keyTelefono) as? String
             nombre.text = cliente!.value(forKey: Configuraciones.keyNombre) as? String
+            apellidos.text = cliente!.value(forKey: Configuraciones.keyApellidos) as? String
             email.text = cliente!.value(forKey: Configuraciones.keyEmail) as? String
             calle.text = cliente!.value(forKey: Configuraciones.keyCalle) as? String
             colonia.text = cliente!.value(forKey: Configuraciones.keyColonia) as? String
