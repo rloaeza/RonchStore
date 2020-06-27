@@ -217,6 +217,16 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             let vc = segue.destination as? ClienteUbicacionVC {
             vc.cliente = venta?.value(forKey: Configuraciones.keyCliente) as? NSDictionary            
         }
+        
+        if segue.identifier == "PagoNuevoDesdePagosRealizados",
+            let vc = segue.destination as? PagoNuevoVC {
+            //vc.lblCliente.text = cliente?.value(forKey: Configuraciones.keyNombre) as? String ?? ""
+            vc.venta = venta
+            vc.delegate = self
+            
+            
+        }
+        //
     }
     
 
@@ -224,7 +234,30 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
 
 }
+extension PagosListaVC:PagoNuevoVCDelegate {
+    func pagoNuevo(monto: Double, concepto: String) {
+        //pago = textField!.text!
+        let fechaPago = Configuraciones.fecha()
 
+        self.pagoActual = [Configuraciones.keyPago:String(monto), Configuraciones.keyFecha:fechaPago, Configuraciones.keyConceptoPago:concepto]
+        self.pagos.append(self.pagoActual!)
+
+        let strRef = "\(Configuraciones.keyVentasBorrador)/\(self.codigo!)"
+
+        self.ref.child(strRef).child(Configuraciones.keyPagos).setValue(self.pagos)
+
+
+        self.venta?.setValue(self.pagos, forKey: Configuraciones.keyPagos)
+
+        //Configuraciones.alert(Titulo: "Pago", Mensaje: "Pago guardado", self, popView: false)
+
+        self.enviarPagoSMS(Pago: self.pagoActual!)
+        self.calcularTotales()
+        self.tableViewController.reloadData()
+    }
+    
+    
+}
 
 
 extension PagosListaVC:UITableViewDataSource {

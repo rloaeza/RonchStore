@@ -78,9 +78,11 @@ class Configuraciones{
     
     static let keyDatosDiaCobro = "Datos/Dias de cobro"
     static let keyDatosHoraCobro = "Datos/Horas de cobro"
+    static let keyDatosConceptoPago = "Datos/Conceptos de pago"
     
     static let keyDiaCobro = "Dias de cobro"
     static let keyHoraCobro = "Horas de cobro"
+    static let keyConceptoPago = "Concepto de pago"
 
     
     

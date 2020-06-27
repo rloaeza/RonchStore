@@ -20,7 +20,10 @@ class VentasVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let ref = Database.database().reference().child(Configuraciones.keyVentasBorrador).queryOrdered(byChild: "\(Configuraciones.keyFecha)")
+        
+        
+        
+        let ref = Database.database().reference().child(Configuraciones.keyVentasBorrador).queryOrdered(byChild: "\(Configuraciones.keyContador)")
         
         ref.observe(.value) { (DataSnapshot) in
             self.valores.removeAll()
