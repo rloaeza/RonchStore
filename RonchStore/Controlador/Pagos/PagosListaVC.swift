@@ -143,10 +143,14 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
         switch (result) {
         case .cancelled:
             msg = "Mensaje cancelado"
+            pagoActual?.setValue(false, forKey: Configuraciones.keyPagoMensajeEnviado)
         case .failed:
             msg = "Error al enviar"
+            pagoActual?.setValue(false, forKey: Configuraciones.keyPagoMensajeEnviado)
         case .sent:
             msg = "Mensaje enviado satisfactoriamente"
+            
+            
         default:
             break
         }
@@ -239,13 +243,19 @@ extension PagosListaVC:PagoNuevoVCDelegate {
         //pago = textField!.text!
         let fechaPago = Configuraciones.fecha()
 
-        self.pagoActual = [Configuraciones.keyPago:String(monto), Configuraciones.keyFecha:fechaPago, Configuraciones.keyConceptoPago:concepto]
+        self.pagoActual = [Configuraciones.keyPago:String(monto), Configuraciones.keyFecha:fechaPago, Configuraciones.keyConceptoPago:concepto, Configuraciones.keyPagoMensajeEnviado:true]
         self.pagos.append(self.pagoActual!)
 
         let strRef = "\(Configuraciones.keyVentasBorrador)/\(self.codigo!)"
 
-        self.ref.child(strRef).child(Configuraciones.keyPagos).setValue(self.pagos)
+        //self.ref.child(strRef).child(Configuraciones.keyPagos).setValue(self.pagos)
 
+        //Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: strRef, KeyValue: Configuraciones.keyPagos, Value: pagos)
+        
+        
+        Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
+        
+        
 
         self.venta?.setValue(self.pagos, forKey: Configuraciones.keyPagos)
 
@@ -266,11 +276,33 @@ extension PagosListaVC:UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let celda = tableView.dequeueReusableCell(withIdentifier: "PagoCelda", for: indexPath)
-        let nombre = pagos[indexPath.row].value(forKey: Configuraciones.keyPago) as? String
+        //let celda = tableView.dequeueReusableCell(withIdentifier: "PagoCelda", for: indexPath)
+        let celda = tableView.dequeueReusableCell(withIdentifier: "PagoCelda", for: indexPath) as! PagoCell
+
+        
+        
+        
+        let monto = "$ \(pagos[indexPath.row].value(forKey: Configuraciones.keyPago) as? String ?? "0") "
         let fecha = pagos[indexPath.row].value(forKey: Configuraciones.keyFecha) as? String
-        celda.textLabel?.text = "\(indexPath.row+1)) $ \(nombre!)"
-        celda.detailTextLabel?.text = "\(fecha!)"
+        let concepto = pagos[indexPath.row].value(forKey: Configuraciones.keyConceptoPago) as? String
+        
+        let pagoMensajeEnviado = pagos[indexPath.row].value(forKey: Configuraciones.keyPagoMensajeEnviado) as? Bool ?? false
+        //celda.textLabel?.text = "\(indexPath.row+1)) $ \(nombre!)"
+        //celda.detailTextLabel?.text = "\(fecha!)"
+        
+        celda.Monto.text = monto
+        celda.Fecha.text = fecha
+        celda.Descripcion.text = concepto
+        
+        if pagoMensajeEnviado {
+            celda.Mensaje.isHidden = true
+        }
+        else {
+            celda.Mensaje.isHidden = false
+        }
+        
+        
+        
         return celda
     }
     

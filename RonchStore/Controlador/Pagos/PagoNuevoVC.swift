@@ -50,7 +50,7 @@ class PagoNuevoVC: UIViewController {
         if venta != nil {
             let cliente: NSDictionary = venta?.value(forKey: Configuraciones.keyCliente) as! NSDictionary
             let total: Double = venta?.value(forKey: Configuraciones.keyTotal) as? Double ?? 0
-            let pagos: [NSDictionary] = venta?.value(forKey: Configuraciones.keyPagos) as! [NSDictionary]
+            let pagos: [NSDictionary] = venta?.value(forKey: Configuraciones.keyPagos) as? [NSDictionary] ?? []
             let pagoInicial: Double = venta?.value(forKey: Configuraciones.keyPagoInicialV) as? Double ?? 0
             
             adeudo = total - (Configuraciones.calcularTotalPagos(Pagos: pagos) + pagoInicial)

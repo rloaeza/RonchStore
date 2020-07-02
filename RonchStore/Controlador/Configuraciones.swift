@@ -54,6 +54,7 @@ class Configuraciones{
     static let keyDateFormatExte = "yyyy-MM-dd HH:mm:ss"
     static let keyPagos = "Pagos"
     static let keyPago = "Pago"
+    static let keyPagoMensajeEnviado = "Pago mensaje enviado"
     static let keyAbonado = "Abonado"
     static let keyFecha = "Fecha"
     static let keyStatus = "Status"
