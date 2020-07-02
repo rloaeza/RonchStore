@@ -23,6 +23,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     var anticipo: Double = 0.0
     var totalVenta: Double = 0.0
     var isAdmin: Bool = true
+    var idPagoEnviarMensaje: Int? = nil
     
     @IBOutlet weak var tableViewController: UITableView!
     @IBOutlet weak var labelDescripcion: UITextView!
@@ -42,60 +43,11 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             pagosFinalizados = true
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagosFinalizados, Value: pagosFinalizados)
             venta?.setValue(true, forKey: Configuraciones.keyPagosFinalizados)
-            
         }
-        
-        
-    }
-    
-    @IBAction func botonAgregar(_ sender: Any) {
-        
-        if pagosFinalizados {
-            Configuraciones.alert(Titulo: "Pagos", Mensaje: "Esta venta ya se finalizó", self, popView: false)
-            return
-        }
-        
-        var pago: String = ""
-        var alert: UIAlertController
-        alert = UIAlertController(title: "Pago", message: "Introduce la cantridad a pagar", preferredStyle: .alert)
-        alert.addTextField { (textField) in
-            textField.keyboardType = .decimalPad
-            //textField.text = "Marca"
-        }
-        
-        alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: { [weak alert] (_) in
-            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
-            
-            pago = textField!.text!
-            let fechaPago = Configuraciones.fecha()
-            
-            self.pagoActual = [Configuraciones.keyPago:pago, Configuraciones.keyFecha:fechaPago]
-            self.pagos.append(self.pagoActual!)
-        
-            let strRef = "\(Configuraciones.keyVentasBorrador)/\(self.codigo!)"
-            
-            self.ref.child(strRef).child(Configuraciones.keyPagos).setValue(self.pagos)
-            
-            
-            self.venta?.setValue(self.pagos, forKey: Configuraciones.keyPagos)
-            
-            //Configuraciones.alert(Titulo: "Pago", Mensaje: "Pago guardado", self, popView: false)
-            
-            self.enviarPagoSMS(Pago: self.pagoActual!)
-            self.calcularTotales()
-            self.tableViewController.reloadData()
-            
-        }))
-        
-        
-        alert.addAction(UIAlertAction(title: "Cancelar", style: .destructive) { (alertAction) in })
-        
-        present(alert, animated: true)
     }
     
     func enviarPagoSMS(Pago pago: NSDictionary) {
         if MFMessageComposeViewController.canSendText() {
-            //let fechaVenta = self.venta?.value(forKey: Configuraciones.keyFecha) as! String
             let fechaVenta = Configuraciones.fechaReducida(Fecha: venta?.value(forKey: Configuraciones.keyFecha) as? String ?? "2020-01-01 00:00")
 
             let ticket = String(self.venta?.value(forKey: Configuraciones.keyContador) as? Int ?? 0)
@@ -103,26 +55,19 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             let fechaPago = pago.value(forKey: Configuraciones.keyFecha)
             let monto = pago.value(forKey: Configuraciones.keyPago)
             let apellidos = cliente?.value(forKey: Configuraciones.keyApellidos) as? String ?? "Mostrador"
-            
-            
+        
             totalPagos = Configuraciones.calcularTotalPagos(Pagos: pagos)
             let saldo: Double = total - (totalPagos + anticipo)
             var mensaje: String = Configuraciones.txtMensajeAbono
             mensaje = mensaje.replacingOccurrences(of: "$fecha", with: fechaVenta)
             mensaje = mensaje.replacingOccurrences(of: "$ticket", with: ticket)
             mensaje = mensaje.replacingOccurrences(of: "$cliente", with: apellidos)
-            
-            
             mensaje = mensaje.replacingOccurrences(of: "$abono", with: "\(monto!)")
             mensaje = mensaje.replacingOccurrences(of: "$fAbono", with: "\(fechaPago!)")
-            
             mensaje = mensaje.replacingOccurrences(of: "$total", with: String(total) )
             mensaje = mensaje.replacingOccurrences(of: "$totAbonos", with: String(totalPagos+anticipo) )
             mensaje = mensaje.replacingOccurrences(of: "$saldo", with: String(saldo) )
-            
-            
-            //let msg = "Confirmacion de pago por $\(monto!) de \(self.botonCliente.currentTitle!) de la venta del dia \(fechaVenta) por la cantidad de: $\(total). Realizado el: \(fechaPago!)"
-            
+
             let messageVC = MFMessageComposeViewController()
             messageVC.body = mensaje
             let cliente = self.venta?.value(forKey: Configuraciones.keyCliente) as! NSDictionary
@@ -134,6 +79,9 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
         }
         else {
             Configuraciones.alert(Titulo: "Alerta", Mensaje: "No es posible enviar mensajes", self, popView: false)
+            pagoActual?.setValue(false, forKey: Configuraciones.keyPagoMensajeEnviado)
+            _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
+            tableViewController.reloadData()
         }
         
     }
@@ -149,12 +97,15 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             pagoActual?.setValue(false, forKey: Configuraciones.keyPagoMensajeEnviado)
         case .sent:
             msg = "Mensaje enviado satisfactoriamente"
-            
+            pagoActual?.setValue(true, forKey: Configuraciones.keyPagoMensajeEnviado)
             
         default:
             break
         }
         
+         _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
+        tableViewController.reloadData()
+
         dismiss(animated: true, completion: nil)
         Configuraciones.alert(Titulo: "Mensaje", Mensaje: msg, self, popView: false)
         
@@ -165,8 +116,6 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
-
-        
         if venta != nil {
             botonFinalizar.isHidden = !isAdmin
             
@@ -187,18 +136,11 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             if pagosFinalizados {
                 botonFinalizar.isHidden = true
             }
-            
             if let ps = venta?.value(forKey: Configuraciones.keyPagos) as? [NSDictionary] {
                 pagos = ps
             }
-            
-            
             calcularTotales()
-            
-            
         }
-
-
     }
     
     func calcularTotales() {
@@ -208,8 +150,6 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
         
         labelDescripcion.text = "Actualmente se han pagado $\(totalPagos+anticipo) de un total de $\(totalVenta)"
     }
-    
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ProductosVendidosDesdePagosListaSegue",
@@ -230,37 +170,18 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             
             
         }
-        //
     }
-    
-
-    
-    
-
 }
 extension PagosListaVC:PagoNuevoVCDelegate {
     func pagoNuevo(monto: Double, concepto: String) {
-        //pago = textField!.text!
         let fechaPago = Configuraciones.fecha()
 
         self.pagoActual = [Configuraciones.keyPago:String(monto), Configuraciones.keyFecha:fechaPago, Configuraciones.keyConceptoPago:concepto, Configuraciones.keyPagoMensajeEnviado:true]
         self.pagos.append(self.pagoActual!)
 
-        let strRef = "\(Configuraciones.keyVentasBorrador)/\(self.codigo!)"
-
-        //self.ref.child(strRef).child(Configuraciones.keyPagos).setValue(self.pagos)
-
-        //Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: strRef, KeyValue: Configuraciones.keyPagos, Value: pagos)
-        
-        
-        Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
-        
-        
-
+        _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
         self.venta?.setValue(self.pagos, forKey: Configuraciones.keyPagos)
-
-        //Configuraciones.alert(Titulo: "Pago", Mensaje: "Pago guardado", self, popView: false)
-
+        self.idPagoEnviarMensaje = self.pagos.count - 1
         self.enviarPagoSMS(Pago: self.pagoActual!)
         self.calcularTotales()
         self.tableViewController.reloadData()
@@ -276,19 +197,11 @@ extension PagosListaVC:UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let celda = tableView.dequeueReusableCell(withIdentifier: "PagoCelda", for: indexPath)
         let celda = tableView.dequeueReusableCell(withIdentifier: "PagoCelda", for: indexPath) as! PagoCell
-
-        
-        
-        
         let monto = "$ \(pagos[indexPath.row].value(forKey: Configuraciones.keyPago) as? String ?? "0") "
         let fecha = pagos[indexPath.row].value(forKey: Configuraciones.keyFecha) as? String
         let concepto = pagos[indexPath.row].value(forKey: Configuraciones.keyConceptoPago) as? String
-        
         let pagoMensajeEnviado = pagos[indexPath.row].value(forKey: Configuraciones.keyPagoMensajeEnviado) as? Bool ?? false
-        //celda.textLabel?.text = "\(indexPath.row+1)) $ \(nombre!)"
-        //celda.detailTextLabel?.text = "\(fecha!)"
         
         celda.Monto.text = monto
         celda.Fecha.text = fecha
@@ -300,9 +213,6 @@ extension PagosListaVC:UITableViewDataSource {
         else {
             celda.Mensaje.isHidden = false
         }
-        
-        
-        
         return celda
     }
     
@@ -313,11 +223,5 @@ extension PagosListaVC:UITableViewDataSource {
 extension PagosListaVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.pagoActual = pagos[indexPath.row]
-        //self.performSegue(withIdentifier: "ProductoAgregarSegue", sender: valores[indexPath.row])
-        //delegate?.marcaSeleccionada(nombre: valores[indexPath.row].value(forKey: Configuraciones.keyNombre) as! String)
-        //self.navigationController?.popViewController(animated: true)
-        
-        
-        //tableView.deselectRow(at: indexPath, animated: true)
     }
 }
