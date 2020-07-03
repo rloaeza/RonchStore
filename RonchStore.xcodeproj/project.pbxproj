@@ -49,6 +49,7 @@
 		62A5D9B923348CE000A58A6F /* VentasListadoCobradorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A5D9B823348CE000A58A6F /* VentasListadoCobradorVC.swift */; };
 		62A5D9BB233496CF00A58A6F /* ClienteUbicacionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A5D9BA233496CF00A58A6F /* ClienteUbicacionVC.swift */; };
 		62B266DA23341E06001DC5A2 /* ProductosVentaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B266D923341E06001DC5A2 /* ProductosVentaVC.swift */; };
+		62B47A5C24AED7F7009666DD /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B47A5B24AED7F7009666DD /* Theme.swift */; };
 		62CC2AF322E97F220042BE2D /* Mapas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CC2AF222E97F220042BE2D /* Mapas.swift */; };
 		62E5B32A22E2D9180080A4A0 /* TextFieldDeletage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E5B32922E2D9180080A4A0 /* TextFieldDeletage.swift */; };
 		62E64AB92373601700DC7C2D /* ListasVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E64AB82373601700DC7C2D /* ListasVC.swift */; };
@@ -126,6 +127,7 @@
 		62A5D9B823348CE000A58A6F /* VentasListadoCobradorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VentasListadoCobradorVC.swift; sourceTree = "<group>"; };
 		62A5D9BA233496CF00A58A6F /* ClienteUbicacionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteUbicacionVC.swift; sourceTree = "<group>"; };
 		62B266D923341E06001DC5A2 /* ProductosVentaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductosVentaVC.swift; sourceTree = "<group>"; };
+		62B47A5B24AED7F7009666DD /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		62CC2AF222E97F220042BE2D /* Mapas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapas.swift; sourceTree = "<group>"; };
 		62E5B32922E2D9180080A4A0 /* TextFieldDeletage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDeletage.swift; sourceTree = "<group>"; };
 		62E64AB82373601700DC7C2D /* ListasVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListasVC.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 			children = (
 				6235CA9F22D586C00011A330 /* Main.storyboard */,
 				6235CAA422D586C10011A330 /* LaunchScreen.storyboard */,
+				62B47A5B24AED7F7009666DD /* Theme.swift */,
 			);
 			path = Vista;
 			sourceTree = "<group>";
@@ -638,6 +641,7 @@
 				624FF821232B56EB00641DFD /* ProductosListaVC.swift in Sources */,
 				628A229B248190A5008E23B0 /* ClienteContactosSistemaVC.swift in Sources */,
 				62FC219723669A0F0022690C /* ProductoCell.swift in Sources */,
+				62B47A5C24AED7F7009666DD /* Theme.swift in Sources */,
 				623A7E7424996E6600001572 /* DetallesProductoListaVC.swift in Sources */,
 				6214753D236AA18D008D4338 /* Connection.swift in Sources */,
 				62E64ABB2373662E00DC7C2D /* ListaAgregarVC.swift in Sources */,

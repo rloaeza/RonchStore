@@ -23,7 +23,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     var anticipo: Double = 0.0
     var totalVenta: Double = 0.0
     var isAdmin: Bool = true
-    var idPagoEnviarMensaje: Int? = nil
+    var idMensajeEnviado: Int? = nil
     
     @IBOutlet weak var tableViewController: UITableView!
     @IBOutlet weak var labelDescripcion: UITextView!
@@ -79,8 +79,6 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
         }
         else {
             Configuraciones.alert(Titulo: "Alerta", Mensaje: "No es posible enviar mensajes", self, popView: false)
-            pagoActual?.setValue(false, forKey: Configuraciones.keyPagoMensajeEnviado)
-            _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
             tableViewController.reloadData()
         }
         
@@ -88,26 +86,38 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         var msg = ""
+        var msgOK: Bool = false
         switch (result) {
         case .cancelled:
             msg = "Mensaje cancelado"
-            pagoActual?.setValue(false, forKey: Configuraciones.keyPagoMensajeEnviado)
+            msgOK = false
         case .failed:
             msg = "Error al enviar"
-            pagoActual?.setValue(false, forKey: Configuraciones.keyPagoMensajeEnviado)
+            msgOK = false
         case .sent:
+            msgOK = true
             msg = "Mensaje enviado satisfactoriamente"
-            pagoActual?.setValue(true, forKey: Configuraciones.keyPagoMensajeEnviado)
+            
             
         default:
             break
         }
-        
-         _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
-        tableViewController.reloadData()
-
+                 
         dismiss(animated: true, completion: nil)
         Configuraciones.alert(Titulo: "Mensaje", Mensaje: msg, self, popView: false)
+        
+      
+        let p: NSDictionary = self.pagos.remove(at: self.idMensajeEnviado!)
+        
+        self.pagoActual = [Configuraciones.keyPago:p.value(forKey: Configuraciones.keyPago)!, Configuraciones.keyFecha:p.value(forKey: Configuraciones.keyFecha)!, Configuraciones.keyConceptoPago:p.value(forKey: Configuraciones.keyConceptoPago)!, Configuraciones.keyPagoMensajeEnviado:msgOK]
+        
+        self.pagos.insert(pagoActual!, at: self.idMensajeEnviado!)
+    
+        self.venta?.setValue(self.pagos, forKey: Configuraciones.keyPagos)
+
+        _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
+        tableViewController.reloadData()
+
         
     }
     
@@ -176,13 +186,18 @@ extension PagosListaVC:PagoNuevoVCDelegate {
     func pagoNuevo(monto: Double, concepto: String) {
         let fechaPago = Configuraciones.fecha()
 
-        self.pagoActual = [Configuraciones.keyPago:String(monto), Configuraciones.keyFecha:fechaPago, Configuraciones.keyConceptoPago:concepto, Configuraciones.keyPagoMensajeEnviado:true]
+        self.pagoActual = [Configuraciones.keyPago:String(monto), Configuraciones.keyFecha:fechaPago, Configuraciones.keyConceptoPago:concepto, Configuraciones.keyPagoMensajeEnviado:false]
+        
         self.pagos.append(self.pagoActual!)
 
         _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
+        
         self.venta?.setValue(self.pagos, forKey: Configuraciones.keyPagos)
-        self.idPagoEnviarMensaje = self.pagos.count - 1
-        self.enviarPagoSMS(Pago: self.pagoActual!)
+        
+      
+        self.idMensajeEnviado = self.pagos.count - 1
+        
+        self.enviarPagoSMS(Pago: self.pagos[pagos.count - 1])
         self.calcularTotales()
         self.tableViewController.reloadData()
     }
@@ -223,5 +238,24 @@ extension PagosListaVC:UITableViewDataSource {
 extension PagosListaVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.pagoActual = pagos[indexPath.row]
+        self.idMensajeEnviado = indexPath.row
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let reEnviarMSG = UITableViewRowAction(style: .normal, title: "Enviar mensaje") { (action, indexPath) in
+            // share item at indexPath
+            self.pagoActual = self.pagos[indexPath.row]
+            self.idMensajeEnviado = indexPath.row
+            self.enviarPagoSMS(Pago: self.pagoActual!)
+
+            
+        }
+
+        reEnviarMSG.backgroundColor = UIColor.blue
+
+        return [reEnviarMSG]
     }
 }

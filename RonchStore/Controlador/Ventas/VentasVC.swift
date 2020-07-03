@@ -134,13 +134,41 @@ extension VentasVC:UITableViewDataSource {
     
     }
     
+  
+    
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
   
         if (editingStyle == .delete) {
-            var ref: DatabaseReference!
-            ref = Database.database().reference()
-            ref.child(Configuraciones.keyVentasBorrador).child(valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+            
+            
+            let alertaConfirmacion = UIAlertController(title: "Advertencia", message: "Archivar venta # \(self.valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyContador)!)", preferredStyle: UIAlertController.Style.alert)
+
+            alertaConfirmacion.addAction(UIAlertAction(title: "Si", style: .default, handler: { (action: UIAlertAction!) in
+                
+                let ventaArchivada = self.valoresParaMostrar[indexPath.row]
+                
+                var ref: DatabaseReference!
+                ref = Database.database().reference()
+                Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: Configuraciones.keyVentasArchivadas, KeyValue: nil, Value: ventaArchivada)
+                
+                ref.child(Configuraciones.keyVentasBorrador).child(self.valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+                
+            }))
+
+            alertaConfirmacion.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in
+                return
+            }))
+
+            present(alertaConfirmacion, animated: true, completion: nil )
+            
+            
+            
+            
+            
+            
+            
+         
         }
         
     }

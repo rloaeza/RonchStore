@@ -15,6 +15,7 @@ class Configuraciones{
     static let Titulo = " .::RonchStore::."
     static let keyVentasBorrador = "Ventas Borrador"
     static let keyVentaFinalizada = "Venta Finalizada"
+    static let keyVentasArchivadas = "Ventas Archivadas"
     static let keyProductos = "Productos"
     static let keyClientes = "Clientes"
     static let keyPedidos = "Pedidos"
@@ -202,11 +203,16 @@ Abonos: $totAbonos
         return newData.key!
     }
     
-    static func guardarValorDirecto(Reference ref: DatabaseReference!, KeyNode keyNode: String, KeyValue keyValue: String, Value val: Any) {
+    static func guardarValorDirecto(Reference ref: DatabaseReference!, KeyNode keyNode: String, KeyValue keyValue: String?, Value val: Any) {
         var newData: DatabaseReference!    
         newData = ref.child(keyNode)
-        newData.child(keyValue).setValue(val)
         
+        if keyValue == nil {
+            newData.childByAutoId().setValue(val)
+        }
+        else {
+            newData.child(keyValue!).setValue(val)
+        }
         
     }
     static func calcularTotalPagos(Pagos pagos: [NSDictionary]) -> Double {
