@@ -256,14 +256,11 @@ extension PagosListaVC:UITableViewDelegate {
         reEnviarMSG.backgroundColor = UIColor.blue
         
         if indexPath.row == (self.pagos.count - 1)  {
-            
             let eliminarPago = UITableViewRowAction(style: .destructive, title: "Eliminar Pago") { (action, indexPath) in
                 self.pagos.remove(at: indexPath.row)
                 _ = Configuraciones.guardarValor(Reference: self.ref, KeyNode: Configuraciones.keyVentasBorrador, Child: self.codigo, KeyValue: Configuraciones.keyPagos, Value: self.pagos)
                 self.venta?.setValue(self.pagos, forKey: Configuraciones.keyPagos)
-                self.tableViewController.reloadData()
-
-                
+                self.tableViewController.reloadData()                
             }
             return [reEnviarMSG, eliminarPago]
         }
