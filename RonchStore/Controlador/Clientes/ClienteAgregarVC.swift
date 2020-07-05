@@ -24,6 +24,12 @@ class ClienteAgregarVC: UIViewController{
     @IBOutlet weak var botonDiaCobro: UIButton!
     @IBOutlet weak var swPremium: UISwitch!
     
+    @IBOutlet weak var swSemanal: UISwitch!
+    @IBOutlet weak var swQuincenal: UISwitch!
+    @IBOutlet weak var swMensual: UISwitch!
+    
+    
+    
     @IBOutlet weak var apellidos: UITextField!
     @IBOutlet weak var botonHoraCobro: UIButton!
     @IBOutlet weak var telefono: UITextField!
@@ -46,6 +52,39 @@ class ClienteAgregarVC: UIViewController{
     
     var imagenMostrar: UIImageView!
     var ubicacion: CLLocationCoordinate2D!
+    var opcionTipoPago: String = Configuraciones.keyTipoPagoSemanal
+    
+    func seleccionaTipoDia(Semanal semanal: Bool, Quincenal quincenal: Bool, Mensual mensual: Bool, TipoPago tipoPago:String, TextoBoton txtBoton: String,  Valor valor: String?) {
+        swSemanal.setOn(semanal, animated: true)
+        swQuincenal.setOn(quincenal, animated: true)
+        swMensual.setOn(mensual, animated: true)
+        opcionTipoPago = tipoPago
+        botonDiaCobro.setTitle(txtBoton, for: .normal)
+        
+        
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: valor)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyTipoPago, Value: tipoPago)
+        
+        if quincenal {
+            botonDiaCobro.isEnabled = false
+        }
+        else {
+            botonDiaCobro.isEnabled = true
+        }
+    }
+    
+    @IBAction func seleccionSemanal(_ sender: Any) {
+        seleccionaTipoDia(Semanal: true, Quincenal: false, Mensual: false, TipoPago: Configuraciones.keyTipoPagoSemanal, TextoBoton: Configuraciones.txtSeleccionaDiaSemana, Valor: nil)
+    }
+    @IBAction func seleccionQuincenal(_ sender: Any) {
+        seleccionaTipoDia(Semanal: false, Quincenal: true, Mensual: false, TipoPago: Configuraciones.keyTipoPagoQuincenal, TextoBoton: Configuraciones.txtSeleccionaDiaQuincenal, Valor: Configuraciones.txtSeleccionaDiaQuincenal)
+    }
+    @IBAction func seleccionMensual(_ sender: Any) {
+        seleccionaTipoDia(Semanal: false, Quincenal: false, Mensual: true, TipoPago: Configuraciones.keyTipoPagoMensual, TextoBoton: Configuraciones.txtSeleccionaDiaMensual, Valor: nil)
+    }
+    
+    
+    
     
     
     
@@ -196,7 +235,7 @@ class ClienteAgregarVC: UIViewController{
             pais.text = cliente!.value(forKey: Configuraciones.keyPais) as? String
             montoCredito.text = cliente!.value(forKey: Configuraciones.keyMontoMaximo) as? String
             
-            botonDiaCobro.setTitle(cliente!.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "Día de cobro", for: .normal)
+            
             
             botonHoraCobro.setTitle(cliente!.value(forKey: Configuraciones.keyHoraCobro) as? String ?? "Hora de cobro", for: .normal)
             
@@ -209,6 +248,22 @@ class ClienteAgregarVC: UIViewController{
                let long = cliente!.value(forKey: Configuraciones.keyLong) as? String {
                 self.lat = Double( lat ) ?? 0.0
                 self.long = Double( long ) ?? 0.0
+            }
+            opcionTipoPago = cliente?.value(forKey: Configuraciones.keyTipoPago) as? String ?? Configuraciones.keyTipoPagoSemanal
+            let diaCobro = cliente!.value(forKey: Configuraciones.keyDiaCobro) as? String
+            switch opcionTipoPago {
+            case Configuraciones.keyTipoPagoSemanal:
+                seleccionaTipoDia(Semanal: true, Quincenal: false, Mensual: false, TipoPago: Configuraciones.keyTipoPagoSemanal, TextoBoton: diaCobro == nil ? Configuraciones.txtSeleccionaDiaSemana : diaCobro!, Valor: diaCobro)
+                break
+            case Configuraciones.keyTipoPagoQuincenal:
+                seleccionaTipoDia(Semanal: false, Quincenal: true, Mensual: false, TipoPago: Configuraciones.keyTipoPagoQuincenal, TextoBoton: Configuraciones.txtSeleccionaDiaQuincenal, Valor: diaCobro)
+                break
+            case Configuraciones.keyTipoPagoMensual:
+                seleccionaTipoDia(Semanal: false, Quincenal: false, Mensual: true, TipoPago: Configuraciones.keyTipoPagoMensual, TextoBoton: diaCobro == nil ? Configuraciones.txtSeleccionaDiaMensual : diaCobro!, Valor: diaCobro)
+                break
+            default:
+                break
+                    
             }
             
     
@@ -239,14 +294,6 @@ class ClienteAgregarVC: UIViewController{
         
         }
         
-        if segue.identifier == "DiaCobroDesdeClientes",
-            let vc = segue.destination as? DetallesProductoListaVC {
-            vc.delegate = self
-            vc.title = "Días de cobro"
-            vc.ordenarPor = nil
-            vc.detalleKey = Configuraciones.keyDatosDiaCobro
-        }
-        
         if segue.identifier == "HoraCobroDesdeClientes",
             let vc = segue.destination as? DetallesProductoListaVC {
             vc.delegate = self
@@ -255,10 +302,26 @@ class ClienteAgregarVC: UIViewController{
             vc.detalleKey = Configuraciones.keyDatosHoraCobro
         }
         
-    }
+        if segue.identifier == "DiaCobroDesdeClientes",
+                 let vc = segue.destination as? DetallesProductoListaVC {
+            
+            if opcionTipoPago == Configuraciones.keyTipoPagoSemanal {
+                 vc.delegate = self
+                 vc.title = "Días de cobro semanal"
+                 vc.ordenarPor = nil
+                 vc.detalleKey = Configuraciones.keyDatosDiaCobroSemanal
+            }
+            else if opcionTipoPago == Configuraciones.keyTipoPagoMensual {
+                vc.delegate = self
+                vc.title = "Días de cobro mensual"
+                vc.ordenarPor = nil
+                vc.detalleKey = Configuraciones.keyDatosDiaCobroMensual
+             }
+        
+        }
 
     
-    
+    }
     
 }
 
@@ -360,10 +423,14 @@ extension ClienteAgregarVC: DetallesProductoListaVCDelegate {
              botonHoraCobro.setTitle(nombre, for: .normal)
              codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyHoraCobro, Value: nombre)
              break
-        case Configuraciones.keyDatosDiaCobro:
+        case Configuraciones.keyDatosDiaCobroSemanal:
             botonDiaCobro.setTitle(nombre, for: .normal)
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: nombre)
-        break
+            break
+        case Configuraciones.keyDatosDiaCobroMensual:
+            botonDiaCobro.setTitle(nombre, for: .normal)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: nombre)
+            break
         default:
             break
         }

@@ -35,6 +35,12 @@ class Configuraciones{
     static let keyMontoMaximo = "MaximoCredito"
     static let keyPremium = "Premium"
     static let keyApellidos = "Apellidos"
+    static let keyTipoPago = "Tipo de pago"
+    static let keyTipoPagoSemanal = "Semanal"
+    static let keyTipoPagoQuincenal = "Quincenal"
+    static let keyTipoPagoMensual = "Mensual"
+    
+    
     
     static let keyLat = "Lat"
     static let keyLong = "Long"
@@ -78,7 +84,8 @@ class Configuraciones{
     static let keyDetalleProductoExistencia = "ProductoDetalle/Existencia"
     
     
-    static let keyDatosDiaCobro = "Datos/Dias de cobro"
+    static let keyDatosDiaCobroSemanal = "Datos/Dias de cobro semanal"
+    static let keyDatosDiaCobroMensual = "Datos/Dias de cobro mensual"
     static let keyDatosHoraCobro = "Datos/Horas de cobro"
     static let keyDatosConceptoPago = "Datos/Conceptos de pago"
     
@@ -102,7 +109,9 @@ class Configuraciones{
     static let txtSeleccionarTalla = "Seleccionar talla"
     static let txtSeleccionarCategoria = "Seleccionar categoria"
     static let txtMensajeDemora = "Total despues de  # semanas"
-    
+    static let txtSeleccionaDiaSemana = "Selecciona día de la semana"
+    static let txtSeleccionaDiaQuincenal = "1 y 15"
+    static let txtSeleccionaDiaMensual = "Selecciona día del mes"
     
     
     
@@ -189,7 +198,7 @@ Abonos: $totAbonos
         }
     }
     
-    static func guardarValor(Reference ref: DatabaseReference!, KeyNode keyNode: String, Child child: String?, KeyValue keyValue: String, Value val: Any) -> String {
+    static func guardarValor(Reference ref: DatabaseReference!, KeyNode keyNode: String, Child child: String?, KeyValue keyValue: String, Value val: Any?) -> String {
         var newData: DatabaseReference!
         
         if child == nil {
