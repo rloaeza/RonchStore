@@ -11,36 +11,49 @@ import Foundation
 
 class Funciones {
     static let keyDateFormat = "yyyy-MM-dd HH:mm"
+    
+    static let diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
 
     static func hoy(Fecha fecha: String) -> Void{
         
-        var fecha2 = "2020-07-03 22:55"
+        var fecha2 = "2020-07-06 22:55"
         fecha2 = fecha
         
         let index = fecha2.index(fecha2.startIndex, offsetBy: 10)
         fecha2 = String( fecha2.prefix(upTo: index) ) + " 00:00"
         
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(identifier: "America/Mexico_City")
-        dateFormatter.locale = Locale(identifier: "es_MX")
         dateFormatter.dateFormat = keyDateFormat
         
         
         var dateVenta = dateFormatter.date(from:fecha2)!
                 
-        
-        print( "La fecha Original es:\(fecha) \n\n")
-        print( "La fecha en 0's es:\(fecha2) \n\n")
-        print( "La fecha es:\(dateVenta) \n\n")
-    
-                
         dateVenta = buscarSiguienteDia(Fecha: dateVenta, Dia: 1)
-        print( buscarSiguienteDia(Fecha: dateVenta, Dia: 1) )
+        
+        let hoy = Date()
         
         
-    
-        print( "\n\n" )
+        switch compareDate(date1: dateVenta, date2: hoy) {
+        case ComparisonResult.orderedSame:
+            print ( "Es hoy" )
+            break
+        case ComparisonResult.orderedAscending:
+            print( "Ya se paso" )
+            break
+        case ComparisonResult.orderedDescending:
+            print( "Aun faltan dias" )
+            break
+        default:
+            break
+        }
             
+    }
+    
+    
+    static func compareDate(date1:Date, date2:Date) -> ComparisonResult {
+        
+        let order = NSCalendar.current.compare(date1, to: date2, toGranularity: .day)
+        return order
     }
     
     static func buscarSiguienteDia(Fecha fecha: Date, Dia dia: Int) -> Date {
