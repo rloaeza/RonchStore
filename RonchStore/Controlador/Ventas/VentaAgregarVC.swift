@@ -277,6 +277,12 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
                 ventaFinalizada = false
             }
             finalizarStatusVenta(Finalizar: ventaFinalizada)
+            
+            // Aqui vamos
+            
+            Funciones.hoy(Fecha: venta?.value(forKey: Configuraciones.keyFecha) as? String ?? "2020-01-01 00:00" )
+            
+            
 
         }
         

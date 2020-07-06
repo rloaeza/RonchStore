@@ -10,6 +10,7 @@
 		0B3D256FD5EFF169001A4BA6 /* Pods_RonchStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3BD259218C7A9B5FA6557D1 /* Pods_RonchStore.framework */; };
 		6203793A2499BD8C00BAF5FA /* Producto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620379392499BD8C00BAF5FA /* Producto.swift */; };
 		6214753D236AA18D008D4338 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6214753C236AA18D008D4338 /* Connection.swift */; };
+		6216E38F24B3306E0085EC70 /* Funciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6216E38E24B3306E0085EC70 /* Funciones.swift */; };
 		62197CF922E15439007F6F7F /* PedidoAgregarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62197CF822E15439007F6F7F /* PedidoAgregarVC.swift */; };
 		62197CFB22E15F40007F6F7F /* PedidosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62197CFA22E15F40007F6F7F /* PedidosVC.swift */; };
 		62197CFD22E17637007F6F7F /* Mensajes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62197CFC22E17637007F6F7F /* Mensajes.swift */; };
@@ -83,6 +84,7 @@
 /* Begin PBXFileReference section */
 		620379392499BD8C00BAF5FA /* Producto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Producto.swift; sourceTree = "<group>"; };
 		6214753C236AA18D008D4338 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
+		6216E38E24B3306E0085EC70 /* Funciones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Funciones.swift; sourceTree = "<group>"; };
 		62197CF822E15439007F6F7F /* PedidoAgregarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedidoAgregarVC.swift; sourceTree = "<group>"; };
 		62197CFA22E15F40007F6F7F /* PedidosVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedidosVC.swift; sourceTree = "<group>"; };
 		62197CFC22E17637007F6F7F /* Mensajes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mensajes.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 			children = (
 				6271EF9523711EB700BCA3AE /* Datos.swift */,
 				627E259924B03CD300A36147 /* Alerta.swift */,
+				6216E38E24B3306E0085EC70 /* Funciones.swift */,
 			);
 			path = Modelo;
 			sourceTree = "<group>";
@@ -645,6 +648,7 @@
 				62A5D9B923348CE000A58A6F /* VentasListadoCobradorVC.swift in Sources */,
 				62197CFB22E15F40007F6F7F /* PedidosVC.swift in Sources */,
 				6263986522DAE0A90080C243 /* ClientesVC.swift in Sources */,
+				6216E38F24B3306E0085EC70 /* Funciones.swift in Sources */,
 				626FFB07232ADF2F00A445DA /* CategoriaVC.swift in Sources */,
 				62CC2AF322E97F220042BE2D /* Mapas.swift in Sources */,
 				621C6DDE22E0C382003508EB /* Configuraciones.swift in Sources */,
