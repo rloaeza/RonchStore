@@ -14,39 +14,32 @@ class Funciones {
     
     static let diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
 
-    static func hoy(Fecha fecha: String) -> Void{
-        
-        var fecha2 = "2020-07-06 22:55"
-        fecha2 = fecha
-        
-        let index = fecha2.index(fecha2.startIndex, offsetBy: 10)
-        fecha2 = String( fecha2.prefix(upTo: index) ) + " 00:00"
-        
+    static func ventaAtrasada(Fecha fecha: String) -> Int{
+ 
+        let index = fecha.index(fecha.startIndex, offsetBy: 10)
+        let fecha2 = String( fecha.prefix(upTo: index) ) + " 00:00"
+    
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = keyDateFormat
-        
-        
-        var dateVenta = dateFormatter.date(from:fecha2)!
                 
-        dateVenta = buscarSiguienteDia(Fecha: dateVenta, Dia: 1)
-        
+        let dateVenta = dateFormatter.date(from:fecha2)!
         let hoy = Date()
         
-        
+        var resultado: Int = 0
         switch compareDate(date1: dateVenta, date2: hoy) {
         case ComparisonResult.orderedSame:
-            print ( "Es hoy" )
+            resultado = 1  // Dia actual
             break
         case ComparisonResult.orderedAscending:
-            print( "Ya se paso" )
+            resultado = 2  // Varios dias de atraso
             break
         case ComparisonResult.orderedDescending:
-            print( "Aun faltan dias" )
+            resultado = 0  // Aun faltan dias
             break
         default:
             break
         }
-            
+        return resultado
     }
     
     
@@ -66,6 +59,33 @@ class Funciones {
         return fechaNueva
     }
     
+    static func buscarSiguienteQuincena(Fecha fecha: Date) -> Date {
+        var fechaNueva = fecha.addingTimeInterval(60*60*24)
+        var componentes = Calendar.current.dateComponents([.month, .day, .weekday], from: fechaNueva)
+        while( true ) {
+            if componentes.day == 1  || componentes.day == 15 {
+                break
+            }
+            fechaNueva = fechaNueva.addingTimeInterval(60*60*24)
+            componentes = Calendar.current.dateComponents([.month, .day, .weekday], from: fechaNueva)
+        }
+        return fechaNueva
+    }
+    static func buscarSiguienteFecha(Fecha fecha: Date, Dia dia: Int) -> Date {
+        var fechaNueva = fecha.addingTimeInterval(60*60*24)
+        var componentes = Calendar.current.dateComponents([.month, .day, .weekday], from: fechaNueva)
+        while( componentes.day != dia ) {
+            fechaNueva = fechaNueva.addingTimeInterval(60*60*24)
+            componentes = Calendar.current.dateComponents([.month, .day, .weekday], from: fechaNueva)
+        }
+        return fechaNueva
+    }
+    
+    static func fechaAString(Fecha fecha: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = keyDateFormat
+        return formatter.string(from: fecha)
+    }
     
     static func fecha() -> String {
          let formatter = DateFormatter()

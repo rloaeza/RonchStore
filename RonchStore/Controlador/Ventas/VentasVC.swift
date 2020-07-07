@@ -58,6 +58,7 @@ class VentasVC: UIViewController {
         valoresParaMostrar.removeAll()
         
         for valor in valores {
+            
             let cliente: NSDictionary = (valor.value(forKey: Configuraciones.keyCliente) as? NSDictionary)!
             
             let nombre: String = cliente.value(forKey: Configuraciones.keyNombre) as? String ?? ""
@@ -65,7 +66,7 @@ class VentasVC: UIViewController {
             let ventaTerminada: Bool = valor.value(forKey: Configuraciones.keyPagosFinalizados) as? Bool ?? false
             if nombre.lowercased().contains(textoSeleccionado.lowercased())||telefono.lowercased().contains(textoSeleccionado.lowercased())||textoSeleccionado.isEmpty{
                 if mostrarSoloDeudas {
-                    if !ventaTerminada {
+                    if Funciones.ventaAtrasada(Fecha: valor.value(forKey: Configuraciones.keyFechaCobro) as? String ?? "2020-01-01 00:00") > 0 {                   
                         valoresParaMostrar.append(valor)
                     }
                 }
@@ -128,6 +129,28 @@ extension VentasVC:UITableViewDataSource {
         celda.Adeudo.textColor = UIColor.black
         if adeudo<total&&(!pagosFinalizados) {
             celda.Adeudo.textColor = UIColor.red
+        }
+        
+
+        switch Funciones.ventaAtrasada(Fecha: valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyFechaCobro) as? String ?? "2020-01-01 00:00") {
+        case 0:
+            celda.AlertaOK.isHidden = false
+            celda.AlertaHoy.isHidden = true
+            celda.AlertaDias.isHidden = true
+            
+            break
+        case 1:
+            celda.AlertaOK.isHidden = true
+            celda.AlertaHoy.isHidden = false
+            celda.AlertaDias.isHidden = true
+            break
+        case 2:
+            celda.AlertaOK.isHidden = true
+            celda.AlertaHoy.isHidden = true
+            celda.AlertaDias.isHidden = false
+            break
+        default:
+            break
         }
         
         return celda

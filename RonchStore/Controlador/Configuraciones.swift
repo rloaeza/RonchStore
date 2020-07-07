@@ -64,6 +64,7 @@ class Configuraciones{
     static let keyPagoMensajeEnviado = "Pago mensaje enviado"
     static let keyAbonado = "Abonado"
     static let keyFecha = "Fecha"
+    static let keyFechaCobro = "Fecha de cobro"
     static let keyStatus = "Status"
     static let keyAnticipo = "Anticipo"
     static let keyPagoInicialP = "Pago Inicial Porcentaje"

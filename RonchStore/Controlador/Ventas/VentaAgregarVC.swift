@@ -134,6 +134,8 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         }
         
        
+        
+        
 
         
         
@@ -280,7 +282,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             
             // Aqui vamos
             
-            Funciones.hoy(Fecha: venta?.value(forKey: Configuraciones.keyFecha) as? String ?? "2020-01-01 00:00" )
+            
             
             
 
@@ -328,6 +330,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         ventaFinalizada = finalizar
         if finalizar {
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyVentaFinalizada, Value: true)
+            
         }
         else {
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyVentaFinalizada, Value: false)
@@ -399,6 +402,28 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         if !fechaFijada {
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFecha, Value: Configuraciones.fecha())
             fechaFijada = true
+            
+            
+            
+            let hoy: Date = Date()
+            let tipoPago = cliente?.value(forKey: Configuraciones.keyTipoPago) as? String ?? Configuraciones.keyTipoPagoSemanal
+            switch tipoPago {
+            case Configuraciones.keyTipoPagoSemanal:
+                codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.fechaAString(Fecha: Funciones.buscarSiguienteDia(Fecha: hoy, Dia: cliente?.value(forKey: Configuraciones.keyDiaCobro) as? Int ?? 1)))
+                break
+            case Configuraciones.keyTipoPagoQuincenal:
+                codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.fechaAString(Fecha: Funciones.buscarSiguienteQuincena(Fecha: hoy)) )
+                break
+            case Configuraciones.keyTipoPagoMensual:
+                codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.fechaAString(Fecha: Funciones.buscarSiguienteFecha(Fecha: hoy, Dia: cliente?.value(forKey: Configuraciones.keyDiaCobro) as? Int ?? 1)) )
+                print( cliente?.value(forKey: Configuraciones.keyDiaCobro) ) 
+                break
+            default:
+                break
+            }
+            
+            
+            
         }
         
         

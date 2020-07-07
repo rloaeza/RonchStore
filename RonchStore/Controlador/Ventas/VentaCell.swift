@@ -15,5 +15,8 @@ class VentaCell: UITableViewCell {
     @IBOutlet weak var Fecha: UILabel!
     @IBOutlet weak var Total: UILabel!
     @IBOutlet weak var NumVenta: UILabel!
+    @IBOutlet weak var AlertaHoy: UIImageView!
+    @IBOutlet weak var AlertaDias: UIImageView!
+    @IBOutlet weak var AlertaOK: UIImageView!
     
 }
