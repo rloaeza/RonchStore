@@ -13,6 +13,7 @@ class Funciones {
     static let keyDateFormat = "yyyy-MM-dd HH:mm"
     
     static let diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
+    static let diasMes = [1...31]
 
     static func ventaAtrasada(Fecha fecha: String) -> Int{
  

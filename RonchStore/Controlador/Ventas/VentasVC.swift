@@ -131,28 +131,34 @@ extension VentasVC:UITableViewDataSource {
             celda.Adeudo.textColor = UIColor.red
         }
         
+        if mostrarSoloDeudas {
 
-        switch Funciones.ventaAtrasada(Fecha: valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyFechaCobro) as? String ?? "2020-01-01 00:00") {
-        case 0:
-            celda.AlertaOK.isHidden = false
-            celda.AlertaHoy.isHidden = true
-            celda.AlertaDias.isHidden = true
-            
-            break
-        case 1:
-            celda.AlertaOK.isHidden = true
-            celda.AlertaHoy.isHidden = false
-            celda.AlertaDias.isHidden = true
-            break
-        case 2:
-            celda.AlertaOK.isHidden = true
-            celda.AlertaHoy.isHidden = true
-            celda.AlertaDias.isHidden = false
-            break
-        default:
-            break
+            switch Funciones.ventaAtrasada(Fecha: valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyFechaCobro) as? String ?? "2020-01-01 00:00") {
+            case 0:
+                celda.AlertaOK.isHidden = false
+                celda.AlertaHoy.isHidden = true
+                celda.AlertaDias.isHidden = true
+                
+                break
+            case 1:
+                celda.AlertaOK.isHidden = true
+                celda.AlertaHoy.isHidden = false
+                celda.AlertaDias.isHidden = true
+                break
+            case 2:
+                celda.AlertaOK.isHidden = true
+                celda.AlertaHoy.isHidden = true
+                celda.AlertaDias.isHidden = false
+                break
+            default:
+                break
+            }
         }
-        
+        else {
+            celda.AlertaOK.isHidden = true
+            celda.AlertaHoy.isHidden = true
+            celda.AlertaDias.isHidden = true
+        }
         return celda
     
     }
