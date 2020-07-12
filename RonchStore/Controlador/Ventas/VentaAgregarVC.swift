@@ -397,6 +397,8 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     func guardarValores() {
         
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyProductos, Value: productosVenta)
+        venta?.setValue(productosVenta, forKey: Configuraciones.keyProductos)
+        
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoSemanas, Value: pagoSemanas)
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoInicialP, Value: pagoInicialP)
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoInicialV, Value: pagoInicialV)
@@ -408,33 +410,47 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFecha, Value: Configuraciones.fecha())
             fechaFijada = true
             
+        }
+        
+        if !ventaFinalizada {
+            /*
+            var primerCobro = venta!.value(forKey: Configuraciones.keyOmitirFechaPrimerCobro) as? Bool ?? false
+
+            
+            var fechaSig: Date = Date()
+            let tipoPago = venta?.value(forKey: Configuraciones.keyTipoPago) as? String ?? Configuraciones.keyTipoPagoSemanal
             
             
-            let hoy: Date = Date()
-            let tipoPago = cliente?.value(forKey: Configuraciones.keyTipoPago) as? String ?? Configuraciones.keyTipoPagoSemanal
-            switch tipoPago {
-            case Configuraciones.keyTipoPagoSemanal:
-                
-                var diaSemana: Int = 1
-                for dia in Funciones.diasSemana {
-                    if cliente?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "Domingo" == dia {
-                        break
+            primerCobro = !primerCobro
+            repeat {
+                switch tipoPago {
+                case Configuraciones.keyTipoPagoSemanal:
+                    
+                    var diaSemana: Int = 1
+                    for dia in Funciones.diasSemana {
+                        if venta?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "Domingo" == dia {
+                            break
+                        }
+                        diaSemana = diaSemana + 1
                     }
-                    diaSemana = diaSemana + 1
+                    fechaSig = Funciones.buscarSiguienteDia(Fecha: fechaSig, Dia: diaSemana )
+                    codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.fechaAString(Fecha: fechaSig ))
+                    break
+                case Configuraciones.keyTipoPagoQuincenal:
+                    fechaSig = Funciones.buscarSiguienteQuincena(Fecha: fechaSig)
+                    codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.fechaAString(Fecha: fechaSig) )
+                    break
+                case Configuraciones.keyTipoPagoMensual:
+                    fechaSig = Funciones.buscarSiguienteFecha(Fecha: fechaSig, Dia: Int(venta?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "1") ?? 1 )
+                    codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.fechaAString(Fecha: fechaSig ) )
+                    break
+                default:
+                    break
                 }
-                codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.fechaAString(Fecha: Funciones.buscarSiguienteDia(Fecha: hoy, Dia: diaSemana ) ))
-                break
-            case Configuraciones.keyTipoPagoQuincenal:
-                codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.fechaAString(Fecha: Funciones.buscarSiguienteQuincena(Fecha: hoy)) )
-                break
-            case Configuraciones.keyTipoPagoMensual:
-                codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.fechaAString(Fecha: Funciones.buscarSiguienteFecha(Fecha: hoy, Dia: Int(cliente?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "1") ?? 1 ) ) )
-                break
-            default:
-                break
-            }
-            
-            
+                primerCobro = !primerCobro
+            } while( primerCobro )
+ */
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
             
         }
         

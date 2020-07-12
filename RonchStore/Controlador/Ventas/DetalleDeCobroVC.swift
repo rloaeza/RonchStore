@@ -38,6 +38,9 @@ class DetalleDeCobroVC: UIViewController {
         venta?.setValue(valor, forKey: Configuraciones.keyDiaCobro)
         venta?.setValue(tipoPago, forKey: Configuraciones.keyTipoPago)
         
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
+        venta?.setValue(Funciones.siguienteFechaInicial(Venta: venta), forKey: Configuraciones.keyFechaCobro)
+        
         if quincenal {
             botonDiaCobro.isEnabled = false
         }
@@ -51,6 +54,9 @@ class DetalleDeCobroVC: UIViewController {
         
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyOmitirFechaPrimerCobro, Value: omitir)
         venta?.setValue(omitir, forKey: Configuraciones.keyOmitirFechaPrimerCobro)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
+        
+        venta?.setValue(Funciones.siguienteFechaInicial(Venta: venta), forKey: Configuraciones.keyFechaCobro)
 
     }
     @IBAction func seleccionSemanal(_ sender: Any) {
@@ -70,8 +76,20 @@ class DetalleDeCobroVC: UIViewController {
         ref = Database.database().reference()
         if venta != nil {
             codigo = venta?.value(forKey: Configuraciones.keyId) as? String
+            var pagos: [NSDictionary] = []
             
+            if let ps = venta?.value(forKey: Configuraciones.keyPagos) as? [NSDictionary] {
+                pagos = ps
+            }
             
+            if pagos.count > 0 {
+                botonHoraCobro.isEnabled = false
+                botonDiaCobro.isEnabled = false
+                swOmitirPrimerCobro.isEnabled = false
+                swSemanal.isEnabled = false
+                swQuincenal.isEnabled = false
+                swMensual.isEnabled = false
+            }
             opcionTipoPago = venta?.value(forKey: Configuraciones.keyTipoPago) as? String ?? Configuraciones.keyTipoPagoSemanal
             let diaCobro = venta!.value(forKey: Configuraciones.keyDiaCobro) as? String
             
@@ -159,12 +177,16 @@ extension DetalleDeCobroVC: DetallesProductoListaVCDelegate {
             botonDiaCobro.setTitle(nombre, for: .normal)
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: nombre)
             venta?.setValue(nombre, forKey: Configuraciones.keyDiaCobro)
+            
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
 
             break
         case Configuraciones.keyDatosDiaCobroMensual:
             botonDiaCobro.setTitle(nombre, for: .normal)
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: nombre)
             venta?.setValue(nombre, forKey: Configuraciones.keyDiaCobro)
+            
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
             
             break
         default:

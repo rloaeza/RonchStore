@@ -15,6 +15,77 @@ class Funciones {
     static let diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
     static let diasMes = [1...31]
 
+    
+    static func siguienteFecha(Venta venta: NSDictionary?) -> String {
+        let tipoPago = venta?.value(forKey: Configuraciones.keyTipoPago) as? String ?? Configuraciones.keyTipoPagoSemanal
+        
+        let fecha: String = venta!.value(forKey: Configuraciones.keyFechaCobro) as? String ?? ""
+        let index = fecha.index(fecha.startIndex, offsetBy: 10)
+        let fecha2 = String( fecha.prefix(upTo: index) ) + " 00:00"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = keyDateFormat
+        var fechaSig : Date = dateFormatter.date(from:fecha2)!
+    
+        switch tipoPago {
+        case Configuraciones.keyTipoPagoSemanal:
+            
+            var diaSemana: Int = 1
+            for dia in Funciones.diasSemana {
+                if venta?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "Domingo" == dia {
+                    break
+                }
+                diaSemana = diaSemana + 1
+            }
+            fechaSig = Funciones.buscarSiguienteDia(Fecha: fechaSig, Dia: diaSemana )
+            break
+        case Configuraciones.keyTipoPagoQuincenal:
+            fechaSig = Funciones.buscarSiguienteQuincena(Fecha: fechaSig)
+            break
+        case Configuraciones.keyTipoPagoMensual:
+            fechaSig = Funciones.buscarSiguienteFecha(Fecha: fechaSig, Dia: Int(venta?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "1") ?? 1 )
+            break
+        default:
+            break
+        }
+        
+        return Funciones.fechaAString(Fecha: fechaSig )
+    }
+    
+    static func siguienteFechaInicial(Venta venta: NSDictionary?) -> String {
+        var primerCobro = venta!.value(forKey: Configuraciones.keyOmitirFechaPrimerCobro) as? Bool ?? false
+        var fechaSig: Date = Date()
+        let tipoPago = venta?.value(forKey: Configuraciones.keyTipoPago) as? String ?? Configuraciones.keyTipoPagoSemanal
+        
+        
+        primerCobro = !primerCobro
+        repeat {
+            switch tipoPago {
+            case Configuraciones.keyTipoPagoSemanal:
+                
+                var diaSemana: Int = 1
+                for dia in Funciones.diasSemana {
+                    if venta?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "Domingo" == dia {
+                        break
+                    }
+                    diaSemana = diaSemana + 1
+                }
+                fechaSig = Funciones.buscarSiguienteDia(Fecha: fechaSig, Dia: diaSemana )
+                break
+            case Configuraciones.keyTipoPagoQuincenal:
+                fechaSig = Funciones.buscarSiguienteQuincena(Fecha: fechaSig)
+                break
+            case Configuraciones.keyTipoPagoMensual:
+                fechaSig = Funciones.buscarSiguienteFecha(Fecha: fechaSig, Dia: Int(venta?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "1") ?? 1 )
+                break
+            default:
+                break
+            }
+            primerCobro = !primerCobro
+        } while( primerCobro )
+        
+        return Funciones.fechaAString(Fecha: fechaSig )
+    }
+    
     static func ventaAtrasada(Fecha fecha: String) -> Int{
  
         let index = fecha.index(fecha.startIndex, offsetBy: 10)

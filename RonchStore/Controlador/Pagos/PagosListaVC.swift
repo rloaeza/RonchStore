@@ -194,7 +194,10 @@ extension PagosListaVC:PagoNuevoVCDelegate {
         
         self.venta?.setValue(self.pagos, forKey: Configuraciones.keyPagos)
         
-      
+        let fechaStr = Funciones.siguienteFecha(Venta: venta)
+        _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: fechaStr )
+        self.venta?.setValue(fechaStr, forKey: Configuraciones.keyFechaCobro)
+        
         self.idMensajeEnviado = self.pagos.count - 1
         
         self.enviarPagoSMS(Pago: self.pagos[pagos.count - 1])
