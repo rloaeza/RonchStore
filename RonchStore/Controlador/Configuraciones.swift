@@ -71,6 +71,7 @@ class Configuraciones{
     static let keyPagoInicialV = "Pago Inicial Valor"
     static let keyPagoSemanas = "Pago Semanas"
     static let keyPagosFinalizados = "Pagos Finalizados"
+    static let keyOmitirFechaPrimerCobro = "Omitir fecha primer cobro"
     
     static let keyListas = "Listas"
     
@@ -113,6 +114,7 @@ class Configuraciones{
     static let txtSeleccionaDiaSemana = "Selecciona día de la semana"
     static let txtSeleccionaDiaQuincenal = "1 y 15"
     static let txtSeleccionaDiaMensual = "Selecciona día del mes"
+    static let txtSeleccionaHora = "Selecciona hora"
     
     
     

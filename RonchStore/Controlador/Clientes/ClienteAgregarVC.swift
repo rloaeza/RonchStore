@@ -249,6 +249,8 @@ class ClienteAgregarVC: UIViewController{
                 self.lat = Double( lat ) ?? 0.0
                 self.long = Double( long ) ?? 0.0
             }
+           
+            
             opcionTipoPago = cliente?.value(forKey: Configuraciones.keyTipoPago) as? String ?? Configuraciones.keyTipoPagoSemanal
             let diaCobro = cliente!.value(forKey: Configuraciones.keyDiaCobro) as? String
             switch opcionTipoPago {

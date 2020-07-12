@@ -318,6 +318,11 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             vc.delegate = self
         }
         
+        if segue.identifier == "DetallesCobroDesdeNuevaVenta",
+            let vc = segue.destination as? DetalleDeCobroVC {
+            vc.venta = venta            
+        }
+        
         //
     }
     
