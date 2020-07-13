@@ -171,25 +171,7 @@ extension VentasVC:UITableViewDataSource {
         if (editingStyle == .delete) {
             
             
-            let alertaConfirmacion = UIAlertController(title: "Advertencia", message: "Archivar venta # \(self.valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyContador)!)", preferredStyle: UIAlertController.Style.alert)
-
-            alertaConfirmacion.addAction(UIAlertAction(title: "Si", style: .default, handler: { (action: UIAlertAction!) in
-                
-                let ventaArchivada = self.valoresParaMostrar[indexPath.row]
-                
-                var ref: DatabaseReference!
-                ref = Database.database().reference()
-                Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: Configuraciones.keyVentasArchivadas, KeyValue: nil, Value: ventaArchivada)
-                
-                ref.child(Configuraciones.keyVentasBorrador).child(self.valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
-                
-            }))
-
-            alertaConfirmacion.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in
-                return
-            }))
-
-            present(alertaConfirmacion, animated: true, completion: nil )
+            
             
             
             
@@ -206,6 +188,47 @@ extension VentasVC:UITableViewDataSource {
 
 
 extension VentasVC:UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+               
+               
+        let archivar = UITableViewRowAction(style: .destructive, title: Configuraciones.txtArchivar) { (action, indexPath) in
+                  
+                
+                let alertaConfirmacion = UIAlertController(title: "Advertencia", message: "Archivar venta # \(self.valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyContador)!)", preferredStyle: UIAlertController.Style.alert)
+
+                alertaConfirmacion.addAction(UIAlertAction(title: "Si", style: .default, handler: { (action: UIAlertAction!) in
+                    
+                    let ventaArchivada = self.valoresParaMostrar[indexPath.row]
+                    
+                    var ref: DatabaseReference!
+                    ref = Database.database().reference()
+                    Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: Configuraciones.keyVentasArchivadas, KeyValue: nil, Value: ventaArchivada)
+                    
+                    ref.child(Configuraciones.keyVentasBorrador).child(self.valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+                    
+                }))
+
+                alertaConfirmacion.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in
+                    return
+                }))
+
+                self.present(alertaConfirmacion, animated: true, completion: nil )
+                
+                   
+               }
+            return [archivar]
+        }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "AgregarVentaSegue", sender: valoresParaMostrar[indexPath.row] as NSDictionary)
         tableView.deselectRow(at: indexPath, animated: true)

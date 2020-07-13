@@ -170,7 +170,7 @@ extension VentasArchivadasVC:UITableViewDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
            
            
-           let restaurar = UITableViewRowAction(style: .normal, title: "Restaurar") { (action, indexPath) in
+        let restaurar = UITableViewRowAction(style: .normal, title: Configuraciones.txtRestaurar) { (action, indexPath) in
               
             let alertaConfirmacion = UIAlertController(title: "Advertencia", message: "Restaurar venta # \(self.valoresParaMostrar[indexPath.row].value(forKey: Configuraciones.keyContador)!)", preferredStyle: UIAlertController.Style.alert)
 
@@ -198,12 +198,7 @@ extension VentasArchivadasVC:UITableViewDelegate {
            }
         return [restaurar]
     }
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       // self.performSegue(withIdentifier: "AgregarVentaSegue", sender: valoresParaMostrar[indexPath.row] as NSDictionary)
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
+
 }
 extension VentasArchivadasVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

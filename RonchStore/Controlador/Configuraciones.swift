@@ -116,6 +116,9 @@ class Configuraciones{
     static let txtSeleccionaDiaMensual = "Selecciona día del mes"
     static let txtSeleccionaHora = "Selecciona hora"
     
+    static let txtArchivar = "Archivar"
+    static let txtRestaurar = "Restaurar"
+    
     
     
     static let txtMensajeVenta = """
