@@ -334,13 +334,13 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     func finalizarStatusVenta(Finalizar finalizar: Bool) {
         ventaFinalizada = finalizar
         if finalizar {
-            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyVentaFinalizada, Value: true)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyVentaFinalizada, Value: true)
             
         }
         else {
-            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyVentaFinalizada, Value: false)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyVentaFinalizada, Value: false)
             
-            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagosFinalizados, Value: false)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyPagosFinalizados, Value: false)
             venta?.setValue(false, forKey: Configuraciones.keyPagosFinalizados)
         }
         
@@ -396,18 +396,18 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     
     func guardarValores() {
         
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyProductos, Value: productosVenta)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyProductos, Value: productosVenta)
         venta?.setValue(productosVenta, forKey: Configuraciones.keyProductos)
         
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoSemanas, Value: pagoSemanas)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoInicialP, Value: pagoInicialP)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagoInicialV, Value: pagoInicialV)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyTotal, Value: totalVenta)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyDescuento, Value: descuento)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyDescuentoTipo, Value: descuentoPorcentaje)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyPagoSemanas, Value: pagoSemanas)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyPagoInicialP, Value: pagoInicialP)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyPagoInicialV, Value: pagoInicialV)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyTotal, Value: totalVenta)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyDescuento, Value: descuento)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyDescuentoTipo, Value: descuentoPorcentaje)
         
         if !fechaFijada {
-            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFecha, Value: Configuraciones.fecha())
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyFecha, Value: Configuraciones.fecha())
             fechaFijada = true
             
         }
@@ -450,7 +450,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
                 primerCobro = !primerCobro
             } while( primerCobro )
  */
-            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
             
         }
         
@@ -462,7 +462,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
                 let dic  = DataSnapshot.value as! NSDictionary
                 self.contador = dic.value(forKey: "Venta") as? Int ?? 0
                 self.contador = self.contador! + 1
-                self.codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: self.codigo, KeyValue: Configuraciones.keyContador, Value: self.contador! )
+                self.codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: self.codigo, KeyValue: Configuraciones.keyContador, Value: self.contador! )
                 
                 Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: Configuraciones.keyContador, KeyValue: "Venta", Value: self.contador!)
                 
@@ -636,7 +636,7 @@ extension VentaAgregarVC: ClienteVCDelegate {
         botonCliente.setTitle(cliente.value(forKey: Configuraciones.keyNombre) as? String , for: .normal)
         self.cliente = cliente
         self.premium = cliente.value(forKey: Configuraciones.keyPremium) as? Bool ?? false
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyCliente, Value: cliente)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyCliente, Value: cliente)
         
         if premium {
             viewDetalleCredito.isHidden = true

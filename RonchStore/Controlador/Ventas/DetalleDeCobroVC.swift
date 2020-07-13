@@ -31,14 +31,14 @@ class DetalleDeCobroVC: UIViewController {
         botonDiaCobro.setTitle(txtBoton, for: .normal)
         
         
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: valor)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: valor)
        
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyTipoPago, Value: tipoPago)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyTipoPago, Value: tipoPago)
         
         venta?.setValue(valor, forKey: Configuraciones.keyDiaCobro)
         venta?.setValue(tipoPago, forKey: Configuraciones.keyTipoPago)
         
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
         venta?.setValue(Funciones.siguienteFechaInicial(Venta: venta), forKey: Configuraciones.keyFechaCobro)
         
         if quincenal {
@@ -52,9 +52,9 @@ class DetalleDeCobroVC: UIViewController {
     @IBAction func seleccionOmitirPrimerCobro(_ sender: Any) {
         let omitir = swOmitirPrimerCobro.isOn
         
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyOmitirFechaPrimerCobro, Value: omitir)
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyOmitirFechaPrimerCobro, Value: omitir)
         venta?.setValue(omitir, forKey: Configuraciones.keyOmitirFechaPrimerCobro)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
         
         venta?.setValue(Funciones.siguienteFechaInicial(Venta: venta), forKey: Configuraciones.keyFechaCobro)
 
@@ -169,24 +169,24 @@ extension DetalleDeCobroVC: DetallesProductoListaVCDelegate {
             
         case Configuraciones.keyDatosHoraCobro:
              botonHoraCobro.setTitle(nombre, for: .normal)
-             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyHoraCobro, Value: nombre)
+             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyHoraCobro, Value: nombre)
              venta?.setValue(nombre, forKey: Configuraciones.keyHoraCobro)
 
              break
         case Configuraciones.keyDatosDiaCobroSemanal:
             botonDiaCobro.setTitle(nombre, for: .normal)
-            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: nombre)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: nombre)
             venta?.setValue(nombre, forKey: Configuraciones.keyDiaCobro)
             
-            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
 
             break
         case Configuraciones.keyDatosDiaCobroMensual:
             botonDiaCobro.setTitle(nombre, for: .normal)
-            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: nombre)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: nombre)
             venta?.setValue(nombre, forKey: Configuraciones.keyDiaCobro)
             
-            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
             
             break
         default:

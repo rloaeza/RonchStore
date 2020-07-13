@@ -23,7 +23,7 @@ class VentasVC: UIViewController {
         
         
         
-        let ref = Database.database().reference().child(Configuraciones.keyVentasBorrador).queryOrdered(byChild: "\(Configuraciones.keyContador)")
+        let ref = Database.database().reference().child(Configuraciones.keyVentasActivas).queryOrdered(byChild: "\(Configuraciones.keyContador)")
         
         ref.observe(.value) { (DataSnapshot) in
             self.valores.removeAll()
@@ -205,7 +205,7 @@ extension VentasVC:UITableViewDelegate {
                     ref = Database.database().reference()
                     Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: Configuraciones.keyVentasArchivadas, KeyValue: nil, Value: ventaArchivada)
                     
-                    ref.child(Configuraciones.keyVentasBorrador).child(self.valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+                    ref.child(Configuraciones.keyVentasActivas).child(self.valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
                     
                 }))
 

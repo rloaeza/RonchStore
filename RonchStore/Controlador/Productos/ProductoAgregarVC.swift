@@ -154,49 +154,49 @@ class ProductoAgregarVC: UIViewController {
             vc.delegate = self
             vc.title = "Categoria"
             vc.ordenarPor = Configuraciones.keyNombre
-            vc.detalleKey = Configuraciones.keyDetalleProductoCategoria
+            vc.detalleKey = Configuraciones.keyDatosDetalleProductoCategoria
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaMarca",
             let vc = segue.destination as? DetallesProductoListaVC {
             vc.delegate = self
             vc.title = "Marca"
             vc.ordenarPor = Configuraciones.keyNombre
-            vc.detalleKey = Configuraciones.keyDetalleProductoMarca
+            vc.detalleKey = Configuraciones.keyDatosDetalleProductoMarca
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaTalla",
             let vc = segue.destination as? DetallesProductoListaVC {
             vc.delegate = self
             vc.title = "Talla"
             vc.ordenarPor = Configuraciones.keyNombre
-            vc.detalleKey = Configuraciones.keyDetalleProductoTalla
+            vc.detalleKey = Configuraciones.keyDatosDetalleProductoTalla
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaNombre",
             let vc = segue.destination as? DetallesProductoListaVC {
             vc.delegate = self
             vc.title = "Nombre"
             vc.ordenarPor = Configuraciones.keyNombre
-            vc.detalleKey = Configuraciones.keyDetalleProductoNombre
+            vc.detalleKey = Configuraciones.keyDatosDetalleProductoNombre
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaCosto",
             let vc = segue.destination as? DetallesProductoListaVC {
             vc.delegate = self
             vc.title = "Costo"
             vc.ordenarPor = Configuraciones.keyNombre
-            vc.detalleKey = Configuraciones.keyDetalleProductoCosto
+            vc.detalleKey = Configuraciones.keyDatosDetalleProductoCosto
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaCostoVenta",
             let vc = segue.destination as? DetallesProductoListaVC {
             vc.delegate = self
             vc.title = "Costo de venta"
             vc.ordenarPor = Configuraciones.keyNombre
-            vc.detalleKey = Configuraciones.keyDetalleProductoCostoVenta
+            vc.detalleKey = Configuraciones.keyDatosDetalleProductoCostoVenta
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaExistencia",
             let vc = segue.destination as? DetallesProductoListaVC {
             vc.delegate = self
             vc.title = "Existencia"
             vc.ordenarPor = Configuraciones.keyNombre
-            vc.detalleKey = Configuraciones.keyDetalleProductoExistencia
+            vc.detalleKey = Configuraciones.keyDatosDetalleProductoExistencia
         }
         
         
@@ -308,31 +308,31 @@ extension ProductoAgregarVC: DetallesProductoListaVCDelegate {
         
         switch detalle {
             
-        case Configuraciones.keyDetalleProductoMarca:
+        case Configuraciones.keyDatosDetalleProductoMarca:
              botonMarca.setTitle(nombre, for: .normal)
              codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyMarca, Value: nombre)
              break
-        case Configuraciones.keyDetalleProductoTalla:
+        case Configuraciones.keyDatosDetalleProductoTalla:
             botonTalla.setTitle(nombre, for: .normal)
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyTalla, Value: nombre)
             break
-        case Configuraciones.keyDetalleProductoCategoria:
+        case Configuraciones.keyDatosDetalleProductoCategoria:
             botonCategoria.setTitle(nombre, for: .normal)
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCategorias, Value: nombre)
             break
-        case Configuraciones.keyDetalleProductoNombre:
+        case Configuraciones.keyDatosDetalleProductoNombre:
             botonNombre.setTitle(nombre, for: .normal)
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyNombre, Value: nombre)
             break
-        case Configuraciones.keyDetalleProductoCosto:
+        case Configuraciones.keyDatosDetalleProductoCosto:
             botonCosto.setTitle(nombre, for: .normal)
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCosto, Value: nombre)
             break
-        case Configuraciones.keyDetalleProductoCostoVenta:
+        case Configuraciones.keyDatosDetalleProductoCostoVenta:
             botonCostoVenta.setTitle(nombre, for: .normal)
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCostoVenta, Value: nombre)
             break
-        case Configuraciones.keyDetalleProductoExistencia:
+        case Configuraciones.keyDatosDetalleProductoExistencia:
                botonExistencia.setTitle(nombre, for: .normal)
                codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyExistencia, Value: nombre)
                break

@@ -21,7 +21,7 @@ class VentasListadoCobradorVC: UIViewController {
         super.viewDidLoad()
         //let ref = Database.database().reference().child(Configuraciones.keyVentasBorrador).queryOrdered(byChild: "\(Configuraciones.keyCliente)/\(Configuraciones.keyNombre)")
         
-        let ref = Database.database().reference().child(Configuraciones.keyVentasBorrador).queryOrdered(byChild: "\(Configuraciones.keyCliente)/\(Configuraciones.keyNombre)")
+        let ref = Database.database().reference().child(Configuraciones.keyVentasActivas).queryOrdered(byChild: "\(Configuraciones.keyCliente)/\(Configuraciones.keyNombre)")
         
         
         ref.observe(.value) { (DataSnapshot) in

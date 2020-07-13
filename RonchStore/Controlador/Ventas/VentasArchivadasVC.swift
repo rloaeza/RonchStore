@@ -180,7 +180,7 @@ extension VentasArchivadasVC:UITableViewDelegate {
                 
                 var ref: DatabaseReference!
                 ref = Database.database().reference()
-                Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, KeyValue: nil, Value: ventaArchivada)
+                Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, KeyValue: nil, Value: ventaArchivada)
                 
                 ref.child(Configuraciones.keyVentasArchivadas).child(self.valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
             }))

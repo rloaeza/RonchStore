@@ -41,7 +41,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
         if !pagosFinalizados {
             botonFinalizar.isHidden = true
             pagosFinalizados = true
-            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagosFinalizados, Value: pagosFinalizados)
+            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyPagosFinalizados, Value: pagosFinalizados)
             venta?.setValue(true, forKey: Configuraciones.keyPagosFinalizados)
         }
     }
@@ -115,7 +115,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
         self.venta?.setValue(self.pagos, forKey: Configuraciones.keyPagos)
 
-        _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
+        _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
         tableViewController.reloadData()
 
         
@@ -141,7 +141,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             if let f = venta?.value(forKey: Configuraciones.keyPagosFinalizados) as? Bool {
                 pagosFinalizados = f
             } else {
-             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagosFinalizados, Value: pagosFinalizados)
+             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyPagosFinalizados, Value: pagosFinalizados)
             }
             if pagosFinalizados {
                 botonFinalizar.isHidden = true
@@ -190,12 +190,12 @@ extension PagosListaVC:PagoNuevoVCDelegate {
         
         self.pagos.append(self.pagoActual!)
 
-        _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
+        _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyPagos, Value: pagos)
         
         self.venta?.setValue(self.pagos, forKey: Configuraciones.keyPagos)
         
         let fechaStr = Funciones.siguienteFecha(Venta: venta)
-        _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: fechaStr )
+        _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: fechaStr )
         self.venta?.setValue(fechaStr, forKey: Configuraciones.keyFechaCobro)
         
         self.idMensajeEnviado = self.pagos.count - 1
@@ -261,7 +261,7 @@ extension PagosListaVC:UITableViewDelegate {
         if indexPath.row == (self.pagos.count - 1)  {
             let eliminarPago = UITableViewRowAction(style: .destructive, title: "Eliminar Pago") { (action, indexPath) in
                 self.pagos.remove(at: indexPath.row)
-                _ = Configuraciones.guardarValor(Reference: self.ref, KeyNode: Configuraciones.keyVentasBorrador, Child: self.codigo, KeyValue: Configuraciones.keyPagos, Value: self.pagos)
+                _ = Configuraciones.guardarValor(Reference: self.ref, KeyNode: Configuraciones.keyVentasActivas, Child: self.codigo, KeyValue: Configuraciones.keyPagos, Value: self.pagos)
                 self.venta?.setValue(self.pagos, forKey: Configuraciones.keyPagos)
                 self.tableViewController.reloadData()                
             }

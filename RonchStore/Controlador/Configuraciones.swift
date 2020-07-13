@@ -13,7 +13,7 @@ import FirebaseStorage
 
 class Configuraciones{
     static let Titulo = " .::RonchStore::."
-    static let keyVentasBorrador = "Ventas Borrador"
+    static let keyVentasActivas = "Ventas Activas"
     static let keyVentaFinalizada = "Venta Finalizada"
     static let keyVentasArchivadas = "Ventas Archivadas"
     static let keyProductos = "Productos"
@@ -77,13 +77,13 @@ class Configuraciones{
     
     
     
-    static let keyDetalleProductoCategoria = "ProductoDetalle/Categoria"
-    static let keyDetalleProductoMarca = "ProductoDetalle/Marca"
-    static let keyDetalleProductoTalla = "ProductoDetalle/Talla"
-    static let keyDetalleProductoNombre = "ProductoDetalle/Nombre"
-    static let keyDetalleProductoCosto = "ProductoDetalle/Costo"
-    static let keyDetalleProductoCostoVenta = "ProductoDetalle/CostoVenta"
-    static let keyDetalleProductoExistencia = "ProductoDetalle/Existencia"
+    static let keyDatosDetalleProductoCategoria = "Datos/ProductoDetalle/Categoria"
+    static let keyDatosDetalleProductoMarca = "Datos/ProductoDetalle/Marca"
+    static let keyDatosDetalleProductoTalla = "Datos/ProductoDetalle/Talla"
+    static let keyDatosDetalleProductoNombre = "Datos/ProductoDetalle/Nombre"
+    static let keyDatosDetalleProductoCosto = "Datos/ProductoDetalle/Costo"
+    static let keyDatosDetalleProductoCostoVenta = "Datos/ProductoDetalle/CostoVenta"
+    static let keyDatosDetalleProductoExistencia = "Datos/ProductoDetalle/Existencia"
     
     
     static let keyDatosDiaCobroSemanal = "Datos/Dias de cobro semanal"
