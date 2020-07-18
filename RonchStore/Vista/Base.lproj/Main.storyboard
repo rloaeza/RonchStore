@@ -131,7 +131,7 @@
         <scene sceneID="QFx-j0-igO">
             <objects>
                 <navigationController id="1As-Sh-qrv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Productos" image="tab_producto" id="wNc-VH-snA"/>
+                    <tabBarItem key="tabBarItem" title="Productos" image="tabproductos" id="wNc-VH-snA"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="teI-op-6xt">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -148,7 +148,7 @@
         <scene sceneID="nAs-4k-OQc">
             <objects>
                 <navigationController id="ytc-ao-9Up" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Clientes" image="tab_cliente" id="77B-zL-Xd4"/>
+                    <tabBarItem key="tabBarItem" title="Clientes" image="tabclientes" id="77B-zL-Xd4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Z0D-sv-omH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -750,7 +750,7 @@
         <scene sceneID="vpM-2C-CDp">
             <objects>
                 <navigationController id="ca4-hg-1fw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Ventas" image="tab_venta" id="4n8-fv-HSD"/>
+                    <tabBarItem key="tabBarItem" title="Ventas" image="tabventas" id="4n8-fv-HSD"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DxI-e0-7kn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -3633,7 +3633,7 @@
         <scene sceneID="rfM-S4-mJ9">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jFC-4C-bjv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Listas" image="tab_lista" id="NpE-8R-UVb"/>
+                    <tabBarItem key="tabBarItem" title="Listas" image="tablistas" id="NpE-8R-UVb"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hbQ-vI-auJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
@@ -4500,7 +4500,7 @@
         <scene sceneID="bni-TN-eqG">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3Py-37-6SE" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Ventas archivadas" image="tab_venta" id="kw4-M4-cPs"/>
+                    <tabBarItem key="tabBarItem" title="Ventas archivadas" image="tabventas" id="kw4-M4-cPs"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="ESk-5N-zMo"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MZN-us-VAK">
@@ -4539,13 +4539,13 @@
         <image name="fondo-login" width="720" height="1280"/>
         <image name="icon_almacen" width="25" height="25"/>
         <image name="icon_finanzas" width="25" height="25"/>
-        <image name="tab_cliente" width="25" height="25"/>
-        <image name="tab_lista" width="25" height="25"/>
         <image name="tab_pedidos" width="25" height="25"/>
-        <image name="tab_producto" width="25" height="25"/>
         <image name="tab_reportes" width="25" height="25"/>
         <image name="tab_usuario" width="25" height="25"/>
-        <image name="tab_venta" width="25" height="25"/>
+        <image name="tabclientes" width="30" height="30"/>
+        <image name="tablistas" width="30" height="30"/>
+        <image name="tabproductos" width="30" height="30"/>
+        <image name="tabventas" width="30" height="30"/>
         <image name="user" width="75" height="75"/>
     </resources>
 </document>
