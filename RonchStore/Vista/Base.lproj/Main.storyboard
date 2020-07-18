@@ -3090,7 +3090,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="Actualmente se han pagado $3500 de $7000">
                                         <attributes>
-                                            <font key="NSFont" metaFont="system" size="14"/>
+                                            <font key="NSFont" metaFont="menu" size="14"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -4232,7 +4232,7 @@
                                                     <action selector="seleccionOmitirPrimerCobro:" destination="PaW-on-2YP" eventType="valueChanged" id="95h-Bs-ZbL"/>
                                                 </connections>
                                             </switch>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Omitir prjmer fecha de cobro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKU-xj-oyG">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Omitir primer fecha de cobro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKU-xj-oyG">
                                                 <rect key="frame" x="90" y="377" width="316" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="bhU-KE-PwJ"/>

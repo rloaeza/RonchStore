@@ -52,7 +52,7 @@ class Funciones {
     }
     
     static func siguienteFechaInicial(Venta venta: NSDictionary?) -> String {
-        var primerCobro = venta!.value(forKey: Configuraciones.keyOmitirFechaPrimerCobro) as? Bool ?? false
+        var primerCobro = venta?.value(forKey: Configuraciones.keyOmitirFechaPrimerCobro) as? Bool ?? false
         var fechaSig: Date = Date()
         let tipoPago = venta?.value(forKey: Configuraciones.keyTipoPago) as? String ?? Configuraciones.keyTipoPagoSemanal
         

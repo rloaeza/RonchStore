@@ -75,7 +75,7 @@ class DetalleDeCobroVC: UIViewController {
         
         ref = Database.database().reference()
         if venta != nil {
-            codigo = venta?.value(forKey: Configuraciones.keyId) as? String
+            //codigo = venta?.value(forKey: Configuraciones.keyId) as? String
             var pagos: [NSDictionary] = []
             
             if let ps = venta?.value(forKey: Configuraciones.keyPagos) as? [NSDictionary] {

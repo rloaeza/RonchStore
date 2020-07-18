@@ -320,6 +320,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         
         if segue.identifier == "DetallesCobroDesdeNuevaVenta",
             let vc = segue.destination as? DetalleDeCobroVC {
+            vc.codigo = codigo
             vc.venta = venta            
         }
         
