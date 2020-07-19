@@ -183,7 +183,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
     }
 }
 extension PagosListaVC:PagoNuevoVCDelegate {
-    func pagoNuevo(monto: Double, concepto: String) {
+    func pagoNuevo(monto: Double, concepto: String, pagoParcial: Bool) {
         let fechaPago = Configuraciones.fecha()
 
         self.pagoActual = [Configuraciones.keyPago:String(monto), Configuraciones.keyFecha:fechaPago, Configuraciones.keyConceptoPago:concepto, Configuraciones.keyPagoMensajeEnviado:false]
@@ -194,9 +194,12 @@ extension PagosListaVC:PagoNuevoVCDelegate {
         
         self.venta?.setValue(self.pagos, forKey: Configuraciones.keyPagos)
         
-        let fechaStr = Funciones.siguienteFecha(Venta: venta)
-        _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: fechaStr )
-        self.venta?.setValue(fechaStr, forKey: Configuraciones.keyFechaCobro)
+        if !pagoParcial {
+            let fechaStr = Funciones.siguienteFecha(Venta: venta)
+            _ = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: fechaStr )
+            self.venta?.setValue(fechaStr, forKey: Configuraciones.keyFechaCobro)
+        }
+        
         
         self.idMensajeEnviado = self.pagos.count - 1
         

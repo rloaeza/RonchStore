@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol PagoNuevoVCDelegate {
-    func pagoNuevo(monto: Double, concepto: String)
+    func pagoNuevo(monto: Double, concepto: String, pagoParcial: Bool)
 }
 
 
@@ -21,6 +21,7 @@ class PagoNuevoVC: UIViewController {
     @IBOutlet weak var lblAdeudo: UILabel!
     @IBOutlet weak var tfMonto: UITextField!
     @IBOutlet weak var btnConcepto: UIButton!
+    @IBOutlet weak var swPagoParcial: UISwitch!
     
     
     var delegate: PagoNuevoVCDelegate?
@@ -37,7 +38,7 @@ class PagoNuevoVC: UIViewController {
             }
             else {
                 self.navigationController?.popViewController(animated: true)
-                delegate?.pagoNuevo(monto: monto, concepto: concepto)
+                delegate?.pagoNuevo(monto: monto, concepto: concepto, pagoParcial: swPagoParcial.isOn)
                 
 
             }
