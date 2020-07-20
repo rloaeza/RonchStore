@@ -21,6 +21,7 @@ class DetallesProductoListaVC: UIViewController {
     var titulo: String? = nil
     var detalleKey: String? = nil
     var ordenarPor: String? = nil
+    var tipoTeclado: UIKeyboardType? = nil
     
 
     @IBOutlet weak var tablaValores: UITableView!
@@ -30,6 +31,10 @@ class DetallesProductoListaVC: UIViewController {
         var alert: UIAlertController
         alert = UIAlertController(title: self.title, message: "Introduce el nuevo valor", preferredStyle: .alert)
         alert.addTextField { (textField) in
+            if self.tipoTeclado != nil {
+                textField.keyboardType = self.tipoTeclado!
+            }
+            
             //textField.text = ""
         }
         

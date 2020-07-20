@@ -119,7 +119,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         }
         mensajePremium = mensajePremium.replacingOccurrences(of: "$total", with: total.text!)
         
-        let diaCobro: String = cliente?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "x"
+        let diaCobro: String = venta?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "x"
         mensajePremium = mensajePremium.replacingOccurrences(of: "$diaCobro", with: diaCobro)
         
         

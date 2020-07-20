@@ -76,6 +76,7 @@ class PagoNuevoVC: UIViewController {
             vc.ordenarPor = Configuraciones.keyNombre
             vc.title = "Concepto de pago"
             vc.detalleKey = Configuraciones.keyDatosConceptoPago
+            vc.tipoTeclado = UIKeyboardType.alphabet
         }
         
     }    

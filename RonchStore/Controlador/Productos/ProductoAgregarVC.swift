@@ -155,6 +155,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Categoria"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoCategoria
+            vc.tipoTeclado = UIKeyboardType.alphabet
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaMarca",
             let vc = segue.destination as? DetallesProductoListaVC {
@@ -162,6 +163,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Marca"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoMarca
+            vc.tipoTeclado = UIKeyboardType.alphabet
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaTalla",
             let vc = segue.destination as? DetallesProductoListaVC {
@@ -169,6 +171,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Talla"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoTalla
+            vc.tipoTeclado = UIKeyboardType.alphabet
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaNombre",
             let vc = segue.destination as? DetallesProductoListaVC {
@@ -176,6 +179,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Nombre"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoNombre
+            vc.tipoTeclado = UIKeyboardType.alphabet
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaCosto",
             let vc = segue.destination as? DetallesProductoListaVC {
@@ -183,6 +187,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Costo"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoCosto
+            vc.tipoTeclado = UIKeyboardType.numberPad
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaCostoVenta",
             let vc = segue.destination as? DetallesProductoListaVC {
@@ -190,6 +195,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Costo de venta"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoCostoVenta
+            vc.tipoTeclado = UIKeyboardType.numberPad
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaExistencia",
             let vc = segue.destination as? DetallesProductoListaVC {
@@ -197,6 +203,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Existencia"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoExistencia
+            vc.tipoTeclado = UIKeyboardType.numberPad
         }
         
         

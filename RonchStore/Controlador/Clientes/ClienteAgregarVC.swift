@@ -20,70 +20,25 @@ class ClienteAgregarVC: UIViewController{
     var lat: Double? = nil
     var long: Double? = nil
     
-    
-    @IBOutlet weak var botonDiaCobro: UIButton!
+  
     @IBOutlet weak var swPremium: UISwitch!
-    
-    @IBOutlet weak var swSemanal: UISwitch!
-    @IBOutlet weak var swQuincenal: UISwitch!
-    @IBOutlet weak var swMensual: UISwitch!
-    
-    
-    
     @IBOutlet weak var apellidos: UITextField!
-    @IBOutlet weak var botonHoraCobro: UIButton!
     @IBOutlet weak var telefono: UITextField!
     @IBOutlet weak var nombre: UITextField!
     
     @IBOutlet weak var email: UITextField!
-    //@IBOutlet weak var imagenPersona: UIImageView!
-    //@IBOutlet weak var imagenCasa: UIImageView!
-    
     @IBOutlet weak var calle: UITextField!
     @IBOutlet weak var colonia: UITextField!
     @IBOutlet weak var ciudad: UITextField!
     @IBOutlet weak var pais: UITextField!
     @IBOutlet weak var montoCredito: UITextField!
-    
     @IBOutlet weak var imagenCasa: UIImageView!
-    
     @IBOutlet weak var imagenPersona: UIImageView!
     
     
     var imagenMostrar: UIImageView!
     var ubicacion: CLLocationCoordinate2D!
     var opcionTipoPago: String = Configuraciones.keyTipoPagoSemanal
-    
-    func seleccionaTipoDia(Semanal semanal: Bool, Quincenal quincenal: Bool, Mensual mensual: Bool, TipoPago tipoPago:String, TextoBoton txtBoton: String,  Valor valor: String?) {
-        swSemanal.setOn(semanal, animated: true)
-        swQuincenal.setOn(quincenal, animated: true)
-        swMensual.setOn(mensual, animated: true)
-        opcionTipoPago = tipoPago
-        botonDiaCobro.setTitle(txtBoton, for: .normal)
-        
-        
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: valor)
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyTipoPago, Value: tipoPago)
-        
-        if quincenal {
-            botonDiaCobro.isEnabled = false
-        }
-        else {
-            botonDiaCobro.isEnabled = true
-        }
-    }
-    
-    @IBAction func seleccionSemanal(_ sender: Any) {
-        seleccionaTipoDia(Semanal: true, Quincenal: false, Mensual: false, TipoPago: Configuraciones.keyTipoPagoSemanal, TextoBoton: Configuraciones.txtSeleccionaDiaSemana, Valor: nil)
-    }
-    @IBAction func seleccionQuincenal(_ sender: Any) {
-        seleccionaTipoDia(Semanal: false, Quincenal: true, Mensual: false, TipoPago: Configuraciones.keyTipoPagoQuincenal, TextoBoton: Configuraciones.txtSeleccionaDiaQuincenal, Valor: Configuraciones.txtSeleccionaDiaQuincenal)
-    }
-    @IBAction func seleccionMensual(_ sender: Any) {
-        seleccionaTipoDia(Semanal: false, Quincenal: false, Mensual: true, TipoPago: Configuraciones.keyTipoPagoMensual, TextoBoton: Configuraciones.txtSeleccionaDiaMensual, Valor: nil)
-    }
-    
-    
     
     
     
@@ -237,9 +192,6 @@ class ClienteAgregarVC: UIViewController{
             
             
             
-            botonHoraCobro.setTitle(cliente!.value(forKey: Configuraciones.keyHoraCobro) as? String ?? "Hora de cobro", for: .normal)
-            
-            
             let premium: Bool =  cliente!.value(forKey: Configuraciones.keyPremium) as? Bool ?? false
             
             swPremium.setOn(premium, animated: true)
@@ -250,25 +202,6 @@ class ClienteAgregarVC: UIViewController{
                 self.long = Double( long ) ?? 0.0
             }
            
-            
-            opcionTipoPago = cliente?.value(forKey: Configuraciones.keyTipoPago) as? String ?? Configuraciones.keyTipoPagoSemanal
-            let diaCobro = cliente!.value(forKey: Configuraciones.keyDiaCobro) as? String
-            switch opcionTipoPago {
-            case Configuraciones.keyTipoPagoSemanal:
-                seleccionaTipoDia(Semanal: true, Quincenal: false, Mensual: false, TipoPago: Configuraciones.keyTipoPagoSemanal, TextoBoton: diaCobro == nil ? Configuraciones.txtSeleccionaDiaSemana : diaCobro!, Valor: diaCobro)
-                break
-            case Configuraciones.keyTipoPagoQuincenal:
-                seleccionaTipoDia(Semanal: false, Quincenal: true, Mensual: false, TipoPago: Configuraciones.keyTipoPagoQuincenal, TextoBoton: Configuraciones.txtSeleccionaDiaQuincenal, Valor: diaCobro)
-                break
-            case Configuraciones.keyTipoPagoMensual:
-                seleccionaTipoDia(Semanal: false, Quincenal: false, Mensual: true, TipoPago: Configuraciones.keyTipoPagoMensual, TextoBoton: diaCobro == nil ? Configuraciones.txtSeleccionaDiaMensual : diaCobro!, Valor: diaCobro)
-                break
-            default:
-                break
-                    
-            }
-            
-    
             cliente = nil
             
             
@@ -295,34 +228,7 @@ class ClienteAgregarVC: UIViewController{
             vc.nombre = self.nombre.text!
         
         }
-        
-        if segue.identifier == "HoraCobroDesdeClientes",
-            let vc = segue.destination as? DetallesProductoListaVC {
-            vc.delegate = self
-            vc.ordenarPor = nil
-            vc.title = "Hora de cobro"
-            vc.detalleKey = Configuraciones.keyDatosHoraCobro
-        }
-        
-        if segue.identifier == "DiaCobroDesdeClientes",
-                 let vc = segue.destination as? DetallesProductoListaVC {
-            
-            if opcionTipoPago == Configuraciones.keyTipoPagoSemanal {
-                 vc.delegate = self
-                 vc.title = "Días de cobro semanal"
-                 vc.ordenarPor = nil
-                 vc.detalleKey = Configuraciones.keyDatosDiaCobroSemanal
-            }
-            else if opcionTipoPago == Configuraciones.keyTipoPagoMensual {
-                vc.delegate = self
-                vc.title = "Días de cobro mensual"
-                vc.ordenarPor = nil
-                vc.detalleKey = Configuraciones.keyDatosDiaCobroMensual
-             }
-        
-        }
-
-    
+       
     }
     
 }
@@ -411,30 +317,5 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
  
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
-    }
-}
-
-
-
-extension ClienteAgregarVC: DetallesProductoListaVCDelegate {
-    func valorSeleccionado(nombre: String, detalle: String) {
-        
-        switch detalle {
-            
-        case Configuraciones.keyDatosHoraCobro:
-             botonHoraCobro.setTitle(nombre, for: .normal)
-             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyHoraCobro, Value: nombre)
-             break
-        case Configuraciones.keyDatosDiaCobroSemanal:
-            botonDiaCobro.setTitle(nombre, for: .normal)
-            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: nombre)
-            break
-        case Configuraciones.keyDatosDiaCobroMensual:
-            botonDiaCobro.setTitle(nombre, for: .normal)
-            codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyDiaCobro, Value: nombre)
-            break
-        default:
-            break
-        }
     }
 }

@@ -138,6 +138,7 @@ class DetalleDeCobroVC: UIViewController {
             vc.ordenarPor = nil
             vc.title = "Hora de cobro"
             vc.detalleKey = Configuraciones.keyDatosHoraCobro
+            vc.tipoTeclado = UIKeyboardType.alphabet
         }
         
         if segue.identifier == "DiaCobroDesdeDetalleCobro",
@@ -148,12 +149,14 @@ class DetalleDeCobroVC: UIViewController {
                  vc.title = "Días de cobro semanal"
                  vc.ordenarPor = nil
                  vc.detalleKey = Configuraciones.keyDatosDiaCobroSemanal
+                vc.tipoTeclado = UIKeyboardType.alphabet
             }
             else if opcionTipoPago == Configuraciones.keyTipoPagoMensual {
                 vc.delegate = self
                 vc.title = "Días de cobro mensual"
                 vc.ordenarPor = nil
                 vc.detalleKey = Configuraciones.keyDatosDiaCobroMensual
+                vc.tipoTeclado = UIKeyboardType.alphabet
              }
         
         }
