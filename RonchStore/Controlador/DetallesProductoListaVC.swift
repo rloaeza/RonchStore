@@ -33,6 +33,7 @@ class DetallesProductoListaVC: UIViewController {
         alert.addTextField { (textField) in
             if self.tipoTeclado != nil {
                 textField.keyboardType = self.tipoTeclado!
+                textField.autocapitalizationType = .sentences
             }
             
             //textField.text = ""

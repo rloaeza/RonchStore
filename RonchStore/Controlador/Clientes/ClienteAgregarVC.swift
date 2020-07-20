@@ -202,7 +202,7 @@ class ClienteAgregarVC: UIViewController{
                 self.long = Double( long ) ?? 0.0
             }
            
-            cliente = nil
+            //cliente = nil
             
             
             Configuraciones.cargarImagen(KeyNode: Configuraciones.keyClientes, Child: codigo!, Image: self.imagenPersona)
@@ -226,6 +226,7 @@ class ClienteAgregarVC: UIViewController{
             vc.lat1 = self.lat
             vc.coord1 = self.long
             vc.nombre = self.nombre.text!
+            vc.cliente = cliente
         
         }
        

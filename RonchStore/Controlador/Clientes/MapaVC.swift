@@ -20,11 +20,20 @@ class MapaVC: UIViewController {
     var lat1: Double? = nil
     var coord1: Double? = nil
     var ref: DatabaseReference!
+    var cliente: NSDictionary? = nil
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
+        
+        if let lat = cliente!.value(forKey: Configuraciones.keyLat) as? String,
+           let long = cliente!.value(forKey: Configuraciones.keyLong) as? String {
+            self.lat1 = Double( lat ) ?? 0.0
+            self.coord1 = Double( long ) ?? 0.0
+        }
+        
+        
         
         if lat1 != nil {
         
@@ -61,6 +70,9 @@ class MapaVC: UIViewController {
         
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyLat, Value: "\(coord.latitude)")
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyClientes, Child: codigo, KeyValue: Configuraciones.keyLong, Value: "\(coord.longitude)")
+        
+        cliente?.setValue("\(coord.latitude)", forKey: Configuraciones.keyLat)
+        cliente?.setValue("\(coord.longitude)", forKey: Configuraciones.keyLong)
         
     }
     
