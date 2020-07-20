@@ -123,6 +123,9 @@ class Configuraciones{
     static let txtIntroduzcaNuevoValor = "Introduzca nuevo valor"
     static let txtValorGuardado = "Valor guardado"
     
+    static let txtError = "Error"
+    static let txtErrorLlenarCampos = "Favor de llenar los campos"
+    
     
     
     static let txtMensajeVenta = """

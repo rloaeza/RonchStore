@@ -34,7 +34,10 @@ class ProductoAgregarVC: UIViewController {
     
     
     @IBAction func botonTomarFotoProducto(_ sender: Any) {
-        
+        if codigo == nil {
+            Configuraciones.alert(Titulo: Configuraciones.txtError, Mensaje: Configuraciones.txtErrorLlenarCampos, self, popView: false)
+            return
+        }
         
         let alertaOrigenImagen = UIAlertController(title: "Adquirir imagen", message: "Seleccione la fuente de la imagen", preferredStyle: UIAlertController.Style.alert)
 
