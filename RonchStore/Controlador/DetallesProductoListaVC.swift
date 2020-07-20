@@ -29,7 +29,7 @@ class DetallesProductoListaVC: UIViewController {
     @IBAction func botonAgregar(_ sender: Any) {
         var valor: String = ""
         var alert: UIAlertController
-        alert = UIAlertController(title: self.title, message: "Introduce el nuevo valor", preferredStyle: .alert)
+        alert = UIAlertController(title: self.title, message: Configuraciones.txtIntroduzcaNuevoValor, preferredStyle: .alert)
         alert.addTextField { (textField) in
             if self.tipoTeclado != nil {
                 textField.keyboardType = self.tipoTeclado!
@@ -39,7 +39,7 @@ class DetallesProductoListaVC: UIViewController {
             //textField.text = ""
         }
         
-        alert.addAction(UIAlertAction(title: "Guardar", style: .default, handler: { [weak alert] (_) in
+        alert.addAction(UIAlertAction(title: Configuraciones.txtGuardar, style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
             
             valor = textField!.text!
@@ -54,12 +54,12 @@ class DetallesProductoListaVC: UIViewController {
                 ])
             
             
-            Configuraciones.alert(Titulo: self.title!, Mensaje: "Valor guardado", self, popView: false)
+            Configuraciones.alert(Titulo: self.title!, Mensaje: Configuraciones.txtValorGuardado, self, popView: false)
             
         }))
         
         
-        alert.addAction(UIAlertAction(title: "Cancelar", style: .destructive) { (alertAction) in })
+        alert.addAction(UIAlertAction(title: Configuraciones.txtCancelar, style: .destructive) { (alertAction) in })
         
         present(alert, animated: true)
         
