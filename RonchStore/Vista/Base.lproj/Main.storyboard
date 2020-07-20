@@ -1852,7 +1852,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="181" id="98P-Rj-D6j"/>
                                                 </constraints>
-                                                <state key="normal" title="Button" image="user"/>
+                                                <state key="normal" title="Button" image="noproducto"/>
                                                 <connections>
                                                     <action selector="botonTomarFotoProducto:" destination="vbp-xc-wtV" eventType="touchUpInside" id="kgt-6x-4xT"/>
                                                 </connections>
@@ -4476,6 +4476,7 @@
         <image name="fondo-login" width="720" height="1280"/>
         <image name="icon_almacen" width="25" height="25"/>
         <image name="icon_finanzas" width="25" height="25"/>
+        <image name="noproducto" width="96" height="96"/>
         <image name="tab_pedidos" width="25" height="25"/>
         <image name="tab_reportes" width="25" height="25"/>
         <image name="tab_usuario" width="25" height="25"/>
@@ -4483,6 +4484,5 @@
         <image name="tablistas" width="30" height="30"/>
         <image name="tabproductos" width="30" height="30"/>
         <image name="tabventas" width="30" height="30"/>
-        <image name="user" width="75" height="75"/>
     </resources>
 </document>
