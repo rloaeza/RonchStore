@@ -118,6 +118,10 @@ class Configuraciones{
     
     static let txtArchivar = "Archivar"
     static let txtRestaurar = "Restaurar"
+    static let txtGuardar = "Guardar"
+    static let txtCancelar = "Cancelar"
+    static let txtIntroduzcaNuevoValor = "Introduzca nuevo valor"
+    static let txtValorGuardado = "Valor guardado"
     
     
     
