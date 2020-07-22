@@ -27,7 +27,11 @@ class MapaVC: UIViewController {
         super.viewDidLoad()
         ref = Database.database().reference()
         
-        if let lat = cliente!.value(forKey: Configuraciones.keyLat) as? String,
+        if cliente == nil {
+            self.lat1 =  0.0
+            self.coord1 =  0.0
+        }
+        else if let lat = cliente!.value(forKey: Configuraciones.keyLat) as? String,
            let long = cliente!.value(forKey: Configuraciones.keyLong) as? String {
             self.lat1 = Double( lat ) ?? 0.0
             self.coord1 = Double( long ) ?? 0.0

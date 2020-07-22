@@ -246,7 +246,7 @@ extension ProductoAgregarVC: UIImagePickerControllerDelegate, UINavigationContro
         if codigo == nil {
             guardarNombre(self)
         }
-        let userRef = storageRef.child(key).child(codigo!)
+        let userRef = storageRef.child(Configuraciones.userID + key).child(codigo!)
         
         
         Configuraciones.guardarImagenLocal(KeyNode: key, Child: codigo!, Data: data)

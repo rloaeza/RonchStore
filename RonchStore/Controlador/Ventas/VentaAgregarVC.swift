@@ -459,8 +459,8 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         if contador == nil {
             var ref: DatabaseReference!
             ref = Database.database().reference()
-            ref.child(Configuraciones.keyContador).observeSingleEvent(of: .value) { (DataSnapshot) in
-                let dic  = DataSnapshot.value as! NSDictionary
+            ref.child(Configuraciones.userID + Configuraciones.keyContador).observeSingleEvent(of: .value) { (DataSnapshot) in
+                let dic: NSDictionary  = DataSnapshot.value as? NSDictionary ?? [:]
                 self.contador = dic.value(forKey: "Venta") as? Int ?? 0
                 self.contador = self.contador! + 1
                 self.codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: self.codigo, KeyValue: Configuraciones.keyContador, Value: self.contador! )

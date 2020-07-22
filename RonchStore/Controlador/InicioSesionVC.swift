@@ -33,6 +33,9 @@ class InicioSesionVC: UIViewController {
                 var ref: DatabaseReference!
                 ref = Database.database().reference()
                 ref.child("\(Configuraciones.keyUsuarios)/\(user!.user.uid)").observeSingleEvent(of: .value) { (DataSnapshot) in
+                    
+                    Configuraciones.userID = "Usuarios/\(user!.user.uid)/BD/"
+                    
                     let dic  = DataSnapshot.value as! NSDictionary
                     switch dic.value(forKey: Configuraciones.keyAdmin) as! Int {
                     case 1: self.performSegue(withIdentifier: "InicioSesion_Principal", sender: nil)

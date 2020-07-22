@@ -33,7 +33,7 @@ class ClienteVC: UIViewController {
         
         
         
-        let ref = Database.database().reference().child(Configuraciones.keyClientes).queryOrdered(byChild: Configuraciones.keyNombre)
+        let ref = Database.database().reference().child(Configuraciones.userID + Configuraciones.keyClientes).queryOrdered(byChild: Configuraciones.keyNombre)
         
         ref.observe(.value) { (DataSnapshot) in
             self.valores.removeAll()

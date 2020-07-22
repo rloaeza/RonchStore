@@ -278,7 +278,7 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
         
         
         
-        let data = image!.jpegData(compressionQuality: 0.8)! as NSData
+        let data = image!.jpegData(compressionQuality: 0.25)! as NSData
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
@@ -286,7 +286,7 @@ extension ClienteAgregarVC: UIImagePickerControllerDelegate, UINavigationControl
         let storageRef = Storage.storage().reference()
         let key = self.imagenMostrar==self.imagenCasa ? Configuraciones.keyCasas : Configuraciones.keyClientes
         
-        let userRef = storageRef.child(key).child(codigo!)
+        let userRef = storageRef.child(Configuraciones.userID + key).child(codigo!)
         
         Configuraciones.guardarImagenLocal(KeyNode: key, Child: codigo!, Data: data)
         

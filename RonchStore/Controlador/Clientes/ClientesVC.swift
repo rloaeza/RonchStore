@@ -22,7 +22,7 @@ class ClientesVC: UIViewController {
         super.viewDidLoad()
         
         var ref: DatabaseReference!
-        ref = Database.database().reference().child(Configuraciones.keyClientes)
+        ref = Database.database().reference().child(Configuraciones.userID + Configuraciones.keyClientes)
         
         ref.observe(.value) { (DataSnapshot) in
             self.valores.removeAll()

@@ -12,6 +12,7 @@ import FirebaseStorage
 
 
 class Configuraciones{
+    static var userID : String = ""
     static let Titulo = " .::RonchStore::."
     static let keyVentasActivas = "Ventas Activas"
     static let keyVentaFinalizada = "Venta Finalizada"
@@ -215,10 +216,10 @@ Abonos: $totAbonos
         var newData: DatabaseReference!
         
         if child == nil {
-            newData = ref.child(keyNode).childByAutoId()
+            newData = ref.child(userID + keyNode).childByAutoId()
         }
         else {
-            newData = ref.child(keyNode).child(child!)
+            newData = ref.child(userID + keyNode).child(child!)
         }
         newData.child(keyValue).setValue(val)
         
@@ -227,7 +228,7 @@ Abonos: $totAbonos
     
     static func guardarValorDirecto(Reference ref: DatabaseReference!, KeyNode keyNode: String, KeyValue keyValue: String?, Value val: Any) {
         var newData: DatabaseReference!    
-        newData = ref.child(keyNode)
+        newData = ref.child(userID + keyNode)
         
         if keyValue == nil {
             newData.childByAutoId().setValue(val)
@@ -245,31 +246,31 @@ Abonos: $totAbonos
         return total
     }
     static func eliminarImagen(Reference ref: StorageReference, KeyNode key: String, Child child: String) {
-        ref.child(key).child(child).delete(completion: nil)
+        ref.child(userID + key).child(child).delete(completion: nil)
         eliminarImagenLocal(KeyNode: key, Child: child)
     }
     
     
     static func guardarImagenLocal(KeyNode key: String, Child child: String, Data data: NSData) {
-        UserDefaults.standard.set(data, forKey: "\(key)-\(child)")
+        UserDefaults.standard.set(data, forKey: "\(userID)-\(key)-\(child)")
         
     }
     
     
     
     static func eliminarImagenLocal(KeyNode key: String, Child child: String){
-        UserDefaults.standard.removeObject(forKey: "\(key)-\(child)")
+        UserDefaults.standard.removeObject(forKey: "\(userID)-\(key)-\(child)")
     }
     
     static func cargarImagen(KeyNode key: String, Child child: String, Image image: UIImageView){
         
         
-        let dataIMG = UserDefaults.standard.object(forKey: "\(key)-\(child)") as? NSData
+        let dataIMG = UserDefaults.standard.object(forKey: "\(userID)-\(key)-\(child)") as? NSData
         if dataIMG != nil {
             image.image =  UIImage(data: dataIMG! as Data)
         }
         else {
-            let userRef = storageRef.child(key).child(child)
+            let userRef = storageRef.child(userID + key).child(child)
             userRef.getData(maxSize: 10*1024*1024) { (data, error) in
                 if error == nil {
                     image.image = UIImage(data: data!)
@@ -284,12 +285,12 @@ Abonos: $totAbonos
     static func cargarImagenEnBoton(KeyNode key: String, Child child: String, Boton boton: UIButton){
            
            
-           let dataIMG = UserDefaults.standard.object(forKey: "\(key)-\(child)") as? NSData
+           let dataIMG = UserDefaults.standard.object(forKey: "\(userID)-\(key)-\(child)") as? NSData
            if dataIMG != nil {
             boton.setImage(UIImage(data: dataIMG! as Data), for: .normal)
            }
            else {
-               let userRef = storageRef.child(key).child(child)
+               let userRef = storageRef.child(userID + key).child(child)
                userRef.getData(maxSize: 10*1024*1024) { (data, error) in
                    if error == nil {
                        boton.setImage(UIImage(data: data! as Data), for: .normal)

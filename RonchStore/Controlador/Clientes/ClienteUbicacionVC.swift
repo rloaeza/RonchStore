@@ -30,7 +30,7 @@ class ClienteUbicacionVC: UIViewController {
             
             let storageRef = Storage.storage().reference()
             let codigo = cliente?.value(forKey: Configuraciones.keyId) as? String
-            let userRef = storageRef.child(Configuraciones.keyClientes).child(codigo!)
+            let userRef = storageRef.child(Configuraciones.userID + Configuraciones.keyClientes).child(codigo!)
             userRef.getData(maxSize: 10*1024*1024) { (data, error) in
                 if error == nil {
                     let img = UIImage(data: data!)

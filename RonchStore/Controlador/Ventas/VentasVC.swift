@@ -23,7 +23,7 @@ class VentasVC: UIViewController {
         
         
         
-        let ref = Database.database().reference().child(Configuraciones.keyVentasActivas).queryOrdered(byChild: "\(Configuraciones.keyContador)")
+        let ref = Database.database().reference().child(Configuraciones.userID + Configuraciones.keyVentasActivas).queryOrdered(byChild: "\(Configuraciones.keyContador)")
         
         ref.observe(.value) { (DataSnapshot) in
             self.valores.removeAll()

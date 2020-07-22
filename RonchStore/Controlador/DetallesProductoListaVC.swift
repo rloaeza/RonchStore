@@ -47,7 +47,7 @@ class DetallesProductoListaVC: UIViewController {
             ref = Database.database().reference()
             let newKey: DatabaseReference!
             
-            newKey = ref.child(self.detalleKey!).childByAutoId()
+            newKey = ref.child(Configuraciones.userID + self.detalleKey!).childByAutoId()
             
             newKey.setValue([
                 Configuraciones.keyNombre:valor
@@ -69,10 +69,10 @@ class DetallesProductoListaVC: UIViewController {
         super.viewDidLoad()
         var ref: DatabaseQuery
         if ordenarPor == nil  {
-            ref = Database.database().reference().child(detalleKey!)
+            ref = Database.database().reference().child(Configuraciones.userID + detalleKey!)
         }
         else {
-            ref = Database.database().reference().child(detalleKey!).queryOrdered(byChild: ordenarPor!)
+            ref = Database.database().reference().child(Configuraciones.userID + detalleKey!).queryOrdered(byChild: ordenarPor!)
             
         }
         ref.observe(.value) { (DataSnapshot) in
@@ -110,7 +110,7 @@ extension DetallesProductoListaVC:UITableViewDataSource {
         if (editingStyle == .delete) {
             var ref: DatabaseReference!
             ref = Database.database().reference()
-            ref.child(detalleKey!).child(valores[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+            ref.child(Configuraciones.userID + detalleKey!).child(valores[indexPath.row].value(forKey: "key") as! String).setValue(nil)
         }
     }
 }
