@@ -205,7 +205,7 @@ extension VentasVC:UITableViewDelegate {
                     ref = Database.database().reference()
                     Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: Configuraciones.keyVentasArchivadas, KeyValue: nil, Value: ventaArchivada)
                     
-                    ref.child(Configuraciones.keyVentasActivas).child(self.valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+                    ref.child(Configuraciones.userID + Configuraciones.keyVentasActivas).child(self.valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
                     
                 }))
 

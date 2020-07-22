@@ -23,7 +23,7 @@ class VentasArchivadasVC: UIViewController {
         
         
         
-        let ref = Database.database().reference().child(Configuraciones.keyVentasArchivadas).queryOrdered(byChild: "\(Configuraciones.keyContador)")
+        let ref = Database.database().reference().child(Configuraciones.userID + Configuraciones.keyVentasArchivadas).queryOrdered(byChild: "\(Configuraciones.keyContador)")
         
         ref.observe(.value) { (DataSnapshot) in
             self.valores.removeAll()
@@ -182,7 +182,7 @@ extension VentasArchivadasVC:UITableViewDelegate {
                 ref = Database.database().reference()
                 Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, KeyValue: nil, Value: ventaArchivada)
                 
-                ref.child(Configuraciones.keyVentasArchivadas).child(self.valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+                ref.child(Configuraciones.userID + Configuraciones.keyVentasArchivadas).child(self.valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
             }))
 
             alertaConfirmacion.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in
