@@ -40,7 +40,9 @@ class RegistroVC: UIViewController {
                     newKey.setValue( [Configuraciones.keyNombre:self.nombre.text!,
                                       Configuraciones.keyEmail:self.correo1.text!,
                                       Configuraciones.keyTelefono:self.telefono.text!,
-                                      Configuraciones.keyAdmin:true])
+                                      Configuraciones.keyAdmin:true,
+                                      Configuraciones.keyUsuarioPro:false
+                    ])
                     
                     //Configuraciones.alert(Titulo: "Usuario", Mensaje: "Usuario guardado", self, popView: false)
                     self.dismiss(animated: true, completion: nil)

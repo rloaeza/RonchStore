@@ -12,6 +12,7 @@ target 'RonchStore' do
   pod 'Firebase/Storage'
   pod 'IQKeyboardManager'
   pod 'ReachabilitySwift'
+  pod 'BarcodeScanner'
 
   target 'RonchStoreTests' do
     inherit! :search_paths

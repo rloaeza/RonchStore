@@ -223,6 +223,38 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
 
         // Do any additional setup after loading the view.
         
+        
+        
+        
+        
+        //var ref: DatabaseReference!
+        ref = Database.database().reference()
+        ref.child(Configuraciones.userID + Configuraciones.keyContador).observeSingleEvent(of: .value) { (DataSnapshot) in
+            let dic: NSDictionary  = DataSnapshot.value as? NSDictionary ?? [:]
+            
+            let contador = dic.value(forKey: "Venta") as? Int ?? 0
+            
+            
+            
+            
+            if Configuraciones.usuarioPro == false, contador >= Configuraciones.ventasLibres {
+                Configuraciones.alert(Titulo: Configuraciones.txtError, Mensaje: Configuraciones.txtErrorLimiteVentas, self, popView: true)
+                //self.navigationController?.popViewController(animated: true)
+            }
+        }
+        
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         ref = Database.database().reference()
         subTotalVenta = 0
         

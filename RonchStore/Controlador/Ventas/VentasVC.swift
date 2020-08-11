@@ -51,8 +51,12 @@ class VentasVC: UIViewController {
         if segue.identifier == "AgregarVentaSegue",
             let vc = segue.destination as? VentaAgregarVC {
             vc.venta = sender as? NSDictionary
+            
+            
+            
         }
     }
+    
     
     private func actualizarDatos() {
         valoresParaMostrar.removeAll()

@@ -37,6 +37,10 @@ class InicioSesionVC: UIViewController {
                     Configuraciones.userID = "Usuarios/\(user!.user.uid)/BD/"
                     
                     let dic  = DataSnapshot.value as! NSDictionary
+                    
+                    Configuraciones.usuarioPro = dic.value(forKey: Configuraciones.keyUsuarioPro) as? Bool ?? false
+                    
+                    
                     switch dic.value(forKey: Configuraciones.keyAdmin) as! Int {
                     case 1: self.performSegue(withIdentifier: "InicioSesion_Principal", sender: nil)
                     case 0: self.performSegue(withIdentifier: "InicioSesion_Cobrador", sender: nil)

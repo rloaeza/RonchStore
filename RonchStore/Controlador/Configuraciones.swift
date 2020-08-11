@@ -12,6 +12,9 @@ import FirebaseStorage
 
 
 class Configuraciones{
+    static let ventasLibres = 3
+    static var usuarioPro: Bool = false
+    static let keyUsuarioPro: String = "Usuario Pro"
     static var userID : String = ""
     static let Titulo = " .::RonchStore::."
     static let keyVentasActivas = "Ventas Activas"
@@ -126,6 +129,7 @@ class Configuraciones{
     
     static let txtError = "Error"
     static let txtErrorLlenarCampos = "Favor de llenar los campos"
+    static let txtErrorLimiteVentas = "Límite de ventas libres superado, favor de migrar a versión PRO"
     
     
     
