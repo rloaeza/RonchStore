@@ -26,7 +26,7 @@ class ProductosVC: UIViewController {
     
     @IBAction func botonCodigoDeBarras(_ sender: Any) {
         let viewController = BarcodeScannerViewController()
-
+        viewController.messageViewController.messages.scanningText=Configuraciones.txtBarCodeSearch
         viewController.codeDelegate = self
         //viewController.errorDelegate = self
         viewController.dismissalDelegate = self

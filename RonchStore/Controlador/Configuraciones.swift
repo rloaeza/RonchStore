@@ -127,6 +127,7 @@ class Configuraciones{
     static let txtCancelar = "Cancelar"
     static let txtIntroduzcaNuevoValor = "Introduzca nuevo valor"
     static let txtValorGuardado = "Valor guardado"
+    static let txtBarCodeSearch = "Coloque el código de barras dentro de la ventana para escanear. La búsqueda comenzará automáticamente."
     
     static let txtError = "Error"
     static let txtErrorLlenarCampos = "Favor de llenar los campos"
