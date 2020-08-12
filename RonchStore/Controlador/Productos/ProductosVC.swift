@@ -10,6 +10,8 @@ import UIKit
 import FirebaseDatabase
 import FirebaseStorage
 import FirebaseCore
+import BarcodeScanner
+
 
 class ProductosVC: UIViewController {
     var valores: [NSDictionary] = []
@@ -22,7 +24,16 @@ class ProductosVC: UIViewController {
     
     var textoSeleccionado: String = ""
     
+    @IBAction func botonCodigoDeBarras(_ sender: Any) {
+        let viewController = BarcodeScannerViewController()
 
+        viewController.codeDelegate = self
+        //viewController.errorDelegate = self
+        viewController.dismissalDelegate = self
+
+        present(viewController, animated: true, completion: nil)
+    }
+    
     @IBOutlet weak var productosViewControler: UITableView!
     
     override func viewDidLoad() {
@@ -137,3 +148,17 @@ extension ProductosVC: UISearchBarDelegate {
     }
 }
 
+
+extension ProductosVC: BarcodeScannerCodeDelegate {
+  func scanner(_ controller: BarcodeScannerViewController, didCaptureCode code: String, type: String) {
+    self.textoSeleccionado = code
+    actualizarDatos()
+    controller.dismiss(animated: true, completion: nil)
+  }
+}
+
+extension ProductosVC: BarcodeScannerDismissalDelegate {
+  func scannerDidDismiss(_ controller: BarcodeScannerViewController) {
+    controller.dismiss(animated: true, completion: nil)
+  }
+}

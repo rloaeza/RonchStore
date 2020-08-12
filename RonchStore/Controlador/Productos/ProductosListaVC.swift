@@ -9,6 +9,8 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseStorage
+import BarcodeScanner
+
 
 
 protocol ProductosListaVCDelegate {
@@ -36,6 +38,14 @@ class ProductosListaVC: UIViewController {
         productosViewController.reloadData()
     }
     
+    @IBAction func botonCodigoBarras(_ sender: Any) {
+        let viewController = BarcodeScannerViewController()
+           viewController.codeDelegate = self
+           //viewController.errorDelegate = self
+           viewController.dismissalDelegate = self
+
+           present(viewController, animated: true, completion: nil)
+    }
     
     
     override func viewDidLoad() {
@@ -171,4 +181,19 @@ extension ProductosListaVC: UISearchBarDelegate {
         textoSeleccionado = searchText
         actualizarDatos()
     }
+}
+
+
+extension ProductosListaVC: BarcodeScannerCodeDelegate {
+  func scanner(_ controller: BarcodeScannerViewController, didCaptureCode code: String, type: String) {
+    self.textoSeleccionado = code
+    actualizarDatos()
+    controller.dismiss(animated: true, completion: nil)
+  }
+}
+
+extension ProductosListaVC: BarcodeScannerDismissalDelegate {
+  func scannerDidDismiss(_ controller: BarcodeScannerViewController) {
+    controller.dismiss(animated: true, completion: nil)
+  }
 }

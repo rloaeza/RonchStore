@@ -89,8 +89,8 @@ class Datos {
             let marca: String = (producto.value(forKey: Configuraciones.keyMarca) as? String ?? "").lowercased()
             let categoria: String = (producto.value(forKey: Configuraciones.keyCategorias) as? String ?? "").lowercased()
             let talla: String = (producto.value(forKey: Configuraciones.keyTalla) as? String ?? "").lowercased()
-            
-            if nombre.contains(patron)||marca.contains(patron)||categoria.contains(patron)||talla.contains(patron)||patron.isEmpty {
+            let codigoBarras: String = (producto.value(forKey: Configuraciones.keyBarCode) as? String ?? "").lowercased()
+            if nombre.contains(patron)||marca.contains(patron)||categoria.contains(patron)||talla.contains(patron)||codigoBarras.contains(patron)||patron.isEmpty {
                 ProductosConPatron.append(producto)
             }
         }

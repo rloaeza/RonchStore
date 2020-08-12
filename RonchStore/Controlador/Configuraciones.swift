@@ -48,6 +48,7 @@ class Configuraciones{
     
     static let keyLat = "Lat"
     static let keyLong = "Long"
+    static let keyBarCode = "BarCode"
     static let keyMarca = "Marca"
     static let keyTalla = "Talla"
     static let keyCosto = "Costo"

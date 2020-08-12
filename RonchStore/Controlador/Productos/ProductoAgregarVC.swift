@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseStorage
+import BarcodeScanner
 
 class ProductoAgregarVC: UIViewController {
     
@@ -30,8 +31,18 @@ class ProductoAgregarVC: UIViewController {
     @IBOutlet weak var botonCosto: UIButton!
     @IBOutlet weak var botonCostoVenta: UIButton!
     @IBOutlet weak var botonExistencia: UIButton!
+    @IBOutlet weak var lblCodigoBarras: UILabel!
     
     
+    @IBAction func botonLeerCodigoDeBarras(_ sender: Any) {
+        
+        let viewController = BarcodeScannerViewController()
+        viewController.codeDelegate = self
+        //viewController.errorDelegate = self
+        viewController.dismissalDelegate = self
+
+        present(viewController, animated: true, completion: nil)
+    }
     
     @IBAction func botonTomarFotoProducto(_ sender: Any) {
         if codigo == nil {
@@ -86,6 +97,8 @@ class ProductoAgregarVC: UIViewController {
         // Do any additional setup after loading the view.
         if producto != nil {
             codigo =  producto!.value(forKey: Configuraciones.keyId) as? String
+            
+            lblCodigoBarras.text = producto!.value(forKey: Configuraciones.keyBarCode) as? String ?? ""
             
             botonMarca.setTitle(producto!.value(forKey: Configuraciones.keyMarca) as? String, for: .normal)
             botonTalla.setTitle(producto!.value(forKey: Configuraciones.keyTalla) as? String, for: .normal)
@@ -353,4 +366,22 @@ extension ProductoAgregarVC: DetallesProductoListaVCDelegate {
     }
     
     
+}
+
+
+extension ProductoAgregarVC: BarcodeScannerCodeDelegate {
+  func scanner(_ controller: BarcodeScannerViewController, didCaptureCode code: String, type: String) {
+    
+    self.lblCodigoBarras.text = code
+    codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyBarCode, Value: code)
+    
+    
+    controller.dismiss(animated: true, completion: nil)
+  }
+}
+
+extension ProductoAgregarVC: BarcodeScannerDismissalDelegate {
+  func scannerDidDismiss(_ controller: BarcodeScannerViewController) {
+    controller.dismiss(animated: true, completion: nil)
+  }
 }
