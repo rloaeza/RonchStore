@@ -78,7 +78,7 @@ class ProductoAgregarVC: UIViewController {
     @IBAction func guardarNombre(_ sender: Any) {
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyNombre, Value: nombre.text!)
     }
-    
+    /*
     @IBAction func guardarCosto(_ sender: Any) {
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCosto, Value: costo.text!)
     }
@@ -90,7 +90,7 @@ class ProductoAgregarVC: UIViewController {
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyExistencia, Value: existencia.text!)
     }
     
-    
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
@@ -136,7 +136,7 @@ class ProductoAgregarVC: UIViewController {
             
             
             
-            botonNombre.titleLabel?.text = Configuraciones.txtSeleccionarNombre
+            botonNombre.titleLabel?.text = Configuraciones.datosProductoNuevo.value(forKey: Configuraciones.keyNombre) as? String ?? Configuraciones.txtSeleccionarNombre
             botonMarca.titleLabel?.text = Configuraciones.txtSeleccionarMarca
             botonTalla.titleLabel?.text = Configuraciones.txtSeleccionarTalla
             botonCosto.titleLabel?.text = Configuraciones.txtSeleccionarCosto
@@ -291,7 +291,7 @@ extension ProductoAgregarVC: UIImagePickerControllerDelegate, UINavigationContro
         self.dismiss(animated: true, completion: nil)
     }
 }
-
+/*
 
 extension ProductoAgregarVC: MarcaVCDelegate {
     func marcaSeleccionada(nombre: String) {
@@ -324,7 +324,7 @@ extension ProductoAgregarVC: CategoriaVCDelegate {
     
 }
 
-
+*/
 
 
 extension ProductoAgregarVC: DetallesProductoListaVCDelegate {
@@ -363,10 +363,7 @@ extension ProductoAgregarVC: DetallesProductoListaVCDelegate {
         default:
             break
         }
-        
     }
-    
-    
 }
 
 

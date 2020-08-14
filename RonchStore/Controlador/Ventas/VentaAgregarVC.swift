@@ -96,7 +96,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         mensajePremium = mensajePremium.replacingOccurrences(of: "$ticket", with: "\(contador!)")
         mensajePremium = mensajePremium.replacingOccurrences(of: "$fecha", with: labelFecha.text!)
         
-        mensajePremium = mensajePremium.replacingOccurrences(of: "$cliente", with: cliente?.value(forKey: Configuraciones.keyApellidos) as? String ?? "Mostrador")
+        mensajePremium = mensajePremium.replacingOccurrences(of: "$cliente", with: cliente?.value(forKey: Configuraciones.keyNombre) as? String ?? "Mostrador")
         
         var productosMSG: String = ""
         for p in productosVenta {

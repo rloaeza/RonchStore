@@ -123,7 +123,7 @@ extension ProductosVC:UITableViewDataSource {
         if (editingStyle == .delete) {
             var ref: DatabaseReference!
             ref = Database.database().reference()
-            ref.child(Configuraciones.keyProductos).child(valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+            ref.child(Configuraciones.userID + Configuraciones.keyProductos).child(valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
             
             Configuraciones.eliminarImagen(Reference: Storage.storage().reference(), KeyNode: Configuraciones.keyProductos, Child: valoresParaMostrar[indexPath.row].value(forKey: "key") as! String)
         }

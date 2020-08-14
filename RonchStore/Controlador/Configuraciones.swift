@@ -12,6 +12,7 @@ import FirebaseStorage
 
 
 class Configuraciones{
+    static var datosProductoNuevo: NSDictionary = [Configuraciones.keyNombre:""]
     static let ventasLibres = 3
     static var usuarioPro: Bool = false
     static let keyUsuarioPro: String = "Usuario Pro"
