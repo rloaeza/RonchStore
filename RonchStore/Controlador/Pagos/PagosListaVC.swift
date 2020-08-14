@@ -54,7 +54,7 @@ class PagosListaVC: UIViewController, MFMessageComposeViewControllerDelegate {
             let total = self.venta?.value(forKey: Configuraciones.keyTotal) as! Double
             let fechaPago = pago.value(forKey: Configuraciones.keyFecha)
             let monto = pago.value(forKey: Configuraciones.keyPago)
-            let apellidos = cliente?.value(forKey: Configuraciones.keyApellidos) as? String ?? "Mostrador"
+            let apellidos = cliente?.value(forKey: Configuraciones.keyNombre) as? String ?? "Mostrador"
         
             totalPagos = Configuraciones.calcularTotalPagos(Pagos: pagos)
             let saldo: Double = total - (totalPagos + anticipo)
