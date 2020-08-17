@@ -32,6 +32,7 @@ class ProductosListaVC: UIViewController {
     var montoDisponible: Double = 0.0
     var validarCantidades: Bool = false
     @IBOutlet weak var productosViewController: UITableView!
+    @IBOutlet weak var barraBusqueda: UISearchBar!
     
     private func actualizarDatos() {
         valoresParaMostrar = Datos.getProductos(Patron: textoSeleccionado, Productos: valores)
@@ -188,6 +189,7 @@ extension ProductosListaVC: UISearchBarDelegate {
 extension ProductosListaVC: BarcodeScannerCodeDelegate {
   func scanner(_ controller: BarcodeScannerViewController, didCaptureCode code: String, type: String) {
     self.textoSeleccionado = code
+    barraBusqueda.text = code
     actualizarDatos()
     controller.dismiss(animated: true, completion: nil)
   }

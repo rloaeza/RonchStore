@@ -1883,6 +1883,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="barraBusqueda" destination="kWJ-Jg-HP0" id="x4x-5Q-DBN"/>
                         <outlet property="productosViewControler" destination="uQf-LW-eCT" id="Dmo-k7-xT6"/>
                     </connections>
                 </viewController>
@@ -2930,6 +2931,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="barraBusqueda" destination="WL2-G2-lK6" id="eb9-kx-4Og"/>
                         <outlet property="productosViewController" destination="QIC-KA-iwT" id="DhN-7a-5vd"/>
                     </connections>
                 </viewController>
@@ -4653,7 +4655,7 @@
         <segue reference="nWG-c6-g0N"/>
         <segue reference="Hxc-DF-0o7"/>
         <segue reference="gTH-1x-Y73"/>
-        <segue reference="QPv-37-d1C"/>
+        <segue reference="FMc-NH-kMf"/>
         <segue reference="n2l-ff-MnN"/>
     </inferredMetricsTieBreakers>
     <resources>

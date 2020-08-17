@@ -17,6 +17,7 @@ class ProductosVC: UIViewController {
     var valores: [NSDictionary] = []
     var valoresParaMostrar: [NSDictionary] = []
 
+    @IBOutlet weak var barraBusqueda: UISearchBar!
     
     @IBOutlet weak var botonCategoria: UIButton!
     @IBOutlet weak var botonMarca: UIButton!
@@ -152,6 +153,7 @@ extension ProductosVC: UISearchBarDelegate {
 extension ProductosVC: BarcodeScannerCodeDelegate {
   func scanner(_ controller: BarcodeScannerViewController, didCaptureCode code: String, type: String) {
     self.textoSeleccionado = code
+    barraBusqueda.text = code
     actualizarDatos()
     controller.dismiss(animated: true, completion: nil)
   }
