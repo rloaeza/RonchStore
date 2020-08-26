@@ -4,6 +4,8 @@
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>accept to get location</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>accept to get location</string>
 	<key>CFBundleDevelopmentRegion</key>
