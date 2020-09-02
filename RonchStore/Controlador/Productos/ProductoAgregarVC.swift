@@ -78,19 +78,7 @@ class ProductoAgregarVC: UIViewController {
     @IBAction func guardarNombre(_ sender: Any) {
         codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyNombre, Value: nombre.text!)
     }
-    /*
-    @IBAction func guardarCosto(_ sender: Any) {
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCosto, Value: costo.text!)
-    }
-    
-    @IBAction func guardarCostoVenta(_ sender: Any) {
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCostoVenta, Value: costoVenta.text!)
-    }
-    @IBAction func guardarExistencia(_ sender: Any) {
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyExistencia, Value: existencia.text!)
-    }
-    
-    */
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
@@ -112,19 +100,6 @@ class ProductoAgregarVC: UIViewController {
      
             producto = nil
             
-            //cargando imagen
-            
-            /*
-            let storageRef = Storage.storage().reference()
-            
-            let userRef = storageRef.child(Configuraciones.keyProductos).child(codigo!)
-            userRef.getData(maxSize: 10*1024*1024) { (data, error) in
-                if error == nil {
-                    let img = UIImage(data: data!)
-                    self.imagenProducto.setImage(img, for: UIControl.State.normal)
-                }
-            }
-            */
             Configuraciones.cargarImagenEnBoton(KeyNode: Configuraciones.keyProductos, Child: codigo!, Boton: self.imagenProducto)
 
             
@@ -149,22 +124,7 @@ class ProductoAgregarVC: UIViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        /*
-        if segue.identifier == "MarcaDesdeAgregarProducto",
-            let vc = segue.destination as? MarcaVC {
-                vc.delegate = self
-        }
-        
-        if segue.identifier == "TallaDesdeAgregarProducto",
-            let vc = segue.destination as? TallaVC {
-                vc.delegate = self
-        }
-        
-        if segue.identifier == "CategoriaDesdeAgregarProducto",
-            let vc = segue.destination as? CategoriaVC {
-            vc.delegate = self
-        }
-        */
+       
         
         if segue.identifier == "DetallesProductoListaDesdeProductosParaCategoria",
             let vc = segue.destination as? DetallesProductoListaVC {
@@ -291,40 +251,6 @@ extension ProductoAgregarVC: UIImagePickerControllerDelegate, UINavigationContro
         self.dismiss(animated: true, completion: nil)
     }
 }
-/*
-
-extension ProductoAgregarVC: MarcaVCDelegate {
-    func marcaSeleccionada(nombre: String) {
-        botonMarca.setTitle(nombre, for: .normal)
-        
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyMarca, Value: nombre)
-        
-    }
-    
-    
-}
-
-extension ProductoAgregarVC: TallaVCDelegate {
-    func tallaSeleccionada(nombre: String) {
-        botonTalla.setTitle(nombre, for: .normal)
-        
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyTalla, Value: nombre)
-    }
-    
-    
-}
-
-extension ProductoAgregarVC: CategoriaVCDelegate {
-    func categoriaSeleccionada(nombre: String) {
-        botonCategoria.setTitle(nombre, for: .normal)
-        
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCategorias, Value: nombre)
-    }
-    
-    
-}
-
-*/
 
 
 extension ProductoAgregarVC: DetallesProductoListaVCDelegate {

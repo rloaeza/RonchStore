@@ -77,7 +77,7 @@ class ProductosListaVC: UIViewController {
         for producto in valoresParaMostrar {
             let contador: Int = Int( (producto.value(forKey: Configuraciones.keyContador) as! String) )!
             if  contador != 0 {
-                montoAcumulado += Double(contador) * Double (producto.value(forKey: Configuraciones.keyCostoVenta) as! String)!
+                montoAcumulado += Double(contador) * Double (producto.value(forKey: Configuraciones.keyCostoVenta) as? String ?? "0")!
             }
         }
         return self.montoDisponible >= montoAcumulado

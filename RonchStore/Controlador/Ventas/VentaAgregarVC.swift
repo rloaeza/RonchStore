@@ -62,7 +62,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     @IBOutlet weak var pickerViewProductos: UIPickerView!
     
     @IBOutlet weak var botonCliente: UIButton!
-    //@IBOutlet weak var botonProductos: UIButton!
+
     
     @IBOutlet weak var botonProductos: UIBarButtonItem!
     
@@ -132,35 +132,10 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             mensajePremium += "\n\nDespues de \(labelDemora1.text!): \(tfPagoDemora1.text!)\n"
             mensajePremium += "Despues de \(labelDemora2.text!): \(tfPagoDemora2.text!)\n"
         }
-        
-       
-        
-        
-
-        
+               
         
         if MFMessageComposeViewController.canSendText() {
-            //let nProductos = productosVenta.count
-            
-            /*
-            var mensaje = "\(Configuraciones.Titulo) \n"
-            
-            for p in productosVenta {
-                mensaje += "  1 x \(p.value(forKey: Configuraciones.keyNombre)!) [$\(p.value(forKey: Configuraciones.keyCostoVenta)!)]\n"
-            }
-            
-            mensaje += "Total: $\(totalVenta)\n"
-            mensaje += "Anticipo: $\(tfPagoInicialV.text!)\n\n"
-            mensaje += "Despues de \(labelDemora1.text!): \(tfPagoDemora1.text!)\n"
-            mensaje += "Despues de \(labelDemora2.text!): \(tfPagoDemora2.text!)\n"
-            
-            
-            
-            
-            
-            
-            */
-            
+ 
             let messageVC = MFMessageComposeViewController()
             messageVC.body = mensajePremium
             messageVC.recipients = [cliente?.value(forKey: Configuraciones.keyTelefono) as! String]
@@ -221,13 +196,6 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        
-        
-        
-        
-        
-        //var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child(Configuraciones.userID + Configuraciones.keyContador).observeSingleEvent(of: .value) { (DataSnapshot) in
             let dic: NSDictionary  = DataSnapshot.value as? NSDictionary ?? [:]
@@ -239,22 +207,11 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             
             if Configuraciones.usuarioPro == false, contador >= Configuraciones.ventasLibres {
                 Configuraciones.alert(Titulo: Configuraciones.txtError, Mensaje: Configuraciones.txtErrorLimiteVentas, self, popView: true)
-                //self.navigationController?.popViewController(animated: true)
+
             }
         }
         
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+      
         ref = Database.database().reference()
         subTotalVenta = 0
         
@@ -311,12 +268,6 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
                 ventaFinalizada = false
             }
             finalizarStatusVenta(Finalizar: ventaFinalizada)
-            
-            // Aqui vamos
-            
-            
-            
-            
 
         }
         
@@ -356,7 +307,6 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
             vc.venta = venta            
         }
         
-        //
     }
     
     
@@ -414,12 +364,6 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         tfPagoDemora1.text = "$ \(String(format: "%.1f", pagoDemora1))"
         tfPagoDemora2.text = "$ \(String(format: "%.1f", pagoDemora2))"
         
-        
-        //let d1 = Configuraciones.txtMensajeDemora.replacingOccurrences(of: "#", with: String(pagoSemanas))
-        //let d2 = Configuraciones.txtMensajeDemora.replacingOccurrences(of: "#", with: String(pagoSemanas + 3))
-        
-        
-        
         labelDemora1.text = Configuraciones.fechaMasDias( Semanas: Double(pagoSemanas) )
         labelDemora2.text = Configuraciones.fechaMasDias( Semanas: Double(pagoSemanas + 3) )
         if guardar {
@@ -446,43 +390,6 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
         }
         
         if !ventaFinalizada {
-            /*
-            var primerCobro = venta!.value(forKey: Configuraciones.keyOmitirFechaPrimerCobro) as? Bool ?? false
-
-            
-            var fechaSig: Date = Date()
-            let tipoPago = venta?.value(forKey: Configuraciones.keyTipoPago) as? String ?? Configuraciones.keyTipoPagoSemanal
-            
-            
-            primerCobro = !primerCobro
-            repeat {
-                switch tipoPago {
-                case Configuraciones.keyTipoPagoSemanal:
-                    
-                    var diaSemana: Int = 1
-                    for dia in Funciones.diasSemana {
-                        if venta?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "Domingo" == dia {
-                            break
-                        }
-                        diaSemana = diaSemana + 1
-                    }
-                    fechaSig = Funciones.buscarSiguienteDia(Fecha: fechaSig, Dia: diaSemana )
-                    codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.fechaAString(Fecha: fechaSig ))
-                    break
-                case Configuraciones.keyTipoPagoQuincenal:
-                    fechaSig = Funciones.buscarSiguienteQuincena(Fecha: fechaSig)
-                    codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.fechaAString(Fecha: fechaSig) )
-                    break
-                case Configuraciones.keyTipoPagoMensual:
-                    fechaSig = Funciones.buscarSiguienteFecha(Fecha: fechaSig, Dia: Int(venta?.value(forKey: Configuraciones.keyDiaCobro) as? String ?? "1") ?? 1 )
-                    codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasBorrador, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.fechaAString(Fecha: fechaSig ) )
-                    break
-                default:
-                    break
-                }
-                primerCobro = !primerCobro
-            } while( primerCobro )
- */
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyVentasActivas, Child: codigo, KeyValue: Configuraciones.keyFechaCobro, Value: Funciones.siguienteFechaInicial(Venta: venta) )
             
         }
@@ -518,7 +425,7 @@ class VentaAgregarVC: UIViewController , MFMessageComposeViewControllerDelegate 
                 subTotalVenta += Double( costo )!
             }
             else {
-                subTotalVenta += Double( producto.value(forKey: Configuraciones.keyCostoVenta) as! String )!
+                subTotalVenta += Double( producto.value(forKey: Configuraciones.keyCostoVenta) as? String ?? "0" )!
             }
         }
     }
@@ -615,17 +522,13 @@ extension VentaAgregarVC:UITableViewDataSource {
         return productosVenta.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath)
-    
-        let nombre = productosVenta[indexPath.row].value(forKey: Configuraciones.keyNombre) as! String
-        let marca = productosVenta[indexPath.row].value(forKey: Configuraciones.keyMarca) as! String
-        let talla = productosVenta[indexPath.row].value(forKey: Configuraciones.keyTalla) as! String
-        let costoVenta = productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String
+        let nombre = productosVenta[indexPath.row].value(forKey: Configuraciones.keyNombre) as? String ?? ""
+        let marca = productosVenta[indexPath.row].value(forKey: Configuraciones.keyMarca) as? String ?? ""
+        let talla = productosVenta[indexPath.row].value(forKey: Configuraciones.keyTalla) as? String ?? ""
+        let costoVenta = productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as? String ?? "0"
         let costoConDescuento = productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoConDescuento) as? String ?? ""
         let fecha = productosVenta[indexPath.row].value(forKey: Configuraciones.keyFecha) as? String ?? ""
-        
-        //celda.textLabel?.text = String(indexPath.row + 1) + ") \(nombre) (\(marca)/\(talla))"
-        //celda.detailTextLabel?.text = costo
+
         let celda = tableView.dequeueReusableCell(withIdentifier: "ProductoCelda", for: indexPath) as! VentaProductoCell
         celda.nombre.text = nombre
         celda.marca.text = marca
@@ -652,8 +555,7 @@ extension VentaAgregarVC:UITableViewDataSource {
             if self.ventaFinalizada {
                 Configuraciones.alert(Titulo: "Error", Mensaje: "Venta finalizada, no se puede editar", self, popView: false)
             }else {
-                //subTotalVenta -= Double(productosVenta[indexPath.row].value(forKey: Configuraciones.keyCostoVenta) as! String)!
-                productosVenta.remove(at: indexPath.row)                
+                productosVenta.remove(at: indexPath.row)
                 self.tableViewProductos.reloadData()
                 calcularSubTotal()
                 calcularCostos(Guardar: true)
