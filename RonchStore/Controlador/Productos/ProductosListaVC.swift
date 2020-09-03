@@ -52,6 +52,8 @@ class ProductosListaVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.productosViewController.keyboardDismissMode = .onDrag
         let ref: DatabaseReference! = Database.database().reference().child(Configuraciones.userID + Configuraciones.keyProductos)
 
         ref.observe(.value) { (DataSnapshot) in
