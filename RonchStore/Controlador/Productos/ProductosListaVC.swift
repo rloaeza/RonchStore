@@ -185,6 +185,9 @@ extension ProductosListaVC: UISearchBarDelegate {
         textoSeleccionado = searchText
         actualizarDatos()
     }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
 }
 
 
