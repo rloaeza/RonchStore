@@ -555,7 +555,12 @@ extension VentaAgregarVC:UITableViewDataSource {
             if self.ventaFinalizada {
                 Configuraciones.alert(Titulo: "Error", Mensaje: "Venta finalizada, no se puede editar", self, popView: false)
             }else {
-                productosVenta.remove(at: indexPath.row)
+                
+                
+                let p = productosVenta.remove(at: indexPath.row)
+           
+                Configuraciones.actualizarProducto(Reference: ref, IdProducto: p.value(forKey: Configuraciones.keyId) as! String, Existencia: +1)
+           
                 self.tableViewProductos.reloadData()
                 calcularSubTotal()
                 calcularCostos(Guardar: true)
@@ -595,6 +600,13 @@ extension VentaAgregarVC: ProductosListaVCDelegate {
         for producto in productos {
             let p: NSDictionary = producto.mutableCopy() as! NSDictionary
             p.setValue(Configuraciones.fecha(), forKey: Configuraciones.keyFecha)
+            
+            
+            
+            
+            Configuraciones.actualizarProducto(Reference: ref, IdProducto: p.value(forKey: Configuraciones.keyId) as! String, Existencia: -1)
+            
+            
             productosVenta.append(p)
             self.tableViewProductos.reloadData()
             calcularSubTotal()

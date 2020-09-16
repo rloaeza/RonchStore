@@ -307,6 +307,27 @@ Abonos: $totAbonos
            }
            
        }
+    
+    static func actualizarProducto(Reference ref: DatabaseReference, IdProducto idProducto: String, Existencia existencia: Int) {
+        let ruta = userID+"/\(keyProductos)/\(idProducto)"
+        
+        ref.child( ruta ).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            
+            
+            let existenciaActual: Int =  Int(value!.value(forKey: Configuraciones.keyExistencia) as? String ?? "0") ?? 0
+            
+            
+            
+            Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: "\(Configuraciones.keyProductos)/\(idProducto)", KeyValue: Configuraciones.keyExistencia, Value: "\(existenciaActual + existencia)")
+            
+            
+        }) {(error) in
+            
+        }
+        
+        
+    }
  
     
 }
