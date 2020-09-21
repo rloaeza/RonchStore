@@ -28,6 +28,7 @@ class ProductosListaVC: UIViewController {
     var marcaSeleccionada: String = ""
     var tallaSeleccionada: String = ""
     var textoSeleccionado: String = ""
+    var ref: DatabaseReference!
     
     var montoDisponible: Double = 0.0
     var validarCantidades: Bool = false
@@ -54,7 +55,7 @@ class ProductosListaVC: UIViewController {
         super.viewDidLoad()
         
         self.productosViewController.keyboardDismissMode = .onDrag
-        let ref: DatabaseReference! = Database.database().reference().child(Configuraciones.userID + Configuraciones.keyProductos)
+        ref = Database.database().reference().child(Configuraciones.userID + Configuraciones.keyProductos)
 
         ref.observe(.value) { (DataSnapshot) in
             self.valores.removeAll()
@@ -94,7 +95,13 @@ class ProductosListaVC: UIViewController {
                 for _ in 1...contador {
                     productos.append(producto)
                 }
+                
+                Configuraciones.actualizarProducto(Reference: ref, IdProducto: producto.value(forKey: Configuraciones.keyId) as! String, Existencia: (-1)*contador)
             }
+            
+            
+            
+            
         }
         
         //delegate?.productoSeleccionado(productos: valoresParaMostrar)

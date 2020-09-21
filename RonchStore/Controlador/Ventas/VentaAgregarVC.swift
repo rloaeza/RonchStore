@@ -604,14 +604,17 @@ extension VentaAgregarVC: ProductosListaVCDelegate {
             
             
             
-            Configuraciones.actualizarProducto(Reference: ref, IdProducto: p.value(forKey: Configuraciones.keyId) as! String, Existencia: -1)
+            //Configuraciones.actualizarProducto(Reference: ref, IdProducto: p.value(forKey: Configuraciones.keyId) as! String, Existencia: -1)
+            
             
             
             productosVenta.append(p)
-            self.tableViewProductos.reloadData()
-            calcularSubTotal()
-            calcularCostos(Guardar: true)
+            
+            
         }
+        self.tableViewProductos.reloadData()
+        calcularSubTotal()
+        calcularCostos(Guardar: true)
         
     }
 }
