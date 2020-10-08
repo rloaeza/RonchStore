@@ -70,7 +70,8 @@ extension ClienteVC:UITableViewDataSource {
         if (editingStyle == .delete) {
             var ref: DatabaseReference!
             ref = Database.database().reference()
-            ref.child(Configuraciones.keyClientes).child(valores[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+            //Configuraciones.userID + Configuraciones.keyProductos
+            ref.child(Configuraciones.userID + Configuraciones.keyClientes).child(valores[indexPath.row].value(forKey: "key") as! String).setValue(nil)
         }
     }
 }

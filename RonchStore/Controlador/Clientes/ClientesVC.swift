@@ -82,7 +82,7 @@ extension ClientesVC:UITableViewDataSource {
         if (editingStyle == .delete) {
             var ref: DatabaseReference!
             ref = Database.database().reference()
-            ref.child(Configuraciones.keyClientes).child(valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
+            ref.child(Configuraciones.userID + Configuraciones.keyClientes).child(valoresParaMostrar[indexPath.row].value(forKey: "key") as! String).setValue(nil)
             
          
             

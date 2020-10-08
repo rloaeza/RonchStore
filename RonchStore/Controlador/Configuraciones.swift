@@ -321,11 +321,7 @@ Abonos: $totAbonos
             
             let existenciaActual: Int =  Int(value!.value(forKey: Configuraciones.keyExistencia) as? String ?? "0") ?? 0
             
-            
-            
             Configuraciones.guardarValorDirecto(Reference: ref, KeyNode: "\(Configuraciones.keyProductos)/\(idProducto)", KeyValue: Configuraciones.keyExistencia, Value: "\(existenciaActual + existencia)")
-            
-            print( "idProducto: \(idProducto)  Existencia: \(existenciaActual) Nuevo: \(existenciaActual + existencia)" )
             
         }) {(error) in
             
