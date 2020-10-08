@@ -69,14 +69,15 @@ class ClienteContactosSistemaVC: UIViewController {
         request.sortOrder = CNContactSortOrder.givenName
         
         try! contactStore.enumerateContacts(with: request, usingBlock: { (contacto, apuntador) in
-            let nombre = "\(contacto.givenName) \(contacto.familyName)"
+            let nombre = "\(contacto.givenName)"
+            let apellido = "\(contacto.familyName)"
             let telefono = contacto.phoneNumbers.first?.value.stringValue ?? ""
             let email = contacto.emailAddresses.first?.value.description ?? ""
             let calle = contacto.postalAddresses.first?.value.street ?? ""
             let ciudad = contacto.postalAddresses.first?.value.city ?? ""
             let pais = contacto.postalAddresses.first?.value.country ?? ""
             
-            let contactoNuevo = Contacto(nombre: nombre, telefono: telefono, email: email, calle: calle, colonia: "", ciudad: ciudad, pais: pais)
+            let contactoNuevo = Contacto(nombre: nombre, apellido: apellido, telefono: telefono, email: email, calle: calle, colonia: "", ciudad: ciudad, pais: pais)
             self.listaContactos.append(contactoNuevo)
         })
     }
