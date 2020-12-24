@@ -64,7 +64,10 @@ class ProductosListaVC: UIViewController {
                     let dic = snap.value as? NSDictionary
                     dic?.setValue(snap.key, forKey: Configuraciones.keyId)
                     dic?.setValue("0", forKey: Configuraciones.keyContador)
-                    self.valores.append(dic!)
+                    let existen = Int( dic?.value(forKey: Configuraciones.keyExistencia) as? String ?? "0" ) ?? 0
+                    if existen > 0 {
+                        self.valores.append(dic!)
+                    }
                 }
             }
             self.actualizarDatos()
