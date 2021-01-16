@@ -16,6 +16,7 @@ class ProductoAgregarVC: UIViewController {
     var producto: NSDictionary? = nil
     var codigo: String? = nil
     var ref: DatabaseReference!
+    var categoriaSeleccionada: String? = nil
     
     @IBOutlet weak var nombre: UITextField!
     @IBOutlet weak var costo: UITextField!
@@ -132,6 +133,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Categoria"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoCategoria
+            vc.detalleKeyOrigen = Configuraciones.keyDatosDetalleProductoCategoria
             vc.tipoTeclado = UIKeyboardType.alphabet
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaMarca",
@@ -140,6 +142,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Marca"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoMarca
+            vc.detalleKeyOrigen = Configuraciones.keyDatosDetalleProductoMarca + categoriaSeleccionada!
             vc.tipoTeclado = UIKeyboardType.alphabet
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaTalla",
@@ -148,6 +151,8 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Talla"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoTalla
+            vc.detalleKeyOrigen = Configuraciones.keyDatosDetalleProductoTalla + categoriaSeleccionada!
+
             vc.tipoTeclado = UIKeyboardType.alphabet
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaNombre",
@@ -156,6 +161,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Nombre"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoNombre
+            vc.detalleKeyOrigen = Configuraciones.keyDatosDetalleProductoNombre+categoriaSeleccionada!
             vc.tipoTeclado = UIKeyboardType.alphabet
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaCosto",
@@ -164,6 +170,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Costo"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoCosto
+            vc.detalleKeyOrigen = Configuraciones.keyDatosDetalleProductoCosto + categoriaSeleccionada!
             vc.tipoTeclado = UIKeyboardType.numberPad
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaCostoVenta",
@@ -172,6 +179,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Costo de venta"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoCostoVenta
+            vc.detalleKeyOrigen = Configuraciones.keyDatosDetalleProductoCostoVenta + categoriaSeleccionada!
             vc.tipoTeclado = UIKeyboardType.numberPad
         }
         if segue.identifier == "DetallesProductoListaDesdeProductosParaExistencia",
@@ -180,6 +188,7 @@ class ProductoAgregarVC: UIViewController {
             vc.title = "Existencia"
             vc.ordenarPor = Configuraciones.keyNombre
             vc.detalleKey = Configuraciones.keyDatosDetalleProductoExistencia
+            vc.detalleKeyOrigen = Configuraciones.keyDatosDetalleProductoExistencia + categoriaSeleccionada!
             vc.tipoTeclado = UIKeyboardType.numberPad
         }
         
@@ -269,6 +278,7 @@ extension ProductoAgregarVC: DetallesProductoListaVCDelegate {
         case Configuraciones.keyDatosDetalleProductoCategoria:
             botonCategoria.setTitle(nombre, for: .normal)
             codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCategorias, Value: nombre)
+            categoriaSeleccionada = nombre
             break
         case Configuraciones.keyDatosDetalleProductoNombre:
             botonNombre.setTitle(nombre, for: .normal)

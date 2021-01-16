@@ -101,7 +101,8 @@ class Configuraciones{
     static let keyHoraCobro = "Horas de cobro"
     static let keyConceptoPago = "Concepto de pago"
 
-    
+    static let keyEncabezado = "Encabezado"
+    static let keyPie = "Pie"
     
     static let keyContador = "Contador"
     
@@ -133,6 +134,7 @@ class Configuraciones{
     static let txtError = "Error"
     static let txtErrorLlenarCampos = "Favor de llenar los campos"
     static let txtErrorLimiteVentas = "Límite de ventas libres superado, favor de migrar a versión PRO"
+    
     
     
     

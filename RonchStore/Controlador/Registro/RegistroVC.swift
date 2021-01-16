@@ -17,6 +17,8 @@ class RegistroVC: UIViewController {
     @IBOutlet weak var correo2: UITextField!
     @IBOutlet weak var clave1: UITextField!
     @IBOutlet weak var clave2: UITextField!
+    @IBOutlet weak var encabezado: UITextField!
+    @IBOutlet weak var pie: UITextField!
     
     @IBAction func cancelar(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -41,7 +43,10 @@ class RegistroVC: UIViewController {
                                       Configuraciones.keyEmail:self.correo1.text!,
                                       Configuraciones.keyTelefono:self.telefono.text!,
                                       Configuraciones.keyAdmin:true,
-                                      Configuraciones.keyUsuarioPro:false
+                                      Configuraciones.keyUsuarioPro:false,
+                                      Configuraciones.keyEncabezado:self.encabezado.text!,
+                                      Configuraciones.keyPie:self.pie.text!
+                                      
                     ])
                     
                     //Configuraciones.alert(Titulo: "Usuario", Mensaje: "Usuario guardado", self, popView: false)

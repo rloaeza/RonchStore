@@ -220,7 +220,6 @@
 		6235CA9A22D586C00011A330 /* RonchStore */ = {
 			isa = PBXGroup;
 			children = (
-				627E259824B03CB600A36147 /* Funciones */,
 				6271EF9423711E9D00BCA3AE /* Modelo */,
 				6235CACE22D58E2B0011A330 /* Vista */,
 				6235CACD22D58E1A0011A330 /* Controlador */,
@@ -307,13 +306,6 @@
 				6216E38E24B3306E0085EC70 /* Funciones.swift */,
 			);
 			path = Modelo;
-			sourceTree = "<group>";
-		};
-		627E259824B03CB600A36147 /* Funciones */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Funciones;
 			sourceTree = "<group>";
 		};
 		628E2D3D245369EA000EDF93 /* Reportes */ = {
