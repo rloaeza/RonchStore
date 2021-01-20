@@ -134,6 +134,7 @@ class Configuraciones{
     static let txtError = "Error"
     static let txtErrorLlenarCampos = "Favor de llenar los campos"
     static let txtErrorLimiteVentas = "Límite de ventas libres superado, favor de migrar a versión PRO"
+    static let txtDuplicarProducto = "Duplicar producto"
     
     
     

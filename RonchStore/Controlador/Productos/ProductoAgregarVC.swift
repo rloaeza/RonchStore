@@ -17,11 +17,8 @@ class ProductoAgregarVC: UIViewController {
     var codigo: String? = nil
     var ref: DatabaseReference!
     var categoriaSeleccionada: String? = nil
+    var productosDuplicados = 0
     
-    @IBOutlet weak var nombre: UITextField!
-    @IBOutlet weak var costo: UITextField!
-    @IBOutlet weak var costoVenta: UITextField!
-    @IBOutlet weak var existencia: UITextField!
     @IBOutlet weak var imagenProducto: UIButton!
     
     @IBOutlet weak var botonMarca: UIButton!
@@ -33,7 +30,38 @@ class ProductoAgregarVC: UIViewController {
     @IBOutlet weak var botonCostoVenta: UIButton!
     @IBOutlet weak var botonExistencia: UIButton!
     @IBOutlet weak var lblCodigoBarras: UILabel!
+    @IBOutlet weak var botonDuplicar: UIButton!
     
+    
+    
+    @IBAction func botonDuplicarProducto(_ sender: Any) {
+        productosDuplicados += 1
+        lblCodigoBarras.text = nil
+        codigo = nil
+        let imgProducto = UIImage(named: "noproducto")
+
+        imagenProducto.setImage(imgProducto, for: UIControl.State.normal)
+
+       
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCategorias, Value: botonCategoria.title(for: .normal))
+        
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyMarca, Value: botonMarca.title(for: .normal))
+        
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyTalla, Value: botonTalla.title(for: .normal))
+        
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyNombre, Value: botonNombre.title(for: .normal))
+        
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCosto, Value: botonCosto.title(for: .normal))
+        
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyCostoVenta, Value: botonCostoVenta.title(for: .normal))
+        
+        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyExistencia, Value: botonExistencia.title(for: .normal))
+        
+        
+        
+        botonDuplicar.setTitle(Configuraciones.txtDuplicarProducto + "(\(productosDuplicados)) ", for: .normal)
+        
+    }
     
     @IBAction func botonLeerCodigoDeBarras(_ sender: Any) {
         
@@ -75,10 +103,6 @@ class ProductoAgregarVC: UIViewController {
     
     
  
-    
-    @IBAction func guardarNombre(_ sender: Any) {
-        codigo = Configuraciones.guardarValor(Reference: ref, KeyNode: Configuraciones.keyProductos, Child: codigo, KeyValue: Configuraciones.keyNombre, Value: nombre.text!)
-    }
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -225,10 +249,7 @@ extension ProductoAgregarVC: UIImagePickerControllerDelegate, UINavigationContro
         
         let storageRef = Storage.storage().reference()
         let key = Configuraciones.keyProductos
-        
-        if codigo == nil {
-            guardarNombre(self)
-        }
+       
         let userRef = storageRef.child(Configuraciones.userID + key).child(codigo!)
         
         
