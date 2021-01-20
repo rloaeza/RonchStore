@@ -17,7 +17,7 @@ class ProductoAgregarVC: UIViewController {
     var codigo: String? = nil
     var ref: DatabaseReference!
     var categoriaSeleccionada: String? = nil
-    var productosDuplicados = 0
+    var productosDuplicados = 1
     
     @IBOutlet weak var imagenProducto: UIButton!
     
