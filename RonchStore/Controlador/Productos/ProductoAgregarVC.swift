@@ -121,7 +121,7 @@ class ProductoAgregarVC: UIViewController {
             botonCosto.setTitle(producto!.value(forKey: Configuraciones.keyCosto) as? String, for: .normal)
             botonCostoVenta.setTitle(producto!.value(forKey: Configuraciones.keyCostoVenta) as? String, for: .normal)
             botonExistencia.setTitle(producto!.value(forKey: Configuraciones.keyExistencia) as? String, for: .normal)
-
+            categoriaSeleccionada = botonCategoria.title(for: .normal)
      
             producto = nil
             
