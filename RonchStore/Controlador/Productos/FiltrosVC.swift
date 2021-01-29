@@ -16,7 +16,11 @@ protocol FiltrosVCDelegate {
 
 class FiltrosVC: UIViewController {
     var delegate: FiltrosVCDelegate?
-
+    var c: String = ""
+    var m: String = ""
+    var t: String = ""
+    
+    
     var categoriaSeleccionada: String? = nil
     var filtros: [NSDictionary] = []
 
@@ -32,11 +36,15 @@ class FiltrosVC: UIViewController {
         botonCategoria.setTitle(Configuraciones.txtSeleccionarCategoria, for: .normal)
         botonMarca.setTitle(Configuraciones.txtSeleccionarMarca, for: .normal)
         botonTalla.setTitle(Configuraciones.txtSeleccionarTalla, for: .normal)
+        m = ""
+        t = ""
+        c = ""
     }
     
     @IBAction func botonAceptar(_ sender: Any) {
         
-        delegate?.filtro(categoria: botonCategoria.title(for: .normal)!, marca: botonMarca.title(for: . normal)!, talla: botonTalla.title(for: .normal)! )
+        
+        delegate?.filtro(categoria: c, marca: m, talla: t )
         self.navigationController?.popViewController(animated: true)
 
         
@@ -85,13 +93,16 @@ extension FiltrosVC: DetallesProductoListaVCDelegate {
         case Configuraciones.keyDatosDetalleProductoCategoria:
             botonCategoria.setTitle(nombre, for: .normal)
             categoriaSeleccionada = nombre
+            c = nombre
             break
             
         case Configuraciones.keyDatosDetalleProductoMarca:
              botonMarca.setTitle(nombre, for: .normal)
+             m = nombre
              break
         case Configuraciones.keyDatosDetalleProductoTalla:
             botonTalla.setTitle(nombre, for: .normal)
+            t = nombre
             break
 
         default:
