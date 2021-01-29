@@ -106,7 +106,7 @@ class Datos {
             let marcas: String = (producto.value(forKey: Configuraciones.keyMarca) as? String ?? "").lowercased()
             let categorias: String = (producto.value(forKey: Configuraciones.keyCategorias) as? String ?? "").lowercased()
             let tallas: String = (producto.value(forKey: Configuraciones.keyTalla) as? String ?? "").lowercased()
-            if categorias.contains(categoria)||tallas.contains(talla)||marcas.contains(marca) {
+            if categorias.contains(categoria)||categoria.isEmpty, (tallas.contains(talla)||talla.isEmpty),(marcas.contains(marca)||marca.isEmpty) {
                 ProductosConPatron.append(producto)
             }
         }
