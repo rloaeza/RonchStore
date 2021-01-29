@@ -75,7 +75,11 @@ class ProductosListaVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     
+        if segue.identifier == "FiltrosDesdeProductos",
+            let vc = segue.destination as? FiltrosVC {
+            vc.delegate = self            
+        }
+        //
     }
     
     func validarMonto() -> Bool {
@@ -214,4 +218,14 @@ extension ProductosListaVC: BarcodeScannerDismissalDelegate {
   func scannerDidDismiss(_ controller: BarcodeScannerViewController) {
     controller.dismiss(animated: true, completion: nil)
   }
+}
+
+
+extension ProductosListaVC: FiltrosVCDelegate {
+    func filtro(categoria: String, marca: String, talla: String) {
+        barraBusqueda.text = "Categoría: \(categoria), Marca: \(marca), Talla: \(talla)"
+        
+        self.valoresParaMostrar = Datos.getProductosConFiltro(categoria: categoria, marca: marca, talla: talla, productos: valores)
+        self.productosViewController.reloadData()
+    }
 }

@@ -10,6 +10,7 @@
 		0B3D256FD5EFF169001A4BA6 /* Pods_RonchStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3BD259218C7A9B5FA6557D1 /* Pods_RonchStore.framework */; };
 		6203793A2499BD8C00BAF5FA /* Producto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620379392499BD8C00BAF5FA /* Producto.swift */; };
 		62093A5924BC04E4003B2F4A /* VentasArchivadasVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62093A5824BC04E4003B2F4A /* VentasArchivadasVC.swift */; };
+		620B430C25C3B8980051B887 /* FiltrosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620B430B25C3B8980051B887 /* FiltrosVC.swift */; };
 		6214753D236AA18D008D4338 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6214753C236AA18D008D4338 /* Connection.swift */; };
 		6216E38F24B3306E0085EC70 /* Funciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6216E38E24B3306E0085EC70 /* Funciones.swift */; };
 		62197CF922E15439007F6F7F /* PedidoAgregarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62197CF822E15439007F6F7F /* PedidoAgregarVC.swift */; };
@@ -87,6 +88,7 @@
 /* Begin PBXFileReference section */
 		620379392499BD8C00BAF5FA /* Producto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Producto.swift; sourceTree = "<group>"; };
 		62093A5824BC04E4003B2F4A /* VentasArchivadasVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VentasArchivadasVC.swift; sourceTree = "<group>"; };
+		620B430B25C3B8980051B887 /* FiltrosVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltrosVC.swift; sourceTree = "<group>"; };
 		6214753C236AA18D008D4338 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		6216E38E24B3306E0085EC70 /* Funciones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Funciones.swift; sourceTree = "<group>"; };
 		62197CF822E15439007F6F7F /* PedidoAgregarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedidoAgregarVC.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 				62FC219623669A0F0022690C /* ProductoCell.swift */,
 				62FC21982366A0FC0022690C /* ProductoCompletoCell.swift */,
 				620379392499BD8C00BAF5FA /* Producto.swift */,
+				620B430B25C3B8980051B887 /* FiltrosVC.swift */,
 			);
 			path = Productos;
 			sourceTree = "<group>";
@@ -627,6 +630,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				620B430C25C3B8980051B887 /* FiltrosVC.swift in Sources */,
 				627CDF4E22D820B10003EF15 /* InicioSesionVC.swift in Sources */,
 				62F9EC5124C7DEC900855D1E /* RegistroVC.swift in Sources */,
 				62E64AB92373601700DC7C2D /* ListasVC.swift in Sources */,

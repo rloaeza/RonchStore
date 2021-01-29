@@ -97,6 +97,22 @@ class Datos {
         return ProductosConPatron
     }
     
+    static func getProductosConFiltro(categoria: String, marca: String, talla: String,  productos: [NSDictionary])->[NSDictionary] {
+        
+        var ProductosConPatron: [NSDictionary] = []
+        for producto in productos {
+            
+            
+            let marcas: String = (producto.value(forKey: Configuraciones.keyMarca) as? String ?? "").lowercased()
+            let categorias: String = (producto.value(forKey: Configuraciones.keyCategorias) as? String ?? "").lowercased()
+            let tallas: String = (producto.value(forKey: Configuraciones.keyTalla) as? String ?? "").lowercased()
+            if categorias.contains(categoria)||tallas.contains(talla)||marcas.contains(marca) {
+                ProductosConPatron.append(producto)
+            }
+        }
+        return ProductosConPatron
+    }
+    
     // MARK: - Listas
     
     static var Listas: [NSDictionary] = []
